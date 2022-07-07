@@ -39,7 +39,7 @@ object Lib {
     private const val COMPOSE_NAVIGATION_VERSION = "2.5.0-alpha01"
     private const val COMPOSE_COIL_VERSION = "1.4.0"
     private const val ACCOMPANIST_VERSION = "0.24.1-alpha"
-    private const val SPLASH_SCREEN_VERSION = "1.0.0-beta01"
+    private const val SPLASH_SCREEN_VERSION = "1.0.0-rc01"
 
     const val APP_COMPAT = "androidx.appcompat:appcompat:1.3.0-beta01"
 
