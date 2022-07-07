@@ -4,6 +4,9 @@
 - [ ] Release
 - [ ] Other
 
+#### Associated Tickets
+- [Feature Name](https://github.com/Anmol92verma/DiscordJetpackCompose/issues/{ticket-number})
+
 #### Details
 - This is a thing that does stuff for widgets.
 
