@@ -4,9 +4,6 @@
 - [ ] Release
 - [ ] Other
 
-#### Associated Tickets
-- [Feature Name](https://dealerware.atlassian.net/browse/RTA-{ticket-number})
-
 #### Details
 - This is a thing that does stuff for widgets.
 
