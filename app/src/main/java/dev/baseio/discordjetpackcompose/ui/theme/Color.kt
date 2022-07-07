@@ -1,6 +1,13 @@
+@file:SuppressLint("InvalidColorHexValue")
+@file:Suppress("unused")
+
 package dev.baseio.discordjetpackcompose.ui.theme
 
+import android.annotation.SuppressLint
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
+import dev.baseio.discordjetpackcompose.R
 
 val Purple200 = Color(0xFFBB86FC)
 val Purple500 = Color(0xFF6200EE)
@@ -178,7 +185,7 @@ val design_default_color_primary_variant = Color(0xFF3700b3)
 val design_default_color_secondary = Color(0xFF03dac6)
 val design_default_color_secondary_variant = Color(0xFF018786)
 val design_default_color_surface = Color(0xFFffffff)
-val design_fab_shadow_end_color = Color(0xFF@android:color/transparent)
+val design_fab_shadow_end_color @Composable get() = colorResource(id = R.color.transparent)
 val design_fab_shadow_mid_color = Color(0xFF14000000)
 val design_fab_shadow_start_color = Color(0xFF44000000)
 val design_fab_stroke_end_inner_color = Color(0xFF0a000000)
@@ -232,8 +239,8 @@ val focus_primary_800 = Color(0xFF003549)
 val focus_primary_830 = Color(0xFF002838)
 val focus_primary_860 = Color(0xFF001a25)
 val focus_primary_900 = Color(0xFF00090c)
-val foreground_material_dark = Color(0xFF@android:color/white)
-val foreground_material_light = Color(0xFF@android:color/black)
+val foreground_material_dark @Composable get() = colorResource(id = R.color.white)
+val foreground_material_light @Composable get() = colorResource(id = R.color.black)
 val github = Color(0xFF191717)
 val github_500 = Color(0xFF191717)
 val gold = Color(0xFFffc819)
@@ -484,7 +491,7 @@ val primary_dark_800 = Color(0xFF18191c)
 val primary_dark_830 = Color(0xFF121315)
 val primary_dark_860 = Color(0xFF0c0d0e)
 val primary_dark_900 = Color(0xFF040405)
-val primary_dark_material_dark = Color(0xFF@android:color/black)
+val primary_dark_material_dark @Composable get() = colorResource(id = R.color.black)
 val primary_dark_material_light @Composable get() = colorResource(id = R.color.material_grey_600)
 val primary_light = Color(0xFF747f8d)
 val primary_light_100 = Color(0xFFf8f9f9)
@@ -686,7 +693,7 @@ val switch_thumb_normal_material_dark = Color(0xFFffbdbdbd)
 val switch_thumb_normal_material_light = Color(0xFFfff1f1f1)
 val tooltip_background_dark = Color(0xFFe6616161)
 val tooltip_background_light = Color(0xFFe6ffffff)
-val transparent = Color(0xFF@android:color/transparent)
+val transparent @Composable get() = colorResource(id = R.color.transparent)
 val twitch = Color(0xFF593695)
 val twitch_500 = Color(0xFF593695)
 val twitter = Color(0xFF1da1f2)
