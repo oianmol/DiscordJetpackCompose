@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="11" />
+    <bytecodeTargetLevel target="1.8">
+      <module name="DiscordJetpackCompose.app" target="11" />
+      <module name="DiscordJetpackCompose.buildSrc" target="11" />
+      <module name="DiscordJetpackCompose.buildSrc.main" target="11" />
+      <module name="DiscordJetpackCompose.buildSrc.test" target="11" />
+      <module name="DiscordJetpackCompose.data" target="11" />
+      <module name="DiscordJetpackCompose.navigator" target="11" />
+    </bytecodeTargetLevel>
   </component>
 </project>
