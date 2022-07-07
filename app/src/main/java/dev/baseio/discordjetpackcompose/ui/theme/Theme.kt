@@ -6,25 +6,34 @@ import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 
-private val DarkColorPalette = darkColors(
-    primary = Purple200,
-    primaryVariant = Purple700,
-    secondary = Teal200
+private val DarkColorPalette @Composable get() = darkColors(
+    primary = design_default_color_primary_dark,
+    primaryVariant = design_dark_default_color_primary_variant,
+    secondary = design_dark_default_color_secondary,
+    secondaryVariant = design_dark_default_color_secondary_variant,
+    background = design_dark_default_color_background,
+    surface = design_dark_default_color_surface,
+    error = design_dark_default_color_error,
+    onPrimary = design_default_color_on_primary,
+    onSecondary = design_dark_default_color_on_secondary,
+    onBackground = design_dark_default_color_on_background,
+    onSurface = design_dark_default_color_on_surface,
+    onError = design_dark_default_color_on_error
 )
 
-private val LightColorPalette = lightColors(
-    primary = Purple500,
-    primaryVariant = Purple700,
-    secondary = Teal200
-
-    /* Other default colors to override
-    background = Color.White,
-    surface = Color.White,
-    onPrimary = Color.White,
-    onSecondary = Color.Black,
-    onBackground = Color.Black,
-    onSurface = Color.Black,
-    */
+private val LightColorPalette @Composable get() = lightColors(
+    primary = design_default_color_primary,
+    primaryVariant = design_default_color_primary_variant,
+    secondary = design_default_color_secondary,
+    secondaryVariant = design_default_color_secondary_variant,
+    background = design_default_color_background,
+    surface = design_default_color_surface,
+    error = design_default_color_error,
+    onPrimary = design_dark_default_color_on_primary,
+    onSecondary = design_default_color_on_secondary,
+    onBackground = design_default_color_on_background,
+    onSurface = design_default_color_on_surface,
+    onError = design_default_color_on_error
 )
 
 @Composable
