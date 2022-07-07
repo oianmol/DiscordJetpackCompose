@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">DiscordJetpackCompose</string>
+    <string name="country_picker_hint">Search</string>
 </resources>
