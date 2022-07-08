@@ -22,7 +22,6 @@ import dev.baseio.discordjetpackcompose.R
 import dev.baseio.discordjetpackcompose.ui.theme.Typography
 
 @Composable
-@Preview
 fun WelcomeScreen(composeNavigator: ComposeNavigator) {
     Column(
         Modifier
@@ -30,7 +29,6 @@ fun WelcomeScreen(composeNavigator: ComposeNavigator) {
             .background(MaterialTheme.colors.background),
         verticalArrangement = Arrangement.SpaceAround
     ) {
-
 
         Image(
             painter = painterResource(id = R.drawable.welcomelogo),
@@ -40,6 +38,7 @@ fun WelcomeScreen(composeNavigator: ComposeNavigator) {
 
         Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
             WelcomeToDiscord()
+            Spacer(modifier = Modifier.height(4.dp))
             WelcomeDiscordMessage()
             Spacer(modifier = Modifier.height(8.dp))
             RegisterButton()
@@ -49,8 +48,9 @@ fun WelcomeScreen(composeNavigator: ComposeNavigator) {
     }
 }
 
+
 @Composable
-fun LoginButton() {
+private fun LoginButton() {
     Button(
         onClick = { },
         colors = buttonColors(
@@ -65,7 +65,7 @@ fun LoginButton() {
 }
 
 @Composable
-fun RegisterButton() {
+private fun RegisterButton() {
     Button(
         onClick = { },
         colors = buttonColors(
@@ -79,7 +79,7 @@ fun RegisterButton() {
 }
 
 @Composable
-fun WelcomeDiscordMessage() {
+private fun WelcomeDiscordMessage() {
     Text(
         text = stringResource(id = R.string.welcome_message),
         style = Typography.subtitle1, textAlign = TextAlign.Center
@@ -87,7 +87,7 @@ fun WelcomeDiscordMessage() {
 }
 
 @Composable
-fun WelcomeToDiscord() {
+private fun WelcomeToDiscord() {
     Text(
         text = stringResource(id = R.string.welcome_to_discord),
         style = Typography.h5.copy(fontWeight = FontWeight.Bold), textAlign = TextAlign.Center
