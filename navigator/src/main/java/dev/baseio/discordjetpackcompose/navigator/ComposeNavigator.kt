@@ -1,15 +1,11 @@
-package dev.baseio.discordjetpackcompose.navigator.composenavigator
+package dev.baseio.discordjetpackcompose.navigator
 
 import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.navOptions
-import dev.baseio.discordjetpackcompose.navigator.ComposeNavigationCommand
-import dev.baseio.discordjetpackcompose.navigator.ComposeNavigator
-import dev.baseio.discordjetpackcompose.navigator.asFlow
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
-class discordjetpackcomposeComposeNavigator @Inject constructor(): ComposeNavigator() {
+class DiscordComposeNavigator @Inject constructor(): ComposeNavigator() {
 
   override fun navigate(route: String, optionsBuilder: (NavOptionsBuilder.() -> Unit)?) {
     val options = optionsBuilder?.let { navOptions(it) }
