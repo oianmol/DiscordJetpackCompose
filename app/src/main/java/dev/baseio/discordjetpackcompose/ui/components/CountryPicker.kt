@@ -4,7 +4,6 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -32,7 +31,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.rememberModalBottomSheetState
-import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -45,6 +43,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -53,6 +52,7 @@ import androidx.compose.ui.unit.dp
 import dev.baseio.discordjetpackcompose.R
 import dev.baseio.discordjetpackcompose.models.Country
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordJetpackComposeTheme
+import dev.baseio.discordjetpackcompose.ui.utils.clickableWithRipple
 import dev.baseio.discordjetpackcompose.ui.utils.simpleVerticalScrollbar
 import dev.baseio.discordjetpackcompose.utils.Constants
 import dev.baseio.discordjetpackcompose.utils.readAssetFile
@@ -61,23 +61,24 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun CountryPicker(
-    bottomSheetScaffoldState: ModalBottomSheetState,
+    sheetState: ModalBottomSheetState,
     backgroundContent: @Composable () -> Unit,
     onCountrySelected: (Country) -> Unit,
-    countryList: List<Country>? = LocalContext.current.readAssetFile(Constants.CountriesAssetFilePath)
+    countryList: List<Country>?,
+    countrySearchQuery: String = "",
+    onQueryUpdated: (String) -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()
-    BackHandler(enabled = bottomSheetScaffoldState.isVisible) {
-        coroutineScope.launch { bottomSheetScaffoldState.hide() }
+    BackHandler(enabled = sheetState.isVisible) {
+        coroutineScope.launch { sheetState.hide() }
     }
     ModalBottomSheetLayout(
-        sheetState = bottomSheetScaffoldState, sheetContent = {
+        sheetState = sheetState, sheetContent = {
             Box(modifier = Modifier.fillMaxSize()) {
-                var searchQuery by remember { mutableStateOf("") }
                 Column {
                     SearchBox(
-                        currentValue = searchQuery,
-                        onValueChanged = { updatedQuery: String -> searchQuery = updatedQuery },
+                        currentValue = countrySearchQuery,
+                        onValueChanged = { updatedQuery: String -> onQueryUpdated(updatedQuery) },
                     )
                     val lazyListState = rememberLazyListState()
                     LazyColumn(
@@ -87,11 +88,7 @@ fun CountryPicker(
                             color = MaterialTheme.colors.onSurface.copy(alpha = 0.5f)
                         ),
                     ) {
-                        countryList?.filter { country ->
-                            country.name.contains(
-                                searchQuery, ignoreCase = true
-                            )
-                        }?.let { nnCountryList ->
+                        countryList?.let { nnCountryList ->
                             items(nnCountryList.size) { index ->
                                 CountryItem(
                                     countryName = nnCountryList[index].name,
@@ -118,10 +115,7 @@ private fun CountryItem(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(
-                interactionSource = remember { MutableInteractionSource() },
-                indication = rememberRipple()
-            ) { onCountrySelected() }
+            .clickableWithRipple { onCountrySelected() }
             .padding(16.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
@@ -138,7 +132,8 @@ private fun SearchBox(currentValue: String, onValueChanged: (String) -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
-            .background(MaterialTheme.colors.onSurface.copy(alpha = 0.05f)),
+            .background(MaterialTheme.colors.onSurface.copy(alpha = 0.05f))
+            .testTag("countryPickerSearchBox"),
         value = currentValue,
         onValueChange = onValueChanged,
         colors = TextFieldDefaults.textFieldColors(
@@ -157,7 +152,10 @@ private fun SearchBox(currentValue: String, onValueChanged: (String) -> Unit) {
         trailingIcon = {
             AnimatedVisibility(visible = currentValue.isNotBlank()) {
                 IconButton(onClick = { onValueChanged("") }) {
-                    Icon(imageVector = Icons.Default.Close, contentDescription = null)
+                    Icon(
+                        imageVector = Icons.Default.Close,
+                        contentDescription = "countryPickerSearchBoxTrailingIcon"
+                    )
                 }
             }
         },
@@ -176,14 +174,21 @@ private fun CountryPickerPreview() {
     DiscordJetpackComposeTheme {
         val sheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
         val coroutineScope = rememberCoroutineScope()
-        CountryPicker(bottomSheetScaffoldState = sheetState, backgroundContent = {
-            Box(modifier = Modifier
-                .fillMaxSize()
-                .clickable {
-                    coroutineScope.launch { sheetState.show() }
-                }) {
-                Text(text = "Click anywhere to open the country picker...")
-            }
-        }, onCountrySelected = {})
+        var currentQuery by remember { mutableStateOf("") }
+
+        CountryPicker(sheetState = sheetState,
+            backgroundContent = {
+                Box(modifier = Modifier
+                    .fillMaxSize()
+                    .clickable {
+                        coroutineScope.launch { sheetState.show() }
+                    }) {
+                    Text(text = "Click anywhere to open the country picker...")
+                }
+            },
+            onCountrySelected = {},
+            countryList = LocalContext.current.readAssetFile(Constants.CountriesAssetFilePath),
+            countrySearchQuery = currentQuery,
+            onQueryUpdated = { updatedQuery -> currentQuery = updatedQuery })
     }
 }
