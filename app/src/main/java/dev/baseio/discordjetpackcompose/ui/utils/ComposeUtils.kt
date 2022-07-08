@@ -51,36 +51,36 @@ data class WindowInfo(
         object Medium : WindowType()
         object Expanded : WindowType()
     }
+}
 
-    fun Modifier.simpleVerticalScrollbar(
-        state: LazyListState, width: Dp = 4.dp, color: Color
-    ): Modifier = composed {
-        val targetAlpha = if (state.isScrollInProgress) 1f else 0f
-        val duration = if (state.isScrollInProgress) 150 else 500
+fun Modifier.simpleVerticalScrollbar(
+    state: LazyListState, width: Dp = 4.dp, color: Color
+): Modifier = composed {
+    val targetAlpha = if (state.isScrollInProgress) 1f else 0f
+    val duration = if (state.isScrollInProgress) 150 else 500
 
-        val alpha by animateFloatAsState(
-            targetValue = targetAlpha, animationSpec = tween(durationMillis = duration)
-        )
+    val alpha by animateFloatAsState(
+        targetValue = targetAlpha, animationSpec = tween(durationMillis = duration)
+    )
 
-        drawWithContent {
-            drawContent()
+    drawWithContent {
+        drawContent()
 
-            val firstVisibleElementIndex = state.layoutInfo.visibleItemsInfo.firstOrNull()?.index
-            val needDrawScrollbar = state.isScrollInProgress || alpha > 0.0f
+        val firstVisibleElementIndex = state.layoutInfo.visibleItemsInfo.firstOrNull()?.index
+        val needDrawScrollbar = state.isScrollInProgress || alpha > 0.0f
 
-            // Draw scrollbar if scrolling or if the animation is still running and lazy column has content
-            if (needDrawScrollbar && firstVisibleElementIndex != null) {
-                val elementHeight = this.size.height / state.layoutInfo.totalItemsCount
-                val scrollbarOffsetY = firstVisibleElementIndex * elementHeight
-                val scrollbarHeight = state.layoutInfo.visibleItemsInfo.size * elementHeight
+        // Draw scrollbar if scrolling or if the animation is still running and lazy column has content
+        if (needDrawScrollbar && firstVisibleElementIndex != null) {
+            val elementHeight = this.size.height / state.layoutInfo.totalItemsCount
+            val scrollbarOffsetY = firstVisibleElementIndex * elementHeight
+            val scrollbarHeight = state.layoutInfo.visibleItemsInfo.size * elementHeight
 
-                drawRect(
-                    color = color,
-                    topLeft = Offset(this.size.width - width.toPx(), scrollbarOffsetY),
-                    size = Size(width.toPx(), scrollbarHeight),
-                    alpha = alpha,
-                )
-            }
+            drawRect(
+                color = color,
+                topLeft = Offset(this.size.width - width.toPx(), scrollbarOffsetY),
+                size = Size(width.toPx(), scrollbarHeight),
+                alpha = alpha,
+            )
         }
     }
 }

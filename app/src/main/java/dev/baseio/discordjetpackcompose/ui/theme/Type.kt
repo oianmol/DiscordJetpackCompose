@@ -30,3 +30,14 @@ val UniSansFontFamily = FontFamily(
 val Typography = Typography(
     defaultFontFamily = UniSansFontFamily
 )
+
+val DirectMessageListTypography = Typography(
+    defaultFontFamily = UniSansFontFamily,
+    h6 = TextStyle(
+        fontWeight = FontWeight.Bold,
+        fontSize = 16.sp
+    ),
+    body1 = TextStyle(
+        fontSize = 14.sp
+    )
+)

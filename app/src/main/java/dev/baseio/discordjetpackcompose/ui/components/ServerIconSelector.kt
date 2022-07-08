@@ -6,10 +6,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,9 +22,10 @@ object ServerIconSelector {
 fun ServerIconSelector(
     modifier: Modifier = Modifier,
     serverList: List<ServerEntity>,
+    currentSelectedItem: Int,
+    onSelectedItemChanged: (Int) -> Unit,
     onAddButtonClick: () -> Unit,
 ) {
-    var currentSelectedItem by remember { mutableStateOf(ServerIconSelector.FirstItemId) }
     LazyColumn(
         modifier = modifier.padding(end = 4.dp, top = 8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -38,7 +35,7 @@ fun ServerIconSelector(
                 id = ServerIconSelector.FirstItemId,
                 iconId = R.drawable.ic_chat_bubble,
                 isSelected = currentSelectedItem == ServerIconSelector.FirstItemId,
-                onClick = { currentSelectedItem = ServerIconSelector.FirstItemId },
+                onClick = { onSelectedItemChanged(ServerIconSelector.FirstItemId) },
             )
         }
         item {
@@ -55,7 +52,7 @@ fun ServerIconSelector(
             ServerIconSelectorItem(id = index,
                 iconUri = serverList[index].thumbnailUri,
                 isSelected = currentSelectedItem == index,
-                onClick = { currentSelectedItem = index })
+                onClick = { onSelectedItemChanged(index) })
         }
         item {
             ServerIconSelectorItem(
@@ -72,19 +69,24 @@ fun ServerIconSelector(
 @Preview(showSystemUi = true)
 @Composable
 private fun ServerIconSelectorPreview() {
-    ServerIconSelector(serverList = listOf(
-        ServerEntity(
-            id = "1",
-            name = "Test Server 1",
-            selectedAnimationUri = null,
-            posterUri = null,
-            channels = listOf()
-        ), ServerEntity(
-            id = "2",
-            name = "Test Server 2",
-            selectedAnimationUri = null,
-            posterUri = null,
-            channels = listOf()
-        )
-    ), onAddButtonClick = {})
+    ServerIconSelector(
+        serverList = listOf(
+            ServerEntity(
+                id = "1",
+                name = "Test Server 1",
+                selectedAnimationUri = null,
+                posterUri = null,
+                channels = listOf()
+            ), ServerEntity(
+                id = "2",
+                name = "Test Server 2",
+                selectedAnimationUri = null,
+                posterUri = null,
+                channels = listOf()
+            )
+        ),
+        onAddButtonClick = {},
+        currentSelectedItem = ServerIconSelector.FirstItemId,
+        onSelectedItemChanged = {}
+    )
 }

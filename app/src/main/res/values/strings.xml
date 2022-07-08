@@ -6,4 +6,6 @@
     <string name="welcome_message">Join over 100 million people who use Discord to talk with communities and friends</string>
     <string name="register">Register</string>
     <string name="login">Login</string>
+    <string name="dm_list_screen_title">Direct Messages</string>
+    <string name="dm_list_screen_search_hint">Find or start a conversation</string>
 </resources>
