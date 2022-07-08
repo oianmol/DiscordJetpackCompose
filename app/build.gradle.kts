@@ -110,6 +110,9 @@ dependencies {
 
     implementation(Lib.Kotlin.KTX_CORE)
 
+    /* Image Loading */
+    implementation(Lib.Android.COIL_COMPOSE)
+
     /*DI*/
     implementation(Lib.Di.hiltAndroid)
     implementation(Lib.Di.hiltNavigationCompose)

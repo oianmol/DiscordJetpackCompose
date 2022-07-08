@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="dev.baseio.discordjetpackcompose">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:name=".DiscordApp"
         android:allowBackup="true"
@@ -17,7 +19,6 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
             android:theme="@style/Theme.DiscordJetpackCompose">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

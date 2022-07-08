@@ -10,7 +10,7 @@ object BuildPlugins {
   const val TOOLS_BUILD_GRADLE = "com.android.tools.build:gradle:${TOOLS_BUILD}"
   const val KTLINT_GRADLE_PLUGIN = "org.jlleitschuh.gradle:ktlint-gradle:${KT_LINT}"
   const val DAGGER_HILT_PLUGIN = "com.google.dagger:hilt-android-gradle-plugin:2.40.5"
-  const val KOTLIN_GRADLE_PLUGIN = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.0"
+  const val KOTLIN_GRADLE_PLUGIN = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Lib.Kotlin.KOTLIN_VERSION}"
   const val ANDROID_APPLICATION_PLUGIN = "com.android.application"
   const val ANDROID_LIBRARY_PLUGIN = "com.android.library"
   const val KOTLIN_ANDROID_PLUGIN = "kotlin-android"
@@ -23,7 +23,7 @@ object BuildPlugins {
 
 object Lib {
   object Kotlin {
-    const val KOTLIN_VERSION = "1.6.0"
+    const val KOTLIN_VERSION = "1.6.10"
     private const val KTX_CORE_VERSION = "1.7.0"
     const val KT_STD = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${KOTLIN_VERSION}"
     const val KTX_CORE = "androidx.core:core-ktx:${KTX_CORE_VERSION}"
@@ -31,13 +31,13 @@ object Lib {
   }
 
   object Android {
-    const val COMPOSE_VERSION = "1.2.0"
-    const val COMPOSE_COMPILER_VERSION = "1.2.0"
+    const val COMPOSE_VERSION = "1.1.1"
+    const val COMPOSE_COMPILER_VERSION = COMPOSE_VERSION
     private const val MATERIAL_DESIGN_VERSION = "1.1.1"
     private const val COMPOSE_ACTIVITY_VERSION = "1.4.0"
     private const val COMPOSE_CONSTRAINT_LAYOUT_VERSION = "1.0.0"
     private const val COMPOSE_NAVIGATION_VERSION = "2.5.0-alpha01"
-    private const val COMPOSE_COIL_VERSION = "1.4.0"
+    private const val COMPOSE_COIL_VERSION = "2.1.0"
     private const val ACCOMPANIST_VERSION = "0.24.1-alpha"
     private const val SPLASH_SCREEN_VERSION = "1.0.0-beta01"
     private const val MATERIAL_EXTENDED_ICONS_VERSION = COMPOSE_VERSION

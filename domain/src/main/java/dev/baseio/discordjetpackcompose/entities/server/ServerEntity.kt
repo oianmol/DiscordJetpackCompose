@@ -12,7 +12,7 @@ package dev.baseio.discordjetpackcompose.entities.server
 data class ServerEntity(
     val id: String,
     val name: String,
-    val thumbnailUri: String = "https://cdn.iconscout.com/icon/free/png-256/discord-3691244-3073764.png",
+    val thumbnailUri: String = "https://upload.wikimedia.org/wikipedia/commons/0/00/Mutual_Mobile_Logo.png",
     val selectedAnimationUri: String? = null,
     val posterUri: String? = null,
     val channels: List<ChannelEntity> = emptyList()
