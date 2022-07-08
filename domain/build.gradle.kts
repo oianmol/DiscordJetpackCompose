@@ -12,5 +12,6 @@ dependencies {
   api(Lib.Kotlin.KT_STD)
   api(Lib.Async.COROUTINES)
   implementation("androidx.paging:paging-common-ktx:3.1.0")
+  implementation(Lib.Di.hiltCore)
 }
 

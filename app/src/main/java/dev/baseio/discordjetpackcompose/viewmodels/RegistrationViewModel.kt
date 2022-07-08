@@ -1,31 +1,44 @@
 package dev.baseio.discordjetpackcompose.viewmodels
 
-import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.baseio.discordjetpackcompose.models.Country
-import dev.baseio.discordjetpackcompose.utils.Constants
+import dev.baseio.discordjetpackcompose.entities.CountryEntity
+import dev.baseio.discordjetpackcompose.usecases.FetchCountriesUseCase
 import dev.baseio.discordjetpackcompose.utils.ioScope
-import dev.baseio.discordjetpackcompose.utils.readAssetFile
 import javax.inject.Inject
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 @HiltViewModel
-class RegistrationViewModel @Inject constructor() : ViewModel() {
-    var countryList: List<Country>? by mutableStateOf(null)
+class RegistrationViewModel @Inject constructor(
+    val fetchCountriesUseCase: FetchCountriesUseCase
+) : ViewModel() {
+    private var countryList: List<CountryEntity>? by mutableStateOf(null)
+    var filteredCountryList: List<CountryEntity>? by mutableStateOf(null)
         private set
+    private var countrySearchQuery: String by mutableStateOf("")
 
-    fun Context.getCountryList() {
+    init {
+        getCountryList()
+        snapshotFlow { countrySearchQuery }.onEach { query ->
+                filteredCountryList = countryList?.filter { country ->
+                    country.name.contains(other = query, ignoreCase = true)
+                }
+            }.launchIn(viewModelScope)
+    }
+
+    private fun getCountryList() {
         ioScope {
-            countryList = readAssetFile(Constants.CountriesAssetFilePath)
+            countryList = fetchCountriesUseCase()
         }
     }
 
-    fun filterCountryList(query: String) {
-        countryList = countryList?.filter { country ->
-            country.name.contains(other = query, ignoreCase = true)
-        }
+    fun updateCountryQuery(query: String) {
+        countrySearchQuery = query
     }
 }

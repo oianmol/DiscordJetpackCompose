@@ -22,10 +22,9 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
-import dev.baseio.discordjetpackcompose.models.Country
+import dev.baseio.discordjetpackcompose.entities.CountryEntity
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordJetpackComposeTheme
-import dev.baseio.discordjetpackcompose.utils.Constants
-import dev.baseio.discordjetpackcompose.utils.readAssetFile
+import dev.baseio.discordjetpackcompose.ui.utils.readAssetFile
 import kotlinx.coroutines.launch
 import org.junit.Before
 import org.junit.Rule
@@ -50,8 +49,9 @@ class CountryPickerTest {
         // Start the app
         composeTestRule.setContent {
             DiscordJetpackComposeTheme {
-                var currentCountry: Country? by remember { mutableStateOf(null) }
+                var currentCountry: CountryEntity? by remember { mutableStateOf(null) }
                 val coroutineScope = rememberCoroutineScope()
+                val context = LocalContext.current
 
                 CountryPicker(sheetState = sheetState,
                     backgroundContent = {
@@ -69,7 +69,7 @@ class CountryPickerTest {
                     onCountrySelected = { newCountry ->
                         currentCountry = newCountry
                     },
-                    countryList = LocalContext.current.readAssetFile(Constants.CountriesAssetFilePath),
+                    countryList = context.readAssetFile("countries.json"),
                     countrySearchQuery = searchQuery,
                     onQueryUpdated = { updatedQuery -> searchQuery = updatedQuery })
             }
@@ -93,14 +93,12 @@ class CountryPickerTest {
     fun countryPicker_OnQueryUpdate_TogglesTrailingIconVisibility() {
         composeTestRule.setContent {
             DiscordJetpackComposeTheme {
-                CountryPicker(
-                    sheetState = sheetState,
+                CountryPicker(sheetState = sheetState,
                     backgroundContent = {},
                     onCountrySelected = {},
                     countryList = listOf(),
                     countrySearchQuery = searchQuery,
-                    onQueryUpdated = { updatedQuery -> searchQuery = updatedQuery }
-                )
+                    onQueryUpdated = { updatedQuery -> searchQuery = updatedQuery })
 
                 LaunchedEffect(Unit) {
                     sheetState.show()
@@ -118,5 +116,4 @@ class CountryPickerTest {
             trailingIcon.assertDoesNotExist()
         }
     }
-
 }

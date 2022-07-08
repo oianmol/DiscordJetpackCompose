@@ -1,4 +1,5 @@
 import Lib.Networking
+import groovy.xml.Entity.Dagger
 
 /** This file contains versions of all the dependencies used in the module  */
 
@@ -9,7 +10,7 @@ object BuildPlugins {
 
   const val TOOLS_BUILD_GRADLE = "com.android.tools.build:gradle:${TOOLS_BUILD}"
   const val KTLINT_GRADLE_PLUGIN = "org.jlleitschuh.gradle:ktlint-gradle:${KT_LINT}"
-  const val DAGGER_HILT_PLUGIN = "com.google.dagger:hilt-android-gradle-plugin:2.40.5"
+  const val DAGGER_HILT_PLUGIN = "com.google.dagger:hilt-android-gradle-plugin:${Lib.Di.DAGGER_VERSION}"
   const val KOTLIN_GRADLE_PLUGIN = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Lib.Kotlin.KOTLIN_VERSION}"
   const val ANDROID_APPLICATION_PLUGIN = "com.android.application"
   const val ANDROID_LIBRARY_PLUGIN = "com.android.library"
@@ -63,13 +64,14 @@ object Lib {
   }
 
   object Di {
-    private const val DAGGER_VERSION = "2.40.5"
+    const val DAGGER_VERSION = "2.40.5"
     const val hiltAndroid = "com.google.dagger:hilt-android:${DAGGER_VERSION}"
     const val hiltAndroidCompiler = "com.google.dagger:hilt-android-compiler:${DAGGER_VERSION}"
 
     const val hiltViewModel = "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03"
     const val hiltCompiler = "androidx.hilt:hilt-compiler:1.0.0"
     const val hiltNavigationCompose = "androidx.hilt:hilt-navigation-compose:1.0.0"
+    const val hiltCore = "com.google.dagger:hilt-core:$DAGGER_VERSION"
   }
 
   object Paging {
