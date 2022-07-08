@@ -10,20 +10,7 @@ sealed class DiscordScreen(
 ) {
   val name: String = route.appendArguments(navArguments)
 
-  // onboarding
-  object GettingStarted : DiscordScreen("gettingStarted")
-  // dashboard
-  object Dashboard : DiscordScreen(
-    "Dashboard",
-    navArguments = listOf(navArgument("channelId") { type = NavType.StringType })
-  ) {
-    fun createRoute(channelId: String) =
-      route.replace("{${navArguments.first().name}}", channelId)
-  }
-
-  object CreateChannelsScreen : DiscordScreen("CreateChannelsScreen")
-  object CreateNewChannel : DiscordScreen("CreateNewChannel")
-  object CreateNewDM : DiscordScreen("CreateNewDM")
+  object Welcome : DiscordScreen("welcome")
 
 }
 

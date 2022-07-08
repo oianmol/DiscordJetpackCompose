@@ -4,4 +4,6 @@
     <string name="country_picker_preview_text">Click anywhere to open the country picker…</string>
     <string name="welcome_to_discord">Welcome to Discord</string>
     <string name="welcome_message">Join over 100 million people who use Discord to talk with communities and friends</string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
 </resources>
