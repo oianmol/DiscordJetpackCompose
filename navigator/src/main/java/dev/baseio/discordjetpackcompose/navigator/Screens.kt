@@ -11,11 +11,12 @@ sealed class DiscordScreen(
   val name: String = route.appendArguments(navArguments)
 
   object Welcome : DiscordScreen("welcome")
-
+  object Register : DiscordScreen("register")
 }
 
 sealed class DiscordRoute(val name: String) {
   object OnBoarding : DiscordRoute("onboarding")
+  object Register : DiscordRoute("register")
   object Dashboard : DiscordRoute("dashboard")
 }
 
