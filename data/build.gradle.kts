@@ -53,4 +53,7 @@ dependencies {
   /* Dependency Injection */
   api(Lib.Di.hiltAndroid)
   kapt(Lib.Di.hiltAndroidCompiler)
+
+  /* Logger */
+  implementation(Lib.Logger.TIMBER)
 }

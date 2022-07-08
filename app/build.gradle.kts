@@ -15,7 +15,7 @@ android {
         targetSdk = (ProjectProperties.TARGET_SDK)
         versionCode = 1
         versionName = "1.0"
-        testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
 
@@ -140,4 +140,6 @@ dependencies {
     testImplementation(TestLib.ROBO_ELECTRIC)
     testImplementation(TestLib.COROUTINES)
     testImplementation(TestLib.MOCKK)
+    androidTestImplementation(Lib.Android.COMPOSE_JUNIT)
+    debugImplementation(Lib.Android.COMPOSE_TEST_MANIFEST)
 }
