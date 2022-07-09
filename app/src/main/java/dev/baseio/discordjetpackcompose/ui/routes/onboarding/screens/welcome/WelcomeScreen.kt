@@ -1,4 +1,4 @@
-package dev.baseio.discordjetpackcompose.ui.routes.onboarding.screens
+package dev.baseio.discordjetpackcompose.ui.routes.onboarding.screens.welcome
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -15,19 +15,20 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.baseio.discordjetpackcompose.navigator.ComposeNavigator
 import dev.baseio.discordjetpackcompose.R
 import dev.baseio.discordjetpackcompose.navigator.DiscordRoute
+import dev.baseio.discordjetpackcompose.navigator.DiscordScreen
+import dev.baseio.discordjetpackcompose.ui.routes.onboarding.commonui.CenteredTitleSubtitle
 import dev.baseio.discordjetpackcompose.ui.theme.Typography
 
 @Composable
 fun WelcomeScreen(composeNavigator: ComposeNavigator) {
     Column(
-      Modifier
-        .fillMaxSize()
-        .background(MaterialTheme.colors.background),
+        Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colors.background),
       verticalArrangement = Arrangement.SpaceAround
     ) {
 
@@ -37,13 +38,12 @@ fun WelcomeScreen(composeNavigator: ComposeNavigator) {
           modifier = Modifier.padding(8.dp)
         )
 
+        CenteredTitleSubtitle(R.string.welcome_to_discord,R.string.welcome_message)
+
         Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-            WelcomeToDiscord()
-            Spacer(modifier = Modifier.height(4.dp))
-            WelcomeDiscordMessage()
             Spacer(modifier = Modifier.height(8.dp))
             RegisterButton(navigator = composeNavigator)
-            LoginButton()
+            LoginButton(navigator = composeNavigator)
         }
 
     }
@@ -51,9 +51,9 @@ fun WelcomeScreen(composeNavigator: ComposeNavigator) {
 
 
 @Composable
-private fun LoginButton() {
+private fun LoginButton(navigator: ComposeNavigator) {
     Button(
-      onClick = { },
+        onClick = { navigator.navigate(DiscordScreen.Login.name) },
       colors = buttonColors(
         backgroundColor = colorResource(id = R.color.material_grey_600),
         contentColor = colorResource(
@@ -68,7 +68,7 @@ private fun LoginButton() {
 @Composable
 private fun RegisterButton(navigator: ComposeNavigator) {
     Button(
-      onClick = { navigator.navigate(DiscordRoute.Register.name) },
+      onClick = { navigator.navigate(DiscordScreen.Register.name) },
       colors = buttonColors(
         backgroundColor = colorResource(id = R.color.brand), contentColor = colorResource(
         id = R.color.white
@@ -77,20 +77,4 @@ private fun RegisterButton(navigator: ComposeNavigator) {
     ) {
         Text(text = stringResource(id = R.string.register))
     }
-}
-
-@Composable
-private fun WelcomeDiscordMessage() {
-    Text(
-      text = stringResource(id = R.string.welcome_message),
-      style = Typography.subtitle1, textAlign = TextAlign.Center
-    )
-}
-
-@Composable
-private fun WelcomeToDiscord() {
-    Text(
-      text = stringResource(id = R.string.welcome_to_discord),
-      style = Typography.h5.copy(fontWeight = FontWeight.Bold), textAlign = TextAlign.Center
-    )
 }

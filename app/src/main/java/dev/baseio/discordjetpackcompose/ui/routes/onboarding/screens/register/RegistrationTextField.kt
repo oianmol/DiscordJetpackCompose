@@ -3,9 +3,7 @@ package dev.baseio.discordjetpackcompose.ui.routes.onboarding.screens.register
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
-import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -33,16 +31,22 @@ fun RegistrationTextField(
       .focusRequester(focusRequester),
     shape = RoundedCornerShape(4.dp),
     enabled = isEnabled,
-    colors = TextFieldDefaults.textFieldColors(
-      textColor = colorResource(id = color.white),
-      disabledTextColor = colorResource(id = color.white),
-      backgroundColor = Color(0xFF222327),
-      focusedIndicatorColor = Color.Transparent, // hide the indicator
-      unfocusedIndicatorColor = Color.Transparent,
-      disabledIndicatorColor = Color.Transparent
-    ),
+    colors = textFieldColors(),
     value = value,
     onValueChange = onValueChange,
-    label = { Text(label, color = Color(0xFFb5b6bb)) }
+    label = { Text(label, color = contentColor()) }
   )
 }
+
+@Composable
+private fun contentColor() = MaterialTheme.colors.contentColorFor(MaterialTheme.colors.secondary)
+
+@Composable
+private fun textFieldColors() = TextFieldDefaults.textFieldColors(
+  textColor = contentColor(),
+  disabledTextColor = contentColor(),
+  backgroundColor = MaterialTheme.colors.secondary,
+  focusedIndicatorColor = Color.Transparent, // hide the indicator
+  unfocusedIndicatorColor = Color.Transparent,
+  disabledIndicatorColor = Color.Transparent
+)

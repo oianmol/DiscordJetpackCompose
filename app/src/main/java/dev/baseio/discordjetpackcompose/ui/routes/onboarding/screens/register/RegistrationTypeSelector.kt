@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -26,8 +27,7 @@ fun RegistrationTypeSelector(
     modifier = modifier
       .height(32.dp)
       .background(
-        color = Color(0xFF2a2b2f),
-        shape = RoundedCornerShape(4.dp)
+        shape = RoundedCornerShape(4.dp), color = MaterialTheme.colors.background
       )
       .fillMaxWidth()
   ) {
@@ -36,16 +36,8 @@ fun RegistrationTypeSelector(
         .weight(1f)
         .fillMaxHeight(),
       colors = ButtonDefaults.buttonColors(
-        backgroundColor = if (selectedOption == RegistrationType.Phone) {
-          Color(0xFF4f535c)
-        } else {
-          Color(0xFF2a2b2f)
-        },
-        contentColor = if (selectedOption == RegistrationType.Phone) {
-          Color(0xFFFFFFFF)
-        } else {
-          Color(0xFF55555d)
-        }
+        backgroundColor = bgColor(selectedOption == RegistrationType.Phone),
+        contentColor = contentColor(selectedOption == RegistrationType.Phone)
       ),
       onClick = { onSelectionChange(RegistrationType.Phone) },
     ) {
@@ -57,16 +49,8 @@ fun RegistrationTypeSelector(
         .weight(1f)
         .fillMaxHeight(),
       colors = ButtonDefaults.buttonColors(
-        backgroundColor = if (selectedOption == RegistrationType.Email) {
-          Color(0xFF4f535c)
-        } else {
-          Color(0xFF2a2b2f)
-        },
-        contentColor = if (selectedOption == RegistrationType.Email) {
-          Color(0xFFFFFFFF)
-        } else {
-          Color(0xFF55555d)
-        }
+        backgroundColor = bgColor(selected = selectedOption == RegistrationType.Email),
+        contentColor = contentColor(selected = selectedOption == RegistrationType.Email)
       ),
       onClick = { onSelectionChange(RegistrationType.Email) },
     ) {
@@ -74,6 +58,22 @@ fun RegistrationTypeSelector(
     }
   }
 }
+
+@Composable
+private fun contentColor(selected:Boolean) =
+  if (selected) {
+    Color(0xFFFFFFFF)
+  } else {
+    Color(0xFF55555d)
+  }
+
+@Composable
+private fun bgColor(selected:Boolean) =
+  if (selected) {
+    Color(0xFF4f535c)
+  } else {
+    Color(0xFF2a2b2f)
+  }
 
 sealed class RegistrationType {
   object Phone : RegistrationType()

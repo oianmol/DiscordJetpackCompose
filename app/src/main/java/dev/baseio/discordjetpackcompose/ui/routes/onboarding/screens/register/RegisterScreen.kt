@@ -47,122 +47,122 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun RegisterScreen(
-  composeNavigator: ComposeNavigator? = null,
-  registrationViewModel: RegistrationViewModel = hiltViewModel()
+    composeNavigator: ComposeNavigator? = null,
+    registrationViewModel: RegistrationViewModel = hiltViewModel()
 ) {
 
-  val scaffoldState = rememberScaffoldState()
-  val coroutineScope = rememberCoroutineScope()
-  val sheetState = rememberModalBottomSheetState(initialValue = Hidden)
-  var selectedCountry: CountryEntity? by remember { mutableStateOf(null) }
-  var countrySearchQuery by remember { mutableStateOf("") }
+    val scaffoldState = rememberScaffoldState()
+    val coroutineScope = rememberCoroutineScope()
+    val sheetState = rememberModalBottomSheetState(initialValue = Hidden)
+    var selectedCountry: CountryEntity? by remember { mutableStateOf(null) }
+    var countrySearchQuery by remember { mutableStateOf("") }
 
-  var selectedOption: RegistrationType by remember { mutableStateOf(RegistrationType.Phone) }
-  val onSelectionChange = { type: RegistrationType -> selectedOption = type }
+    var selectedOption: RegistrationType by remember { mutableStateOf(RegistrationType.Phone) }
+    val onSelectionChange = { type: RegistrationType -> selectedOption = type }
 
-  DiscordScaffold(
-    navigator = composeNavigator,
-    scaffoldState = scaffoldState
-  ) {
-    Box(
-      modifier = Modifier
-        .fillMaxSize()
-        .background(Color(0xFF383842))
+    DiscordScaffold(
+        navigator = composeNavigator,
+        scaffoldState = scaffoldState
     ) {
-      Column(
-        modifier = Modifier.padding(16.dp)
-      ) {
-
-        Text(
-          modifier = Modifier
-            .align(Alignment.CenterHorizontally),
-          text = stringResource(id = Strings.enter_phone_or_email),
-          style = TextStyle(color = Color.White, fontWeight = FontWeight.Bold, fontSize = 24.sp)
-        )
-
-        Spacer(
-          modifier = Modifier
-            .fillMaxWidth()
-            .height(32.dp)
-        )
-
-        RegistrationTypeSelector(
-          modifier = Modifier,
-          selectedOption = selectedOption,
-          onSelectionChange = onSelectionChange
-        )
-
-        Spacer(
-          modifier = Modifier
-            .fillMaxWidth()
-            .height(32.dp)
-        )
-
-        RegisterInputLayout(
-          selectedOption = selectedOption,
-          coroutineScope = coroutineScope,
-          bottomSheetState = sheetState,
-          selectedCountry = selectedCountry
-        )
-
-        Text(
-          modifier = Modifier
-            .align(Alignment.Start)
-            .padding(top = 8.dp),
-          text = stringResource(id = Strings.view_privacy_policy),
-          style = TextStyle(
-            color = Color(0xFF2e8eca), fontWeight = FontWeight.Normal, fontSize = 12.sp
-          ),
-          textAlign = TextAlign.Start
-        )
-
-        Button(
-          modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 16.dp),
-          colors = ButtonDefaults.buttonColors(
-            backgroundColor = Color(0xFF5864f4),
-            contentColor = Color(0xFFFFFFFF),
-          ),
-          shape = RoundedCornerShape(4.dp),
-          onClick = { },
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colors.background)
         ) {
-          Text(stringResource(id = Strings.next))
-        }
-      }
+            Column(
+                modifier = Modifier.padding(16.dp)
+            ) {
 
-      CountryPicker(
-        sheetState = sheetState,
-        backgroundContent = {},
-        onCountrySelected = {
-          selectedCountry = it
-          coroutineScope.launch {
-            sheetState.hide()
-          }
-        },
-        countryList = registrationViewModel.filteredCountryList?.filter {
-          it.name.contains(
-            other = countrySearchQuery,
-            ignoreCase = true
-          )
-        },
-        countrySearchQuery = countrySearchQuery,
-        onQueryUpdated = { updatedQuery -> countrySearchQuery = updatedQuery }
-      )
+                Text(
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally),
+                    text = stringResource(id = Strings.enter_phone_or_email),
+                    style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 24.sp)
+                )
+
+                Spacer(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(32.dp)
+                )
+
+                RegistrationTypeSelector(
+                    modifier = Modifier,
+                    selectedOption = selectedOption,
+                    onSelectionChange = onSelectionChange
+                )
+
+                Spacer(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(32.dp)
+                )
+
+                RegisterInputLayout(
+                    selectedOption = selectedOption,
+                    coroutineScope = coroutineScope,
+                    bottomSheetState = sheetState,
+                    selectedCountry = selectedCountry
+                )
+
+                Text(
+                    modifier = Modifier
+                        .align(Alignment.Start)
+                        .padding(top = 8.dp),
+                    text = stringResource(id = Strings.view_privacy_policy),
+                    style = TextStyle(
+                        fontWeight = FontWeight.Normal, fontSize = 12.sp
+                    ),
+                    textAlign = TextAlign.Start
+                )
+
+                Button(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 16.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        backgroundColor = Color(0xFF5864f4),
+                        contentColor = Color(0xFFFFFFFF),
+                    ),
+                    shape = RoundedCornerShape(4.dp),
+                    onClick = { },
+                ) {
+                    Text(stringResource(id = Strings.next))
+                }
+            }
+
+            CountryPicker(
+                sheetState = sheetState,
+                backgroundContent = {},
+                onCountrySelected = {
+                    selectedCountry = it
+                    coroutineScope.launch {
+                        sheetState.hide()
+                    }
+                },
+                countryList = registrationViewModel.filteredCountryList?.filter {
+                    it.name.contains(
+                        other = countrySearchQuery,
+                        ignoreCase = true
+                    )
+                },
+                countrySearchQuery = countrySearchQuery,
+                onQueryUpdated = { updatedQuery -> countrySearchQuery = updatedQuery }
+            )
+        }
     }
-  }
 }
 
 @Preview
 @Composable
 fun PreviewRegisterScreen() {
-  DiscordJetpackComposeTheme {
-    // A surface container using the 'background' color from the theme
-    Surface(
-      modifier = Modifier.fillMaxSize(),
-      color = MaterialTheme.colors.background
-    ) {
-      RegisterScreen()
+    DiscordJetpackComposeTheme {
+        // A surface container using the 'background' color from the theme
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colors.background
+        ) {
+            RegisterScreen()
+        }
     }
-  }
 }
