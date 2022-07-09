@@ -53,7 +53,7 @@ fun RegisterInputLayout(
   ) {
 
     AnimatedVisibility(visible = selectedOption == RegistrationType.Phone) {
-      RegistrationTextField(
+      AuthTextField(
         modifier = Modifier
           .width(120.dp)
           .padding(end = 8.dp),
@@ -70,7 +70,7 @@ fun RegisterInputLayout(
       )
     }
 
-    RegistrationTextField(
+    AuthTextField(
       modifier = Modifier
         .fillMaxWidth(),
       value = textFieldValue,
