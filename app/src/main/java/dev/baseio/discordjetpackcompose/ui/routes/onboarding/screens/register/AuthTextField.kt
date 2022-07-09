@@ -10,14 +10,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
-import dev.baseio.discordjetpackcompose.R.color
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.ui.theme.contentColorFor
 
 @Composable
-fun RegistrationTextField(
+fun AuthTextField(
   modifier: Modifier = Modifier,
   onClick: () -> Unit = {},
   value: String,
