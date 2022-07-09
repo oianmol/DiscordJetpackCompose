@@ -17,5 +17,6 @@ data class ServerEntity(
     val thumbnailUri: String = Constants.MMLogoUrl,
     val selectedAnimationUri: String? = null,
     val posterUri: String? = null,
-    val channels: List<ChannelEntity> = emptyList()
+    val channels: List<ChannelEntity> = emptyList(),
+    val allChannelsUnreadCount: Int = 0,
 )

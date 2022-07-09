@@ -55,6 +55,7 @@ fun ServerIconSelector(
             ServerIconSelectorItem(id = index,
                 iconUri = serverList[index].thumbnailUri,
                 isSelected = currentSelectedItem == index,
+                unreadIndicatorCount = serverList[index].allChannelsUnreadCount,
                 onClick = { onSelectedItemChanged(index) })
         }
         item {

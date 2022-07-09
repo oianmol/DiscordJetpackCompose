@@ -45,6 +45,7 @@ fun ServerIconSelectorItem(
     iconColor: Color = MaterialTheme.colors.onSurface.copy(alpha = ContentAlpha.medium),
     iconStartPadding: Dp = ServerIconSelectorItem.iconStartPadding,
     indicatorWidth: Dp = iconStartPadding,
+    unreadIndicatorCount: Int? = null,
     onClick: () -> Unit
 ) {
     key(id) {
@@ -76,24 +77,27 @@ fun ServerIconSelectorItem(
             } else {
                 MaterialTheme.colors.surface
             }
-            Surface(
-                modifier = Modifier
-                    .padding(start = iconStartPadding)
-                    .fillMaxWidth(0.65f)
-                    .aspectRatio(1f),
-                shape = RoundedCornerShape(cardShapeSize),
-                elevation = 8.dp,
-                color = cardBgColor,
-                onClick = onClick,
-            ) {
-                AsyncImage(
-                    modifier = Modifier.padding(iconId?.let { 12.dp } ?: 0.dp),
-                    model = ImageRequest.Builder(LocalContext.current).data(iconId ?: iconUri)
-                        .crossfade(true).placeholder(R.drawable.ic_refresh).build(),
-                    contentDescription = null,
-                    colorFilter = iconId?.let { ColorFilter.tint(color = iconColor) },
-                    contentScale = ContentScale.Crop,
-                )
+            Box(contentAlignment = Alignment.BottomEnd) {
+                Surface(
+                    modifier = Modifier
+                        .padding(start = iconStartPadding)
+                        .fillMaxWidth(0.65f)
+                        .aspectRatio(1f),
+                    shape = RoundedCornerShape(cardShapeSize),
+                    elevation = 8.dp,
+                    color = cardBgColor,
+                    onClick = onClick,
+                ) {
+                    AsyncImage(
+                        modifier = Modifier.padding(iconId?.let { 12.dp } ?: 0.dp),
+                        model = ImageRequest.Builder(LocalContext.current).data(iconId ?: iconUri)
+                            .crossfade(true).placeholder(R.drawable.ic_refresh).build(),
+                        contentDescription = null,
+                        colorFilter = iconId?.let { ColorFilter.tint(color = iconColor) },
+                        contentScale = ContentScale.Crop,
+                    )
+                }
+                CountIndicator(count = unreadIndicatorCount)
             }
         }
     }

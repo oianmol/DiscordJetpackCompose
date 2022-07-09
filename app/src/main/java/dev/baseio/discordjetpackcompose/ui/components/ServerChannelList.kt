@@ -31,7 +31,7 @@ fun ServerChannelList(
             when (selectedScreenId) {
                 ServerIconSelector.DMScreenId -> DirectMessageList(
                     modifier = Modifier.fillMaxSize(),
-                    openNewDMScreen = {},
+                    openNewDMScreen = {} , // todo: Not implemented
                     openSearchScreen = {},
                     onItemSelection = onItemSelection,
                     chats = chatUserList

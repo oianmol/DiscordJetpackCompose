@@ -93,13 +93,14 @@ private fun ServerDrawerPreview() {
                         name = "Test Server 1",
                         selectedAnimationUri = null,
                         posterUri = null,
-                        channels = listOf()
+                        channels = listOf(),
+                        allChannelsUnreadCount = 179
                     ), ServerEntity(
                         id = "2",
                         name = "Test Server 2",
                         selectedAnimationUri = null,
                         posterUri = null,
-                        channels = listOf()
+                        channels = listOf(),
                     )
                 )
             )
