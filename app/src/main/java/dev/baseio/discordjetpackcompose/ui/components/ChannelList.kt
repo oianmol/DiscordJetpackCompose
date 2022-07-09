@@ -5,12 +5,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
-fun ChannelList(modifier: Modifier = Modifier) {
+fun ChannelList(
+    modifier: Modifier = Modifier,
+    onItemSelection: () -> Unit,
+) {
 
 }
 
 @Preview(showSystemUi = true)
 @Composable
 private fun ChannelScreenPreview() {
-    ChannelList()
+    ChannelList(
+        onItemSelection = {}
+    )
 }

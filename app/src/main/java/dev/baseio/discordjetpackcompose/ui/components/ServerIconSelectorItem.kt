@@ -49,7 +49,7 @@ fun ServerIconSelectorItem(
 ) {
     key(id) {
         val cardShapeSize by animateIntAsState(targetValue = if (isSelected) 35 else 50)
-        val indicatorHeight by animateDpAsState(targetValue = if (isSelected) 32.dp else if (id != ServerIconSelector.FirstItemId) 9.dp else 0.dp)
+        val indicatorHeight by animateDpAsState(targetValue = if (isSelected) 32.dp else if (id != ServerIconSelector.DMScreenId) 9.dp else 0.dp)
 
         Box(
             modifier = Modifier
@@ -71,7 +71,7 @@ fun ServerIconSelectorItem(
                 )
             }
 
-            val cardBgColor = if (id == ServerIconSelector.FirstItemId && isSelected) {
+            val cardBgColor = if (id == ServerIconSelector.DMScreenId && isSelected) {
                 MaterialTheme.colors.primary
             } else {
                 MaterialTheme.colors.surface

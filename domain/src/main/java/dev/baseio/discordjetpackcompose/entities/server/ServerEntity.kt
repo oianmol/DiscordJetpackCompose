@@ -1,5 +1,7 @@
 package dev.baseio.discordjetpackcompose.entities.server
 
+import dev.baseio.discordjetpackcompose.utils.Constants
+
 /**
  * Model class depicting a Discord server.
  * @param id Unique identifier for the server
@@ -12,7 +14,7 @@ package dev.baseio.discordjetpackcompose.entities.server
 data class ServerEntity(
     val id: String,
     val name: String,
-    val thumbnailUri: String = "https://upload.wikimedia.org/wikipedia/commons/0/00/Mutual_Mobile_Logo.png",
+    val thumbnailUri: String = Constants.MMLogoUrl,
     val selectedAnimationUri: String? = null,
     val posterUri: String? = null,
     val channels: List<ChannelEntity> = emptyList()

@@ -33,11 +33,15 @@ val Typography = Typography(
 
 val DirectMessageListTypography = Typography(
     defaultFontFamily = UniSansFontFamily,
-    h6 = TextStyle(
+    h5 = TextStyle(
         fontWeight = FontWeight.Bold,
+        fontSize = 16.sp
+    ),
+    h6 = TextStyle(
+        fontWeight = FontWeight.SemiBold,
         fontSize = 16.sp
     ),
     body1 = TextStyle(
         fontSize = 14.sp
-    )
+    ),
 )

@@ -1,5 +1,6 @@
 package dev.baseio.discordjetpackcompose.ui.components
 
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -15,7 +16,7 @@ import dev.baseio.discordjetpackcompose.R
 import dev.baseio.discordjetpackcompose.entities.server.ServerEntity
 
 object ServerIconSelector {
-    const val FirstItemId = -1
+    const val DMScreenId = -1
 }
 
 @Composable
@@ -27,15 +28,17 @@ fun ServerIconSelector(
     onAddButtonClick: () -> Unit,
 ) {
     LazyColumn(
-        modifier = modifier.padding(end = 4.dp, top = 8.dp),
+        modifier = modifier
+            .fillMaxHeight()
+            .padding(end = 4.dp, top = 8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         item {
             ServerIconSelectorItem(
-                id = ServerIconSelector.FirstItemId,
+                id = ServerIconSelector.DMScreenId,
                 iconId = R.drawable.ic_chat_bubble,
-                isSelected = currentSelectedItem == ServerIconSelector.FirstItemId,
-                onClick = { onSelectedItemChanged(ServerIconSelector.FirstItemId) },
+                isSelected = currentSelectedItem == ServerIconSelector.DMScreenId,
+                onClick = { onSelectedItemChanged(ServerIconSelector.DMScreenId) },
             )
         }
         item {
@@ -86,7 +89,7 @@ private fun ServerIconSelectorPreview() {
             )
         ),
         onAddButtonClick = {},
-        currentSelectedItem = ServerIconSelector.FirstItemId,
+        currentSelectedItem = ServerIconSelector.DMScreenId,
         onSelectedItemChanged = {}
     )
 }

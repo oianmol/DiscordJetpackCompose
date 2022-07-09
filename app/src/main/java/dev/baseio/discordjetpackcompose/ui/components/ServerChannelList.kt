@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import dev.baseio.discordjetpackcompose.entities.ChatUserEntity
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
@@ -18,6 +19,8 @@ fun ServerChannelList(
     modifier: Modifier = Modifier,
     cornerSize: Dp = 8.dp,
     serverId: Int,
+    chatUserList: List<ChatUserEntity>,
+    onItemSelection: () -> Unit,
 ) {
     Surface(
         modifier = modifier.fillMaxHeight(),
@@ -26,12 +29,17 @@ fun ServerChannelList(
     ) {
         AnimatedContent(targetState = serverId) { selectedScreenId ->
             when (selectedScreenId) {
-                ServerIconSelector.FirstItemId -> DirectMessageList(
+                ServerIconSelector.DMScreenId -> DirectMessageList(
                     modifier = Modifier.fillMaxSize(),
                     openNewDMScreen = {},
                     openSearchScreen = {},
+                    onItemSelection = onItemSelection,
+                    chats = chatUserList
                 )
-                else -> ChannelList(modifier = Modifier.fillMaxSize())
+                else -> ChannelList(
+                    modifier = Modifier.fillMaxSize(),
+                    onItemSelection = onItemSelection
+                )
             }
         }
     }
@@ -40,5 +48,9 @@ fun ServerChannelList(
 @Preview(showSystemUi = true)
 @Composable
 private fun ServerChannelListPreview() {
-    ServerChannelList(serverId = ServerIconSelector.FirstItemId)
+    ServerChannelList(
+        serverId = ServerIconSelector.DMScreenId,
+        onItemSelection = {},
+        chatUserList = emptyList()
+    )
 }
