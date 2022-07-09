@@ -4,6 +4,13 @@
     <string name="country_picker_preview_text">Click anywhere to open the country picker…</string>
     <string name="welcome_to_discord">Welcome to Discord</string>
     <string name="welcome_message">Join over 100 million people who use Discord to talk with communities and friends</string>
+    <string name="enter_phone_or_email">Enter phone or email</string>
+    <string name="view_privacy_policy">View our Privacy Policy</string>
+    <string name="next">Next</string>
+    <string name="country_code">Country Code</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="phone">Phone</string>
+    <string name="email">Email</string>
     <string name="register">Register</string>
     <string name="login">Login</string>
 </resources>
