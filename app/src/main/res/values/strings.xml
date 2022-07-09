@@ -18,4 +18,5 @@
     <string name="login">Login</string>
     <string name="welcome_back">Welcome Back!</string>
     <string name="login_excited">We\'re so excited to see you again!</string>
+    <string name="email_or_phone">Email or Phone Number</string>
 </resources>

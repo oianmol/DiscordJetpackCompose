@@ -48,30 +48,37 @@ fun LoginScreen(composeNavigator: ComposeNavigator) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             CenteredTitleSubtitle(title = R.string.welcome_back, subtitle = R.string.login_excited)
-            Spacer(modifier = Modifier.height(12.dp))
-            AuthTextField(
-                modifier = Modifier
-                    .height(55.dp)
-                    .fillMaxWidth(0.75f),
-                value = emailField,
-                onValueChange = {
-                    emailField = it
-                },
-                label = stringResource(id = Strings.enter_phone_or_email),
-                focusRequester = keyboardFocusRequester
-            )
+            Spacer(modifier = Modifier.height(16.dp))
+            Column(
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 12.dp)) {
+                AuthTextField(
+                    modifier = Modifier
+                        .height(55.dp)
+                        .fillMaxWidth(),
+                    value = emailField,
+                    onValueChange = {
+                        emailField = it
+                    },
+                    label = stringResource(id = Strings.email_or_phone),
+                    focusRequester = keyboardFocusRequester
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+                AuthTextField(
+                    modifier = Modifier
+                        .height(55.dp)
+                        .fillMaxWidth(),
+                    value = passwordField, onValueChange = {
+                        passwordField = it
+                    }, label = stringResource(id = Strings.password)
+                )
+                LinkText(Strings.forgot_password)
+                Spacer(modifier = Modifier.height(4.dp))
+                LinkText(Strings.use_pass_manager)
+            }
+
             Spacer(modifier = Modifier.height(8.dp))
-            AuthTextField(
-                modifier = Modifier
-                    .height(55.dp)
-                    .fillMaxWidth(0.75f),
-                value = passwordField, onValueChange = {
-                    passwordField = it
-                }, label = stringResource(id = Strings.password)
-            )
-            LinkText(Strings.forgot_password)
-            Spacer(modifier = Modifier.height(8.dp))
-            LinkText(Strings.use_pass_manager)
 
             Button(
                 onClick = { },
