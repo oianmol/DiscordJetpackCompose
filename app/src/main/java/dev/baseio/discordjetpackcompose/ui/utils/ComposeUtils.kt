@@ -1,7 +1,9 @@
 package dev.baseio.discordjetpackcompose.ui.utils
 
+import android.annotation.SuppressLint
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Indication
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.lazy.LazyListState
@@ -85,10 +87,14 @@ fun Modifier.simpleVerticalScrollbar(
     }
 }
 
-fun Modifier.clickableWithRipple(onClick: () -> Unit) = composed {
-    clickable(
-        interactionSource = remember { MutableInteractionSource() },
-        indication = rememberRipple(),
-        onClick = onClick
-    )
-}
+@SuppressLint("ComposableModifierFactory")
+@Composable
+fun Modifier.clickableWithRipple(
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    indication: Indication? = rememberRipple(),
+    onClick: () -> Unit
+) = clickable(
+    interactionSource = interactionSource,
+    indication = indication,
+    onClick = onClick
+)

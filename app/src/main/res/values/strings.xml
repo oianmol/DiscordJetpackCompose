@@ -8,4 +8,5 @@
     <string name="login">Login</string>
     <string name="dm_list_screen_title">Direct Messages</string>
     <string name="dm_list_screen_search_hint">Find or start a conversation</string>
+    <string name="channel_list_header_btn_txt">Invite Members</string>
 </resources>

@@ -16,15 +16,15 @@ import dev.baseio.discordjetpackcompose.R
 import dev.baseio.discordjetpackcompose.entities.server.ServerEntity
 
 object ServerIconSelector {
-    const val DMScreenId = -1
+    const val DMScreenId = "-1"
 }
 
 @Composable
 fun ServerIconSelector(
     modifier: Modifier = Modifier,
     serverList: List<ServerEntity>,
-    currentSelectedItem: Int,
-    onSelectedItemChanged: (Int) -> Unit,
+    currentSelectedItem: String,
+    onSelectedItemChanged: (String) -> Unit,
     onAddButtonClick: () -> Unit,
 ) {
     LazyColumn(
@@ -52,11 +52,11 @@ fun ServerIconSelector(
             )
         }
         items(serverList.size) { index ->
-            ServerIconSelectorItem(id = index,
+            ServerIconSelectorItem(id = serverList[index].id,
                 iconUri = serverList[index].thumbnailUri,
-                isSelected = currentSelectedItem == index,
+                isSelected = currentSelectedItem == serverList[index].id,
                 unreadIndicatorCount = serverList[index].allChannelsUnreadCount,
-                onClick = { onSelectedItemChanged(index) })
+                onClick = { onSelectedItemChanged(serverList[index].id) })
         }
         item {
             ServerIconSelectorItem(
@@ -80,13 +80,15 @@ private fun ServerIconSelectorPreview() {
                 name = "Test Server 1",
                 selectedAnimationUri = null,
                 posterUri = null,
-                channels = listOf()
+                channels = listOf(),
+                hasNitroSubscription = true
             ), ServerEntity(
                 id = "2",
                 name = "Test Server 2",
                 selectedAnimationUri = null,
                 posterUri = null,
-                channels = listOf()
+                channels = listOf(),
+                hasNitroSubscription = false
             )
         ),
         onAddButtonClick = {},

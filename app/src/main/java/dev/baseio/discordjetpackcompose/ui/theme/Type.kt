@@ -1,6 +1,8 @@
 package dev.baseio.discordjetpackcompose.ui.theme
 
 import androidx.compose.material.Typography
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -42,6 +44,26 @@ val DirectMessageListTypography = Typography(
         fontSize = 16.sp
     ),
     body1 = TextStyle(
+        fontSize = 14.sp
+    ),
+    body2 = TextStyle(
+        fontSize = 12.sp
+    ),
+)
+
+val ChannelListTypography = Typography(
+    defaultFontFamily = UniSansFontFamily,
+    h1 = TextStyle(
+        fontWeight = FontWeight.Black,
+        fontSize = 20.sp,
+        shadow = Shadow(
+            offset = Offset(x = 2f, y = 4f),
+            blurRadius = 4f
+        ),
+        letterSpacing = 2.sp
+    ),
+    button = TextStyle(
+        fontWeight = FontWeight.SemiBold,
         fontSize = 14.sp
     ),
 )

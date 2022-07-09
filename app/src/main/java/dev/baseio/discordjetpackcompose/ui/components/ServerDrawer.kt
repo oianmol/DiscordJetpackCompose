@@ -21,6 +21,7 @@ import dev.baseio.discordjetpackcompose.entities.ChatUserEntity
 import dev.baseio.discordjetpackcompose.entities.server.ServerEntity
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordJetpackComposeTheme
 import dev.baseio.discordjetpackcompose.ui.utils.WindowInfo
+import dev.baseio.discordjetpackcompose.ui.utils.getSampleServer
 import dev.baseio.discordjetpackcompose.ui.utils.rememberWindowInfo
 
 @Composable
@@ -88,20 +89,8 @@ private fun ServerDrawerPreview() {
                     }
                 },
                 serverList = listOf(
-                    ServerEntity(
-                        id = "1",
-                        name = "Test Server 1",
-                        selectedAnimationUri = null,
-                        posterUri = null,
-                        channels = listOf(),
-                        allChannelsUnreadCount = 179
-                    ), ServerEntity(
-                        id = "2",
-                        name = "Test Server 2",
-                        selectedAnimationUri = null,
-                        posterUri = null,
-                        channels = listOf(),
-                    )
+                    getSampleServer(serverId = "1"),
+                    getSampleServer(serverId = "2"),
                 )
             )
         }

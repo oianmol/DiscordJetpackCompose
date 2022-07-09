@@ -10,6 +10,8 @@ import dev.baseio.discordjetpackcompose.utils.Constants
  * @param selectedAnimationUri URL of the animation which will be played whenever this server is selected in the list (Optional)
  * @param posterUri URL of the large poster/image to be displayed when this server is selected (Optional)
  * @param channels List of channels ([ChannelEntity]) this server contains
+ * @param allChannelsUnreadCount Total unread message count of all the channels (Optional)
+ * @param hasNitroSubscription Whether the channel has purchased the Discord Nitro subscription (this will lead to a special icon being displayed before the channel name)
  * */
 data class ServerEntity(
     val id: String,
@@ -18,5 +20,6 @@ data class ServerEntity(
     val selectedAnimationUri: String? = null,
     val posterUri: String? = null,
     val channels: List<ChannelEntity> = emptyList(),
-    val allChannelsUnreadCount: Int = 0,
+    val allChannelsUnreadCount: Int = channels.sumOf { it.unreadCount },
+    val hasNitroSubscription: Boolean
 )

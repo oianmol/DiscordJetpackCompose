@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ContentAlpha
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -40,7 +41,7 @@ fun DirectMessageListItem(
             .padding(top = 4.dp)
             .fillMaxWidth()
             .clip(RoundedCornerShape(4.dp))
-            .background(if (isSelected) MaterialTheme.colors.onSurface.copy(alpha = 0.2f) else Color.Transparent)
+            .background(if (isSelected) MaterialTheme.colors.onSurface.copy(alpha = 0.1f) else Color.Transparent)
             .clickableWithRipple(onClick = onItemClick)
         ,
         verticalAlignment = Alignment.CenterVertically
@@ -73,14 +74,15 @@ fun DirectMessageListItem(
                 overflow = TextOverflow.Ellipsis
             )
             AnimatedVisibility(
-                modifier = Modifier.padding(top = 4.dp),
+                modifier = Modifier.padding(top = 2.dp),
                 visible = chatUserEntity.currentStatus != null
             ) {
                 Text(
                     text = chatUserEntity.currentStatus.orEmpty(),
-                    style = DirectMessageListTypography.body1,
+                    style = DirectMessageListTypography.body2,
                     maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
+                    overflow = TextOverflow.Ellipsis,
+                    color = MaterialTheme.colors.onSurface.copy(alpha = ContentAlpha.disabled)
                 )
             }
         }

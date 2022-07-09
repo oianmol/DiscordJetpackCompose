@@ -25,12 +25,19 @@ import dev.baseio.discordjetpackcompose.ui.theme.DiscordJetpackComposeTheme
 
 @Composable
 fun CountIndicator(
-    count: Int?, textSize: TextUnit = 8.sp
+    modifier: Modifier = Modifier,
+    count: Int?,
+    showCardBackground: Boolean = true,
+    textSize: TextUnit = 8.sp
 ) {
-    AnimatedVisibility(visible = count != null && count > 0) {
+    AnimatedVisibility(
+        modifier = modifier,
+        visible = count != null && count > 0
+    ) {
         val textSizeInDp = with(LocalDensity.current) { textSize.toDp() }
         Surface(
             shape = CircleShape,
+            color = if (showCardBackground) MaterialTheme.colors.surface else Color.Transparent
         ) {
             Box(
                 modifier = Modifier

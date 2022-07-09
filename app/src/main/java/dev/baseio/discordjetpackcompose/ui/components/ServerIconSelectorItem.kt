@@ -37,7 +37,7 @@ object ServerIconSelectorItem {
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ServerIconSelectorItem(
-    id: Int? = null,
+    id: String? = null,
     @DrawableRes iconId: Int? = null,
     iconUri: String? = null,
     isSelected: Boolean,
