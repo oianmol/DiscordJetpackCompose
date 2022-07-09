@@ -14,7 +14,6 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
@@ -34,6 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.baseio.discordjetpackcompose.R
 import dev.baseio.discordjetpackcompose.entities.CountryEntity
+import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordJetpackComposeTheme
 import dev.baseio.discordjetpackcompose.ui.utils.clickableWithRipple
 import dev.baseio.discordjetpackcompose.ui.utils.simpleVerticalScrollbar
@@ -66,7 +66,7 @@ fun CountryPicker(
                         state = lazyListState,
                         modifier = Modifier.simpleVerticalScrollbar(
                             state = lazyListState,
-                            color = MaterialTheme.colors.onSurface.copy(alpha = 0.5f)
+                            color = DiscordColorProvider.colors.onSurface.copy(alpha = 0.5f)
                         ),
                     ) {
                         countryList?.let { nnCountryList ->

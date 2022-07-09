@@ -6,14 +6,12 @@ import androidx.activity.compose.setContent
 import androidx.compose.runtime.LaunchedEffect
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.insets.ProvideWindowInsets
 import dagger.hilt.android.AndroidEntryPoint
 import dev.baseio.discordjetpackcompose.navigator.ComposeNavigator
 import dev.baseio.discordjetpackcompose.navigator.DiscordRoute
 import dev.baseio.discordjetpackcompose.ui.routes.onboarding.onBoardingRoute
-import dev.baseio.discordjetpackcompose.ui.routes.onboarding.screens.WelcomeScreen
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordJetpackComposeTheme
 import javax.inject.Inject
 
