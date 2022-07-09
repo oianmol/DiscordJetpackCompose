@@ -26,6 +26,8 @@ private val LightColorPalette = DiscordColorPalette(
     appBarColor = design_default_app_bar_color_light,
     discordBackgroundOne = design_default_app_bar_color_light,
     linkColor = design_default_link_color,
+    tabsBackgroundColor = design_default_color_secondary_background,
+    tabSelectedColor = design_default_tab_selected_color,
     isLight = true
 )
 
@@ -47,6 +49,8 @@ private val DarkColorPalette = DiscordColorPalette(
     appBarColor = design_default_app_bar_color_dark,
     discordBackgroundOne = design_default_app_bar_color_dark,
     linkColor = design_default_link_color,
+    tabsBackgroundColor = Color(0xFF2a2b2f),
+    tabSelectedColor = Color(0xFF4f535c),
     isLight = false
 )
 
@@ -116,8 +120,10 @@ class DiscordColorPalette(
     onSurface: Color = Color.White,
     onError: Color = Color.Black,
     appBarColor: Color,
-    discordBackgroundOne:Color,
-    linkColor:Color,
+    discordBackgroundOne: Color,
+    linkColor: Color,
+    tabsBackgroundColor: Color,
+    tabSelectedColor:Color,
     isLight: Boolean = false
 ) {
     var primary by mutableStateOf(primary, structuralEqualityPolicy())
@@ -156,7 +162,10 @@ class DiscordColorPalette(
         internal set
     var linkColor by mutableStateOf(linkColor, structuralEqualityPolicy())
         internal set
-
+    var tabsBackgroundColor by mutableStateOf(tabsBackgroundColor, structuralEqualityPolicy())
+        internal set
+    var tabSelectedColor by mutableStateOf(tabSelectedColor, structuralEqualityPolicy())
+        internal set
 
     fun update(other: DiscordColorPalette) {
         primary = other.primary
@@ -177,6 +186,8 @@ class DiscordColorPalette(
         appBarColor = other.appBarColor
         discordBackgroundOne = other.discordBackgroundOne
         linkColor = other.linkColor
+        tabsBackgroundColor = other.tabsBackgroundColor
+        tabSelectedColor = other.tabSelectedColor
     }
 }
 

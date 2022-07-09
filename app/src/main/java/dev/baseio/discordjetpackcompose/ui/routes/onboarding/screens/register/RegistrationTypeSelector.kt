@@ -19,63 +19,64 @@ import dev.baseio.discordjetpackcompose.ui.utils.Strings
 
 @Composable
 fun RegistrationTypeSelector(
-  modifier: Modifier,
-  selectedOption: RegistrationType,
-  onSelectionChange: (RegistrationType) -> Unit
+    modifier: Modifier,
+    selectedOption: RegistrationType,
+    onSelectionChange: (RegistrationType) -> Unit
 ) {
-  Row(
-    modifier = modifier
-      .height(32.dp)
-      .background(
-        shape = RoundedCornerShape(4.dp), color = DiscordColorProvider.colors.background
-      )
-      .fillMaxWidth()
-  ) {
-    Button(
-      modifier = Modifier
-        .weight(1f)
-        .fillMaxHeight(),
-      colors = ButtonDefaults.buttonColors(
-        backgroundColor = bgColor(selectedOption == RegistrationType.Phone),
-        contentColor = contentColor(selectedOption == RegistrationType.Phone)
-      ),
-      onClick = { onSelectionChange(RegistrationType.Phone) },
+    Row(
+        modifier = modifier
+          .height(32.dp)
+          .background(
+            color = DiscordColorProvider.colors.tabsBackgroundColor,
+            shape = RoundedCornerShape(4.dp)
+          )
+          .fillMaxWidth()
     ) {
-      Text(stringResource(id = Strings.phone))
-    }
+        Button(
+            modifier = Modifier
+              .weight(1f)
+              .fillMaxHeight(),
+            colors = ButtonDefaults.buttonColors(
+                backgroundColor = bgColor(selectedOption == RegistrationType.Phone),
+                contentColor = contentColor(selectedOption == RegistrationType.Phone)
+            ),
+            onClick = { onSelectionChange(RegistrationType.Phone) },
+        ) {
+            Text(stringResource(id = Strings.phone))
+        }
 
-    Button(
-      modifier = Modifier
-        .weight(1f)
-        .fillMaxHeight(),
-      colors = ButtonDefaults.buttonColors(
-        backgroundColor = bgColor(selected = selectedOption == RegistrationType.Email),
-        contentColor = contentColor(selected = selectedOption == RegistrationType.Email)
-      ),
-      onClick = { onSelectionChange(RegistrationType.Email) },
-    ) {
-      Text(stringResource(id = Strings.email))
+        Button(
+            modifier = Modifier
+              .weight(1f)
+              .fillMaxHeight(),
+            colors = ButtonDefaults.buttonColors(
+                backgroundColor = bgColor(selected = selectedOption == RegistrationType.Email),
+                contentColor = contentColor(selected = selectedOption == RegistrationType.Email)
+            ),
+            onClick = { onSelectionChange(RegistrationType.Email) },
+        ) {
+            Text(stringResource(id = Strings.email))
+        }
     }
-  }
 }
 
 @Composable
-private fun contentColor(selected:Boolean) =
-  if (selected) {
-    Color(0xFFFFFFFF)
-  } else {
-    Color(0xFF55555d)
-  }
+private fun contentColor(selected: Boolean) =
+    if (selected) {
+        Color(0xFFFFFFFF)
+    } else {
+        Color(0xFF55555d)
+    }
 
 @Composable
-private fun bgColor(selected:Boolean) =
-  if (selected) {
-    Color(0xFF4f535c)
-  } else {
-    Color(0xFF2a2b2f)
-  }
+private fun bgColor(selected: Boolean) =
+    if (selected) {
+        DiscordColorProvider.colors.tabSelectedColor
+    } else {
+        DiscordColorProvider.colors.tabsBackgroundColor
+    }
 
 sealed class RegistrationType {
-  object Phone : RegistrationType()
-  object Email : RegistrationType()
+    object Phone : RegistrationType()
+    object Email : RegistrationType()
 }
