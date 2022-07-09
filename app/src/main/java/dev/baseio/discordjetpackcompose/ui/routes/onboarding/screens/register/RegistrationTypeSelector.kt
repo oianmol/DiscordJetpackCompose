@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.MaterialTheme
+import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -27,7 +27,7 @@ fun RegistrationTypeSelector(
     modifier = modifier
       .height(32.dp)
       .background(
-        shape = RoundedCornerShape(4.dp), color = MaterialTheme.colors.background
+        shape = RoundedCornerShape(4.dp), color = DiscordColorProvider.colors.background
       )
       .fillMaxWidth()
   ) {

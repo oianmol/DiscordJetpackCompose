@@ -12,7 +12,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.MaterialTheme
+import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import androidx.compose.material.ModalBottomSheetValue.Hidden
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -62,12 +62,12 @@ fun RegisterScreen(
 
     DiscordScaffold(
         navigator = composeNavigator,
-        scaffoldState = scaffoldState
+        scaffoldState = scaffoldState,
+        backgroundColor = DiscordColorProvider.colors.discordBackgroundOne,
     ) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colors.background)
         ) {
             Column(
                 modifier = Modifier.padding(16.dp)
@@ -111,7 +111,9 @@ fun RegisterScreen(
                         .padding(top = 8.dp),
                     text = stringResource(id = Strings.view_privacy_policy),
                     style = TextStyle(
-                        fontWeight = FontWeight.Normal, fontSize = 12.sp
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 12.sp,
+                        color = DiscordColorProvider.colors.linkColor
                     ),
                     textAlign = TextAlign.Start
                 )
@@ -160,7 +162,7 @@ fun PreviewRegisterScreen() {
         // A surface container using the 'background' color from the theme
         Surface(
             modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colors.background
+            color = DiscordColorProvider.colors.background
         ) {
             RegisterScreen()
         }

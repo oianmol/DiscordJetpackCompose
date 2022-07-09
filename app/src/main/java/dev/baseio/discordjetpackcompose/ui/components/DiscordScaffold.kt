@@ -11,13 +11,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.statusBarsPadding
 import dev.baseio.discordjetpackcompose.navigator.ComposeNavigator
+import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
+import dev.baseio.discordjetpackcompose.ui.theme.contentColorFor
 
 @Composable
 fun DiscordScaffold(
     scaffoldState: ScaffoldState,
     navigator: ComposeNavigator? = null,
-    backgroundColor: Color = MaterialTheme.colors.background,
-    contentColor: Color = MaterialTheme.colors.contentColorFor(MaterialTheme.colors.background),
+    backgroundColor: Color = DiscordColorProvider.colors.background,
+    contentColor: Color = DiscordColorProvider.colors.contentColorFor(DiscordColorProvider.colors.background),
     topAppBar: @Composable () -> Unit = {
         DiscordAppBar(
             navigationIcon = {

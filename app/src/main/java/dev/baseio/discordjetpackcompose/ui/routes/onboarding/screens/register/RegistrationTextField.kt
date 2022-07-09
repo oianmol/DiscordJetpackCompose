@@ -13,6 +13,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import dev.baseio.discordjetpackcompose.R.color
+import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
+import dev.baseio.discordjetpackcompose.ui.theme.contentColorFor
 
 @Composable
 fun RegistrationTextField(
@@ -39,14 +41,14 @@ fun RegistrationTextField(
 }
 
 @Composable
-private fun contentColor() = MaterialTheme.colors.contentColorFor(MaterialTheme.colors.secondary)
+private fun contentColor() = DiscordColorProvider.colors.contentColorFor(DiscordColorProvider.colors.secondaryBackground)
 
 @Composable
 private fun textFieldColors() = TextFieldDefaults.textFieldColors(
   textColor = contentColor(),
   disabledTextColor = contentColor(),
-  backgroundColor = MaterialTheme.colors.secondary,
+  backgroundColor = DiscordColorProvider.colors.secondaryBackground,
   focusedIndicatorColor = Color.Transparent, // hide the indicator
   unfocusedIndicatorColor = Color.Transparent,
-  disabledIndicatorColor = Color.Transparent
+  disabledIndicatorColor = Color.Transparent, placeholderColor = contentColor()
 )

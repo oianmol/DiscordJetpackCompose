@@ -10,7 +10,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
+import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
@@ -37,12 +37,12 @@ fun SearchBox(currentValue: String, onValueChanged: (String) -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
-            .background(MaterialTheme.colors.onSurface.copy(alpha = 0.05f))
+            .background(DiscordColorProvider.colors.onSurface.copy(alpha = 0.05f))
             .testTag("countryPickerSearchBox"),
         value = currentValue,
         onValueChange = onValueChanged,
         colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = MaterialTheme.colors.onSurface.copy(alpha = 0.05f),
+            backgroundColor = DiscordColorProvider.colors.onSurface.copy(alpha = 0.05f),
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent
         ),
@@ -50,7 +50,7 @@ fun SearchBox(currentValue: String, onValueChanged: (String) -> Unit) {
             Icon(
                 imageVector = Icons.Default.Search,
                 contentDescription = null,
-                tint = MaterialTheme.colors.onSurface.copy(alpha = ContentAlpha.disabled)
+                tint = DiscordColorProvider.colors.onSurface.copy(alpha = ContentAlpha.disabled)
             )
         },
         placeholder = { Text(text = stringResource(id = R.string.country_picker_hint)) },
