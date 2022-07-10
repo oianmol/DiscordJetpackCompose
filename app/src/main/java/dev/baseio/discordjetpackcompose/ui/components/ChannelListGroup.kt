@@ -13,7 +13,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
+import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Campaign
@@ -78,7 +78,7 @@ fun ChannelListGroup(
                 )
                 Text(
                     text = nnCategory.uppercase(),
-                    color = MaterialTheme.colors.onSurface.copy(alpha = 0.5f),
+                    color = DiscordColorProvider.colors.onSurface.copy(alpha = 0.5f),
                     style = ChannelListTypography.button
                 )
             }
@@ -89,7 +89,7 @@ fun ChannelListGroup(
                     mutableStateOf(currentSelectedItemId == currentItem.id)
                 }
                 val itemTint by animateColorAsState(
-                    targetValue = MaterialTheme.colors.onSurface.copy(
+                    targetValue = DiscordColorProvider.colors.onSurface.copy(
                         alpha = if (isItemSelected || currentItem.isUnread) 1f else ContentAlpha.disabled
                     )
                 )
@@ -101,7 +101,7 @@ fun ChannelListGroup(
                             .clip(RoundedCornerShape(8.dp))
                             .background(
                                 if (isItemSelected) {
-                                    MaterialTheme.colors.onSurface.copy(alpha = 0.15f)
+                                    DiscordColorProvider.colors.onSurface.copy(alpha = 0.15f)
                                 } else {
                                     Color.Transparent
                                 }
@@ -143,7 +143,7 @@ fun ChannelListGroup(
                                         topEndPercent = 50, bottomEndPercent = 50
                                     )
                                 )
-                                .background(MaterialTheme.colors.onSurface)
+                                .background(DiscordColorProvider.colors.onSurface)
                         )
                     }
                 }

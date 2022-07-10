@@ -14,7 +14,7 @@ import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
+import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -39,6 +39,7 @@ import com.google.accompanist.insets.navigationBarsPadding
 import dev.baseio.discordjetpackcompose.R
 import dev.baseio.discordjetpackcompose.entities.ChatUserEntity
 import dev.baseio.discordjetpackcompose.ui.theme.DirectMessageListTypography
+import dev.baseio.discordjetpackcompose.ui.theme.contentColorFor
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -68,7 +69,11 @@ fun DirectMessageList(
             }
         }
         val cardElevation by animateDpAsState(targetValue = if (shouldLiftCard) 2.dp else 0.dp)
-        Card(elevation = cardElevation) {
+        Card(
+            elevation = cardElevation,
+            backgroundColor = DiscordColorProvider.colors.secondaryBackground,
+            contentColor = DiscordColorProvider.colors.contentColorFor(DiscordColorProvider.colors.secondaryBackground)
+        ) {
             Column(
                 modifier = Modifier.padding(start = 16.dp)
             ) {
@@ -92,7 +97,7 @@ fun DirectMessageList(
                 Surface(
                     modifier = Modifier.padding(bottom = 16.dp, end = 16.dp),
                     shape = RoundedCornerShape(8.dp),
-                    color = Color.Black.copy(alpha = 0.3f),
+                    color = DiscordColorProvider.colors.background.copy(alpha = 0.3f),
                     onClick = openSearchScreen,
                 ) {
                     Row(
@@ -105,12 +110,12 @@ fun DirectMessageList(
                         Text(
                             text = stringResource(R.string.dm_list_screen_search_hint),
                             style = DirectMessageListTypography.body1,
-                            color = MaterialTheme.colors.onSurface.copy(alpha = 0.5f)
+                            color = DiscordColorProvider.colors.onSurface.copy(alpha = 0.5f)
                         )
                         Icon(
                             imageVector = Icons.Default.Search,
                             contentDescription = null,
-                            tint = MaterialTheme.colors.onSurface.copy(alpha = 0.5f)
+                            tint = DiscordColorProvider.colors.onSurface.copy(alpha = 0.5f)
                         )
                     }
                 }

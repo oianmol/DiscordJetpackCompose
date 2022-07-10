@@ -12,7 +12,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ContentAlpha
-import androidx.compose.material.MaterialTheme
+import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -41,7 +41,7 @@ fun DirectMessageListItem(
             .padding(top = 4.dp)
             .fillMaxWidth()
             .clip(RoundedCornerShape(4.dp))
-            .background(if (isSelected) MaterialTheme.colors.onSurface.copy(alpha = 0.1f) else Color.Transparent)
+            .background(if (isSelected) DiscordColorProvider.colors.onSurface.copy(alpha = 0.1f) else Color.Transparent)
             .clickableWithRipple(onClick = onItemClick)
         ,
         verticalAlignment = Alignment.CenterVertically
@@ -71,7 +71,8 @@ fun DirectMessageListItem(
             Text(
                 text = chatUserEntity.name, style = DirectMessageListTypography.h6,
                 maxLines = 1,
-                overflow = TextOverflow.Ellipsis
+                overflow = TextOverflow.Ellipsis,
+                color = DiscordColorProvider.colors.onSurface
             )
             AnimatedVisibility(
                 modifier = Modifier.padding(top = 2.dp),
@@ -82,7 +83,7 @@ fun DirectMessageListItem(
                     style = DirectMessageListTypography.body2,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
-                    color = MaterialTheme.colors.onSurface.copy(alpha = ContentAlpha.disabled)
+                    color = DiscordColorProvider.colors.onSurface.copy(alpha = ContentAlpha.disabled)
                 )
             }
         }

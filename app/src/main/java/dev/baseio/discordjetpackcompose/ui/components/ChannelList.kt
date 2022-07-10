@@ -27,7 +27,7 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
+import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -207,7 +207,7 @@ private fun ServerInviteButton(onInviteButtonClick: () -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp),
-        color = MaterialTheme.colors.onSurface.copy(alpha = 0.15f),
+        color = DiscordColorProvider.colors.onSurface.copy(alpha = 0.15f),
         shape = RoundedCornerShape(4.dp),
         onClick = onInviteButtonClick,
     ) {

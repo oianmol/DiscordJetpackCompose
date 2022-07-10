@@ -12,7 +12,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.MaterialTheme
+import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -42,7 +42,7 @@ fun ServerIconSelectorItem(
     iconUri: String? = null,
     isSelected: Boolean,
     showIndicator: Boolean = true,
-    iconColor: Color = MaterialTheme.colors.onSurface.copy(alpha = ContentAlpha.medium),
+    iconColor: Color = DiscordColorProvider.colors.onSurface.copy(alpha = ContentAlpha.medium),
     iconStartPadding: Dp = ServerIconSelectorItem.iconStartPadding,
     indicatorWidth: Dp = iconStartPadding,
     unreadIndicatorCount: Int? = null,
@@ -67,15 +67,15 @@ fun ServerIconSelectorItem(
                             )
                         )
                         .size(width = indicatorWidth, height = indicatorHeight)
-                        .background(MaterialTheme.colors.onSurface)
+                        .background(DiscordColorProvider.colors.onSurface)
                         .align(Alignment.CenterStart)
                 )
             }
 
             val cardBgColor = if (id == ServerIconSelector.DMScreenId && isSelected) {
-                MaterialTheme.colors.primary
+                DiscordColorProvider.colors.primary
             } else {
-                MaterialTheme.colors.surface
+                DiscordColorProvider.colors.surface
             }
             Box(contentAlignment = Alignment.BottomEnd) {
                 Surface(
