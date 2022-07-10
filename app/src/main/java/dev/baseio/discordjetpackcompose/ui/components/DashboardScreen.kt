@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import dev.baseio.discordjetpackcompose.entities.ChatUserEntity
+import dev.baseio.discordjetpackcompose.entities.server.ServerEntity
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordJetpackComposeTheme
 import dev.baseio.discordjetpackcompose.ui.utils.getSampleServer
 import kotlin.math.roundToInt
@@ -41,9 +42,16 @@ private enum class DrawerTypes {
     LEFT, RIGHT
 }
 
+private enum class CenterScreenState {
+    LEFT_ANCHORED, CENTER, RIGHT_ANCHORED
+}
+
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun DashboardScreen() {
+fun DashboardScreen(
+    serverList: List<ServerEntity>,
+    chatUserList: List<ChatUserEntity>,
+) {
     val density = LocalDensity.current
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
 
@@ -55,22 +63,22 @@ fun DashboardScreen() {
     val leftEndpointPx by remember(leftEndpointDp) { mutableStateOf(with(density) { leftEndpointDp.toPx() }) }
     val rightEndpointPx by remember(rightEndpointDp) { mutableStateOf(with(density) { rightEndpointDp.toPx() }) }
 
-    // We have 3 states for the center screen (i.e. Left Anchor = 0, Center = 1, Right Anchor = 2)
-    val swipeableState = rememberSwipeableState(initialValue = 2)
+    val swipeableState = rememberSwipeableState(initialValue = CenterScreenState.RIGHT_ANCHORED)
     val anchors = mapOf(
-        leftEndpointPx to 0, screenCenterPx to 1, rightEndpointPx to 2
+        leftEndpointPx to CenterScreenState.LEFT_ANCHORED,
+        screenCenterPx to CenterScreenState.CENTER,
+        rightEndpointPx to CenterScreenState.RIGHT_ANCHORED
     )
 
     val drawerOnTop by remember {
         derivedStateOf {
             when (swipeableState.currentValue) {
-                0 -> DrawerTypes.RIGHT
-                1 -> {
+                CenterScreenState.LEFT_ANCHORED -> DrawerTypes.RIGHT
+                CenterScreenState.CENTER -> {
                     if (swipeableState.direction < 0) DrawerTypes.RIGHT
                     else DrawerTypes.LEFT
                 }
-                2 -> DrawerTypes.LEFT
-                else -> DrawerTypes.LEFT
+                CenterScreenState.RIGHT_ANCHORED -> DrawerTypes.LEFT
             }
         }
     }
@@ -117,31 +125,14 @@ fun DashboardScreen() {
     Box(
         modifier = Modifier.fillMaxSize(),
     ) {
-        ServerDrawer(modifier = leftDrawerModifier, serverList = listOf(
-            getSampleServer(serverId = "1"),
-            getSampleServer(serverId = "2"),
-        ), chatUserList = mutableListOf<ChatUserEntity>().apply {
-            repeat(20) {
-                add(
-                    if (it % 2 == 0) {
-                        ChatUserEntity(
-                            username = "testusername$it",
-                            name = "Test User",
-                            currentStatus = "Studying",
-                            isOnline = false,
-                        )
-                    } else {
-                        ChatUserEntity(
-                            username = "testusername$it",
-                            isOnline = true,
-                        )
-                    }
-                )
-            }
-        }, onAnyItemSelected = { isSelected ->
-            isAnyItemSelectedInServers = isSelected
-            coroutineScope.launch { swipeableState.animateTo(1) }
-        }, onAddButtonClick = {})
+        ServerDrawer(modifier = leftDrawerModifier,
+            serverList = serverList,
+            chatUserList = chatUserList,
+            onAnyItemSelected = { isSelected ->
+                isAnyItemSelectedInServers = isSelected
+                coroutineScope.launch { swipeableState.animateTo(CenterScreenState.CENTER) }
+            },
+            onAddButtonClick = {})
         Box(
             modifier = rightDrawerModifier
                 .fillMaxHeight()
@@ -152,7 +143,7 @@ fun DashboardScreen() {
 
         val centerScreenZIndex by remember {
             derivedStateOf {
-                if (swipeableState.isAnimationRunning || swipeableState.currentValue == 1 || swipeableState.progress.fraction in 0.05f..0.95f) 1f
+                if (swipeableState.isAnimationRunning || swipeableState.currentValue == CenterScreenState.CENTER || swipeableState.progress.fraction in 0.05f..0.95f) 1f
                 else 0.5f
             }
         }
@@ -177,6 +168,27 @@ fun DashboardScreen() {
 @Composable
 private fun DashboardScreenPreview() {
     DiscordJetpackComposeTheme {
-        DashboardScreen()
+        DashboardScreen(serverList = listOf(
+            getSampleServer(serverId = "1"),
+            getSampleServer(serverId = "2"),
+        ), chatUserList = mutableListOf<ChatUserEntity>().apply {
+            repeat(20) {
+                add(
+                    if (it % 2 == 0) {
+                        ChatUserEntity(
+                            username = "testusername$it",
+                            name = "Test User",
+                            currentStatus = "Studying",
+                            isOnline = false,
+                        )
+                    } else {
+                        ChatUserEntity(
+                            username = "testusername$it",
+                            isOnline = true,
+                        )
+                    }
+                )
+            }
+        })
     }
 }
