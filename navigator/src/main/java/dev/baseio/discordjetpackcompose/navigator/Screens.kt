@@ -13,6 +13,7 @@ sealed class DiscordScreen(
     object Welcome : DiscordScreen("welcome")
     object Register : DiscordScreen("register")
     object Login : DiscordScreen("login")
+    object CreateServer : DiscordScreen("createServer")
 }
 
 sealed class DiscordRoute(val name: String) {

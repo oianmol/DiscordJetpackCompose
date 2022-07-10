@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.baseio.discordjetpackcompose.R
 import dev.baseio.discordjetpackcompose.navigator.ComposeNavigator
+import dev.baseio.discordjetpackcompose.navigator.DiscordScreen
 import dev.baseio.discordjetpackcompose.ui.components.DiscordScaffold
 import dev.baseio.discordjetpackcompose.ui.routes.onboarding.commonui.CenteredTitleSubtitle
 import dev.baseio.discordjetpackcompose.ui.routes.onboarding.commonui.DiscordDialog
@@ -83,7 +84,7 @@ fun LoginScreen(composeNavigator: ComposeNavigator) {
             Spacer(modifier = Modifier.height(8.dp))
 
             Button(
-                onClick = { },
+                onClick = { composeNavigator.navigate(DiscordScreen.CreateServer.name) },
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor = colorResource(id = R.color.brand),
                     contentColor = colorResource(
