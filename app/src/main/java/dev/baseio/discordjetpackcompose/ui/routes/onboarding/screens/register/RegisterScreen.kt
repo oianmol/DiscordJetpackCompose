@@ -18,12 +18,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material.rememberScaffoldState
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -35,11 +30,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.baseio.discordjetpackcompose.entities.CountryEntity
 import dev.baseio.discordjetpackcompose.navigator.ComposeNavigator
 import dev.baseio.discordjetpackcompose.ui.components.CountryPicker
 import dev.baseio.discordjetpackcompose.ui.components.DiscordScaffold
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordJetpackComposeTheme
+import dev.baseio.discordjetpackcompose.ui.theme.design_default_color_background
 import dev.baseio.discordjetpackcompose.ui.utils.Strings
 import dev.baseio.discordjetpackcompose.viewmodels.RegistrationViewModel
 import kotlinx.coroutines.launch
@@ -50,6 +47,14 @@ fun RegisterScreen(
     composeNavigator: ComposeNavigator? = null,
     registrationViewModel: RegistrationViewModel = hiltViewModel()
 ) {
+
+    val sysUiController = rememberSystemUiController()
+    val colors = DiscordColorProvider.colors
+    SideEffect {
+        sysUiController.setSystemBarsColor(color = colors.discordBackgroundOne)
+        sysUiController.setNavigationBarColor(color = colors.discordBackgroundOne)
+    }
+
 
     val scaffoldState = rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()

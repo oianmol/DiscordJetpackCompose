@@ -60,12 +60,6 @@ fun DiscordJetpackComposeTheme(
     content: @Composable () -> Unit
 ) {
     val colors = if (isDarkTheme) DarkColorPalette else LightColorPalette
-    val sysUiController = rememberSystemUiController()
-
-    SideEffect {
-        sysUiController.setSystemBarsColor(color = colors.appBarColor)
-        sysUiController.setNavigationBarColor(color = colors.appBarColor)
-    }
 
     ProvideDiscordColors(colors) {
         MaterialTheme(
