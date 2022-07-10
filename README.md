@@ -59,8 +59,6 @@
 ## 🏛️ Architecture
 Discord Compose follows the principles of Clean Architecture with Android Architecture Components.
 
-Architecture Diagram: [Here](https://drive.google.com/file/d/1aLgdk-3PUmAriNR_Z_mPNZBK-IrFpP1G/view?usp=sharing)
-
 <p align="right">[<a href="#top">Back to top</a>]</p>
 
 ## 📷 Screenshots (Dark theme)
