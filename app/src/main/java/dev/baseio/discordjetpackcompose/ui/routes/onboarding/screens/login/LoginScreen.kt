@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.sp
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.baseio.discordjetpackcompose.R
 import dev.baseio.discordjetpackcompose.navigator.ComposeNavigator
-import dev.baseio.discordjetpackcompose.navigator.DiscordScreen
+import dev.baseio.discordjetpackcompose.navigator.DiscordRoute
 import dev.baseio.discordjetpackcompose.ui.components.DiscordScaffold
 import dev.baseio.discordjetpackcompose.ui.routes.onboarding.commonui.CenteredTitleSubtitle
 import dev.baseio.discordjetpackcompose.ui.routes.onboarding.screens.register.AuthTextField
@@ -61,7 +61,8 @@ fun LoginScreen(composeNavigator: ComposeNavigator) {
             Column(
                 Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 12.dp)) {
+                    .padding(horizontal = 12.dp)
+            ) {
                 AuthTextField(
                     modifier = Modifier
                         .height(55.dp)
@@ -90,7 +91,9 @@ fun LoginScreen(composeNavigator: ComposeNavigator) {
             Spacer(modifier = Modifier.height(8.dp))
 
             Button(
-                onClick = { },
+                onClick = {
+                    composeNavigator.navigate(DiscordRoute.Dashboard.name)
+                },
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor = colorResource(id = R.color.brand),
                     contentColor = colorResource(

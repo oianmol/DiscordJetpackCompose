@@ -13,3 +13,6 @@
 */.gradle
 /buildSrc/build
 build
+local.properties
+/.idea/
+/buildSrc/build/

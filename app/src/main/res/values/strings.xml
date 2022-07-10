@@ -4,6 +4,11 @@
     <string name="country_picker_preview_text">Click anywhere to open the country picker…</string>
     <string name="welcome_to_discord">Welcome to Discord</string>
     <string name="welcome_message">Join over 100 million people who use Discord to talk with communities and friends</string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
+    <string name="dm_list_screen_title">Direct Messages</string>
+    <string name="dm_list_screen_search_hint">Find or start a conversation</string>
+    <string name="channel_list_header_btn_txt">Invite Members</string>
     <string name="enter_phone_or_email">Enter phone or email</string>
     <string name="password">Password</string>
     <string name="forgot_password">Forgot your password?</string>
@@ -14,8 +19,6 @@
     <string name="phone_number">Phone Number</string>
     <string name="phone">Phone</string>
     <string name="email">Email</string>
-    <string name="register">Register</string>
-    <string name="login">Login</string>
     <string name="welcome_back">Welcome Back!</string>
     <string name="login_excited">We\'re so excited to see you again!</string>
     <string name="email_or_phone">Email or Phone Number</string>
