@@ -60,12 +60,11 @@ fun ServerDrawer(
         ServerChannelList(
             modifier = Modifier.fillMaxWidth(widthFactor),
             serverId = currentSelectedServer,
-            onItemSelection = {
-                isAnyItemSelectedInCurrentServer = true
-                onAnyItemSelected(true)
-            },
             chatUserList = chatUserList
-        )
+        ) {
+            isAnyItemSelectedInCurrentServer = true
+            onAnyItemSelected(true)
+        }
     }
 }
 

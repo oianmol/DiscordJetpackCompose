@@ -7,7 +7,6 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.with
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -17,7 +16,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.baseio.discordjetpackcompose.entities.ChatUserEntity
 import dev.baseio.discordjetpackcompose.entities.server.ServerEntity
@@ -35,7 +33,6 @@ import dev.baseio.discordjetpackcompose.viewmodels.LandingScreenViewModel
 @Composable
 fun ServerChannelList(
     modifier: Modifier = Modifier,
-    cornerSize: Dp = 8.dp,
     serverId: String,
     chatUserList: List<ChatUserEntity>,
     onItemSelection: () -> Unit,
@@ -50,7 +47,6 @@ fun ServerChannelList(
         modifier = modifier.fillMaxHeight(),
         elevation = 4.dp,
         color = DiscordColorProvider.colors.background,
-        shape = RoundedCornerShape(topStart = cornerSize, topEnd = cornerSize)
     ) {
         AnimatedContent(
             targetState = serverId,
@@ -84,7 +80,6 @@ private fun ServerChannelListPreview() {
     }
     ServerChannelList(
         serverId = ServerIconSelector.DMScreenId,
-        onItemSelection = {},
         chatUserList = emptyList(),
-    )
+    ) {}
 }

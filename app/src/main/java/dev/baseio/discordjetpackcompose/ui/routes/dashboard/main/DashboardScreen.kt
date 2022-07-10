@@ -14,13 +14,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FractionalThreshold
 import androidx.compose.material.rememberSwipeableState
 import androidx.compose.material.swipeable
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -30,10 +24,12 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.baseio.discordjetpackcompose.entities.ChatUserEntity
 import dev.baseio.discordjetpackcompose.entities.server.ServerEntity
 import dev.baseio.discordjetpackcompose.navigator.ComposeNavigator
 import dev.baseio.discordjetpackcompose.ui.components.ServerDrawer
+import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.ui.utils.getSampleServer
 import kotlin.math.roundToInt
 import kotlinx.coroutines.launch
@@ -74,6 +70,14 @@ fun DashboardScreen(
     },
     composeNavigator: ComposeNavigator
 ) {
+
+    val sysUiController = rememberSystemUiController()
+    val colors = DiscordColorProvider.colors
+    SideEffect {
+        sysUiController.setSystemBarsColor(color = colors.background)
+        sysUiController.setNavigationBarColor(color = colors.background)
+    }
+
     val density = LocalDensity.current
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
 
