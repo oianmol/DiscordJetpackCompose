@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Divider
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -67,6 +68,7 @@ fun DiscordDialog(
                             .padding(bottom = 16.dp, top = 10.dp)
                             .padding(horizontal = 16.dp)
                     )
+                    Divider(color = Color.LightGray, thickness = 0.5.dp)
                     Text(
                         text = stringResource(id = subTitleTextProvider()),
                         style = TextStyle(
@@ -81,6 +83,7 @@ fun DiscordDialog(
                             bottom = 24.dp
                         )
                     )
+                    Divider(color = Color.LightGray, thickness = 0.5.dp)
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.End,
