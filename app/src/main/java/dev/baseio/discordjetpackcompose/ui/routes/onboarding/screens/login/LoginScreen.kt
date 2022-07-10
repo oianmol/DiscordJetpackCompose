@@ -1,5 +1,6 @@
 package dev.baseio.discordjetpackcompose.ui.routes.onboarding.screens.login
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
@@ -7,10 +8,8 @@ import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -20,17 +19,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.baseio.discordjetpackcompose.R
 import dev.baseio.discordjetpackcompose.navigator.ComposeNavigator
-import dev.baseio.discordjetpackcompose.navigator.DiscordScreen
 import dev.baseio.discordjetpackcompose.ui.components.DiscordScaffold
 import dev.baseio.discordjetpackcompose.ui.routes.onboarding.commonui.CenteredTitleSubtitle
+import dev.baseio.discordjetpackcompose.ui.routes.onboarding.commonui.DiscordDialog
 import dev.baseio.discordjetpackcompose.ui.routes.onboarding.screens.register.AuthTextField
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.ui.utils.Strings
+import dev.baseio.discordjetpackcompose.viewmodels.LoginScreenViewModel
 import kotlinx.coroutines.job
 
 @Composable
 fun LoginScreen(composeNavigator: ComposeNavigator) {
     val scaffoldState = rememberScaffoldState()
+    val viewModel = LoginScreenViewModel()
 
     val keyboardFocusRequester = remember { FocusRequester() }
     var emailField by remember { mutableStateOf("") }
@@ -52,7 +53,8 @@ fun LoginScreen(composeNavigator: ComposeNavigator) {
             Column(
                 Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 12.dp)) {
+                    .padding(horizontal = 12.dp)
+            ) {
                 AuthTextField(
                     modifier = Modifier
                         .height(55.dp)
@@ -73,9 +75,9 @@ fun LoginScreen(composeNavigator: ComposeNavigator) {
                         passwordField = it
                     }, label = stringResource(id = Strings.password)
                 )
-                LinkText(Strings.forgot_password)
+                LinkText(Strings.forgot_password) {}
                 Spacer(modifier = Modifier.height(4.dp))
-                LinkText(Strings.use_pass_manager)
+                LinkText(Strings.use_pass_manager) { viewModel.onOpenDialogClicked() }
             }
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -91,15 +93,30 @@ fun LoginScreen(composeNavigator: ComposeNavigator) {
             ) {
                 Text(text = stringResource(id = R.string.login))
             }
+
+            val showDialogState: Boolean by viewModel.showDialog.collectAsState()
+            DiscordDialog(
+                titleTextProvider = { R.string.password_manager },
+                subTitleTextProvider = { R.string.password_manager_text },
+                confirmActionButtonTextProvider = { R.string.open_settings },
+                onDismissRequest = {},
+                onClickCancelButton = { viewModel.onDialogDismiss() },
+                onClickConfirmActionButton = { viewModel.onDialogConfirm() },
+                show = showDialogState
+            )
         }
     }
 }
 
 @Composable
-fun LinkText(id: Int) {
+fun LinkText(
+    id: Int,
+    onClick: () -> Unit
+) {
     Text(
         modifier = Modifier
-            .padding(top = 8.dp),
+            .padding(top = 8.dp)
+            .clickable { onClick() },
         text = stringResource(id = id),
         style = TextStyle(
             fontWeight = FontWeight.Normal,
@@ -109,3 +126,5 @@ fun LinkText(id: Int) {
         textAlign = TextAlign.Start
     )
 }
+
+
