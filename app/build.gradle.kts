@@ -1,3 +1,5 @@
+import Lib.Android.ACCOMPANIST_SYSTEM_UI_CONTROLLER
+
 plugins {
     id(BuildPlugins.ANDROID_APPLICATION_PLUGIN)
     id(BuildPlugins.KOTLIN_ANDROID_PLUGIN)
@@ -105,6 +107,7 @@ dependencies {
     implementation(Lib.Android.CONSTRAINT_LAYOUT_COMPOSE)
     implementation(Lib.Android.ACCOMPANIST_INSETS)
     implementation(Lib.Android.SPLASH_SCREEN_API)
+    implementation(ACCOMPANIST_SYSTEM_UI_CONTROLLER)
 
     implementation(Lib.Android.APP_COMPAT)
 

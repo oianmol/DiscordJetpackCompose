@@ -9,10 +9,10 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.baseio.discordjetpackcompose.entities.CountryEntity
 import dev.baseio.discordjetpackcompose.usecases.FetchCountriesUseCase
-import dev.baseio.discordjetpackcompose.utils.ioScope
 import javax.inject.Inject
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 @HiltViewModel
 class RegistrationViewModel @Inject constructor(
@@ -26,14 +26,14 @@ class RegistrationViewModel @Inject constructor(
     init {
         getCountryList()
         snapshotFlow { countrySearchQuery }.onEach { query ->
-                filteredCountryList = countryList?.filter { country ->
-                    country.name.contains(other = query, ignoreCase = true)
-                }
-            }.launchIn(viewModelScope)
+            filteredCountryList = countryList?.filter { country ->
+                country.name.contains(other = query, ignoreCase = true)
+            }
+        }.launchIn(viewModelScope)
     }
 
     private fun getCountryList() {
-        ioScope {
+        viewModelScope.launch {
             countryList = fetchCountriesUseCase()
         }
     }
