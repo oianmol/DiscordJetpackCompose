@@ -14,7 +14,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.baseio.discordjetpackcompose.navigator.ComposeNavigator
 import dev.baseio.discordjetpackcompose.R
@@ -33,25 +37,43 @@ fun WelcomeScreen(composeNavigator: ComposeNavigator) {
     Column(
         Modifier
             .fillMaxSize()
-            .background(design_default_color_background),
+            .background(DiscordColorProvider.colors.background),
         verticalArrangement = Arrangement.SpaceAround
     ) {
 
+        Header()
         Image(
             painter = painterResource(id = R.drawable.welcomelogo),
             contentDescription = null,
-            modifier = Modifier.padding(8.dp)
+            modifier = Modifier.padding(32.dp)
         )
 
-        CenteredTitleSubtitle(R.string.welcome_to_discord, R.string.welcome_message)
+        CenteredTitleSubtitle(
+          modifier = Modifier.padding(start = 16.dp, end = 16.dp),
+          title = R.string.welcome_to_discord,
+          subtitle = R.string.welcome_message
+        )
 
         Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
             Spacer(modifier = Modifier.height(8.dp))
             RegisterButton(navigator = composeNavigator)
             LoginButton(navigator = composeNavigator)
         }
-
     }
+}
+
+@Composable
+private fun Header() {
+    Text(
+      modifier = Modifier.padding(top = 32.dp).fillMaxWidth(),
+      text = stringResource(R.string.discord),
+      style = TextStyle(
+        fontWeight = FontWeight.Bold,
+        fontSize = 36.sp
+      ),
+      textAlign = TextAlign.Center,
+      color = DiscordColorProvider.colors.onSurface
+    )
 }
 
 
@@ -64,7 +86,7 @@ private fun LoginButton(navigator: ComposeNavigator) {
             contentColor = colorResource(
                 id = R.color.white
             )
-        ), modifier = Modifier.fillMaxWidth(0.7f)
+        ), modifier = Modifier.fillMaxWidth(0.9f)
     ) {
         Text(text = stringResource(id = R.string.login))
     }
@@ -78,7 +100,7 @@ private fun RegisterButton(navigator: ComposeNavigator) {
             backgroundColor = colorResource(id = R.color.brand), contentColor = colorResource(
                 id = R.color.white
             )
-        ), modifier = Modifier.fillMaxWidth(0.7f)
+        ), modifier = Modifier.fillMaxWidth(0.9f)
     ) {
         Text(text = stringResource(id = R.string.register))
     }
