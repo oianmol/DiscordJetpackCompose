@@ -26,11 +26,15 @@ import dev.baseio.discordjetpackcompose.ui.utils.rememberWindowInfo
 
 @Composable
 fun ServerDrawer(
+    modifier: Modifier = Modifier,
     serverList: List<ServerEntity>,
     chatUserList: List<ChatUserEntity>,
+    onAnyItemSelected: (Boolean) -> Unit,
     onAddButtonClick: () -> Unit,
 ) {
-    Row {
+    Row(
+        modifier = modifier
+    ) {
         val windowInfo = rememberWindowInfo()
         var currentSelectedServer by rememberSaveable { mutableStateOf(ServerIconSelector.DMScreenId) }
         var isAnyItemSelectedInCurrentServer: Boolean by remember { mutableStateOf(false) }
@@ -54,7 +58,10 @@ fun ServerDrawer(
         ServerChannelList(
             modifier = Modifier.fillMaxWidth(widthFactor),
             serverId = currentSelectedServer,
-            onItemSelection = { isAnyItemSelectedInCurrentServer = true },
+            onItemSelection = {
+                isAnyItemSelectedInCurrentServer = true
+                onAnyItemSelected(true)
+            },
             chatUserList = chatUserList
         )
     }
@@ -91,7 +98,8 @@ private fun ServerDrawerPreview() {
                 serverList = listOf(
                     getSampleServer(serverId = "1"),
                     getSampleServer(serverId = "2"),
-                )
+                ),
+                onAnyItemSelected = {}
             )
         }
     }

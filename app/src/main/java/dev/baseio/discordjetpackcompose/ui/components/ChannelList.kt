@@ -3,6 +3,9 @@ package dev.baseio.discordjetpackcompose.ui.components
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.with
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -64,7 +67,10 @@ fun ChannelList(
     onItemSelection: () -> Unit,
     onInviteButtonClick: (String) -> Unit,
 ) {
-    AnimatedContent(targetState = serverState) { serverUIState ->
+    AnimatedContent(
+        targetState = serverState,
+        transitionSpec = { fadeIn() with fadeOut() }
+    ) { serverUIState ->
         when (serverUIState) {
             is UIState.Empty -> Unit
             is UIState.Loading -> CircularProgressIndicator(

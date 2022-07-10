@@ -121,9 +121,7 @@ fun DirectMessageList(
                 DirectMessageListItem(chatUserEntity = chats[index],
                     isSelected = currentSelectedChatUsername == chats[index].username,
                     onItemClick = {
-                        if (currentSelectedChatUsername == null) {
-                            onItemSelection()
-                        }
+                        onItemSelection()
                         currentSelectedChatUsername = chats[index].username
                     })
             }

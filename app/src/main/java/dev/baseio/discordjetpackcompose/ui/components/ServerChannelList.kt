@@ -2,6 +2,9 @@ package dev.baseio.discordjetpackcompose.ui.components
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.with
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -44,7 +47,10 @@ fun ServerChannelList(
         elevation = 4.dp,
         shape = RoundedCornerShape(topStart = cornerSize, topEnd = cornerSize)
     ) {
-        AnimatedContent(targetState = serverId) { selectedScreenId ->
+        AnimatedContent(
+            targetState = serverId,
+            transitionSpec = { fadeIn() with fadeOut() }
+        ) { selectedScreenId ->
             when (selectedScreenId) {
                 ServerIconSelector.DMScreenId -> DirectMessageList(
                     modifier = Modifier.fillMaxSize(),

@@ -1,5 +1,6 @@
 package dev.baseio.discordjetpackcompose.ui.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -30,6 +31,7 @@ fun ServerIconSelector(
     LazyColumn(
         modifier = modifier
             .fillMaxHeight()
+            .background(MaterialTheme.colors.surface)
             .padding(end = 4.dp, top = 8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
