@@ -1,4 +1,4 @@
-package dev.baseio.discordjetpackcompose.ui.components
+package dev.baseio.discordjetpackcompose.ui.routes.dashboard.components
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.Canvas

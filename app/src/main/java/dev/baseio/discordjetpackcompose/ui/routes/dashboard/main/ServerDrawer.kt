@@ -19,6 +19,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.baseio.discordjetpackcompose.entities.ChatUserEntity
 import dev.baseio.discordjetpackcompose.entities.server.ServerEntity
+import dev.baseio.discordjetpackcompose.ui.routes.dashboard.components.ServerIconSelector
+import dev.baseio.discordjetpackcompose.ui.routes.dashboard.serverchannels.ServerChannelList
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordJetpackComposeTheme
 import dev.baseio.discordjetpackcompose.ui.utils.WindowInfo
 import dev.baseio.discordjetpackcompose.ui.utils.getSampleServer

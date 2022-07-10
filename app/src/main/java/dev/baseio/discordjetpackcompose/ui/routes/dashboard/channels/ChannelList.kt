@@ -1,4 +1,4 @@
-package dev.baseio.discordjetpackcompose.ui.components
+package dev.baseio.discordjetpackcompose.ui.routes.dashboard.channels
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi

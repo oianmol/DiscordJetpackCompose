@@ -1,4 +1,4 @@
-package dev.baseio.discordjetpackcompose.ui.components
+package dev.baseio.discordjetpackcompose.ui.routes.dashboard.channels
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
@@ -40,6 +40,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.baseio.discordjetpackcompose.entities.server.ChannelEntity
 import dev.baseio.discordjetpackcompose.entities.server.ChannelType
+import dev.baseio.discordjetpackcompose.ui.routes.dashboard.components.CountIndicator
+import dev.baseio.discordjetpackcompose.ui.routes.dashboard.components.ServerIconSelectorItem
 import dev.baseio.discordjetpackcompose.ui.theme.ChannelListTypography
 import dev.baseio.discordjetpackcompose.ui.utils.clickableWithRipple
 

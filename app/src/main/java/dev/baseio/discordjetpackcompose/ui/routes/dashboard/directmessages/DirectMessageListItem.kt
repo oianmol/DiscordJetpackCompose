@@ -1,4 +1,4 @@
-package dev.baseio.discordjetpackcompose.ui.components
+package dev.baseio.discordjetpackcompose.ui.routes.dashboard.directmessages
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
@@ -28,6 +28,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import dev.baseio.discordjetpackcompose.R
 import dev.baseio.discordjetpackcompose.entities.ChatUserEntity
+import dev.baseio.discordjetpackcompose.ui.routes.dashboard.components.OnlineIndicator
 import dev.baseio.discordjetpackcompose.ui.theme.DirectMessageListTypography
 import dev.baseio.discordjetpackcompose.ui.utils.clickableWithRipple
 

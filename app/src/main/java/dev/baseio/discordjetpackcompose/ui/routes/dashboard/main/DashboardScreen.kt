@@ -1,4 +1,4 @@
-package dev.baseio.discordjetpackcompose.ui.components
+package dev.baseio.discordjetpackcompose.ui.routes.dashboard.main
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -27,13 +27,13 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import dev.baseio.discordjetpackcompose.entities.ChatUserEntity
 import dev.baseio.discordjetpackcompose.entities.server.ServerEntity
-import dev.baseio.discordjetpackcompose.ui.theme.DiscordJetpackComposeTheme
+import dev.baseio.discordjetpackcompose.navigator.ComposeNavigator
+import dev.baseio.discordjetpackcompose.ui.components.ServerDrawer
 import dev.baseio.discordjetpackcompose.ui.utils.getSampleServer
 import kotlin.math.roundToInt
 import kotlinx.coroutines.launch
@@ -49,8 +49,30 @@ private enum class CenterScreenState {
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun DashboardScreen(
-    serverList: List<ServerEntity>,
-    chatUserList: List<ChatUserEntity>,
+    serverList: List<ServerEntity> = listOf(
+        getSampleServer(serverId = "1"),
+        getSampleServer(serverId = "2"),
+    ),
+    chatUserList: List<ChatUserEntity> = mutableListOf<ChatUserEntity>().apply {
+        repeat(20) {
+            add(
+                if (it % 2 == 0) {
+                    ChatUserEntity(
+                        username = "testusername$it",
+                        name = "Test User",
+                        currentStatus = "Studying",
+                        isOnline = false,
+                    )
+                } else {
+                    ChatUserEntity(
+                        username = "testusername$it",
+                        isOnline = true,
+                    )
+                }
+            )
+        }
+    },
+    composeNavigator: ComposeNavigator
 ) {
     val density = LocalDensity.current
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
@@ -161,34 +183,5 @@ fun DashboardScreen(
                     .background(Color.Green)
             )
         }
-    }
-}
-
-@Preview(showSystemUi = true)
-@Composable
-private fun DashboardScreenPreview() {
-    DiscordJetpackComposeTheme {
-        DashboardScreen(serverList = listOf(
-            getSampleServer(serverId = "1"),
-            getSampleServer(serverId = "2"),
-        ), chatUserList = mutableListOf<ChatUserEntity>().apply {
-            repeat(20) {
-                add(
-                    if (it % 2 == 0) {
-                        ChatUserEntity(
-                            username = "testusername$it",
-                            name = "Test User",
-                            currentStatus = "Studying",
-                            isOnline = false,
-                        )
-                    } else {
-                        ChatUserEntity(
-                            username = "testusername$it",
-                            isOnline = true,
-                        )
-                    }
-                )
-            }
-        })
     }
 }

@@ -1,4 +1,4 @@
-package dev.baseio.discordjetpackcompose.ui.components
+package dev.baseio.discordjetpackcompose.ui.routes.dashboard.serverchannels
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -22,6 +22,9 @@ import androidx.compose.ui.unit.dp
 import dev.baseio.discordjetpackcompose.entities.ChatUserEntity
 import dev.baseio.discordjetpackcompose.entities.server.ServerEntity
 import dev.baseio.discordjetpackcompose.repositories.ServerRepoImpl
+import dev.baseio.discordjetpackcompose.ui.routes.dashboard.channels.ChannelList
+import dev.baseio.discordjetpackcompose.ui.routes.dashboard.components.ServerIconSelector
+import dev.baseio.discordjetpackcompose.ui.routes.dashboard.directmessages.DirectMessageList
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.ui.utils.getSampleServerUIState
 import dev.baseio.discordjetpackcompose.usecases.GetServerUseCase
