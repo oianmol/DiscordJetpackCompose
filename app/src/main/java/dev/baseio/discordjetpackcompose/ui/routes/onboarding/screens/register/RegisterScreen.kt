@@ -11,9 +11,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.ExperimentalMaterialApi
-import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import androidx.compose.material.ModalBottomSheetValue.Hidden
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material.rememberScaffoldState
@@ -25,7 +23,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -34,8 +31,7 @@ import dev.baseio.discordjetpackcompose.entities.CountryEntity
 import dev.baseio.discordjetpackcompose.navigator.ComposeNavigator
 import dev.baseio.discordjetpackcompose.navigator.DiscordRoute
 import dev.baseio.discordjetpackcompose.ui.components.DiscordScaffold
-import dev.baseio.discordjetpackcompose.ui.theme.DiscordJetpackComposeTheme
-import dev.baseio.discordjetpackcompose.ui.theme.design_default_color_background
+import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.ui.utils.Strings
 import dev.baseio.discordjetpackcompose.viewmodels.RegistrationViewModel
 import kotlinx.coroutines.launch
@@ -138,25 +134,25 @@ fun RegisterScreen(
                     Text(stringResource(id = Strings.next))
                 }
             }
-
-            CountryPicker(
-                sheetState = sheetState,
-                backgroundContent = {},
-                onCountrySelected = {
-                    selectedCountry = it
-                    coroutineScope.launch {
-                        sheetState.hide()
-                    }
-                },
-                countryList = registrationViewModel.filteredCountryList?.filter {
-                    it.name.contains(
-                        other = countrySearchQuery,
-                        ignoreCase = true
-                    )
-                },
-                countrySearchQuery = countrySearchQuery,
-                onQueryUpdated = { updatedQuery -> countrySearchQuery = updatedQuery }
-            )
         }
     }
+
+    CountryPicker(
+      sheetState = sheetState,
+      backgroundContent = {},
+      onCountrySelected = {
+          selectedCountry = it
+          coroutineScope.launch {
+              sheetState.hide()
+          }
+      },
+      countryList = registrationViewModel.filteredCountryList?.filter {
+          it.name.contains(
+            other = countrySearchQuery,
+            ignoreCase = true
+          )
+      },
+      countrySearchQuery = countrySearchQuery,
+      onQueryUpdated = { updatedQuery -> countrySearchQuery = updatedQuery }
+    )
 }
