@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.MaterialTheme
+import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -37,14 +37,14 @@ fun CountIndicator(
         val textSizeInDp = with(LocalDensity.current) { textSize.toDp() }
         Surface(
             shape = CircleShape,
-            color = if (showCardBackground) MaterialTheme.colors.surface else Color.Transparent
+            color = if (showCardBackground) DiscordColorProvider.colors.surface else Color.Transparent
         ) {
             Box(
                 modifier = Modifier
                     .padding(2.dp)
                     .size(textSizeInDp * 2)
                     .clip(CircleShape)
-                    .background(MaterialTheme.colors.error), contentAlignment = Alignment.Center
+                    .background(DiscordColorProvider.colors.error), contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = count?.toString() ?: "0",

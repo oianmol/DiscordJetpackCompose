@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import dev.baseio.discordjetpackcompose.entities.ChatUserEntity
 import dev.baseio.discordjetpackcompose.entities.server.ServerEntity
 import dev.baseio.discordjetpackcompose.repositories.ServerRepoImpl
+import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.ui.utils.getSampleServerUIState
 import dev.baseio.discordjetpackcompose.usecases.GetServerUseCase
 import dev.baseio.discordjetpackcompose.utils.UIState
@@ -45,6 +46,7 @@ fun ServerChannelList(
     Surface(
         modifier = modifier.fillMaxHeight(),
         elevation = 4.dp,
+        color = DiscordColorProvider.colors.background,
         shape = RoundedCornerShape(topStart = cornerSize, topEnd = cornerSize)
     ) {
         AnimatedContent(

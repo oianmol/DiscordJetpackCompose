@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 
 @Composable
 fun OnlineIndicator(
@@ -23,7 +24,7 @@ fun OnlineIndicator(
     indicatorSize: Dp = 12.dp,
 ) {
     val color by animateColorAsState(targetValue = if (isOnline) Color.Green else Color.Gray)
-    Surface(shape = CircleShape) {
+    Surface(shape = CircleShape, color = DiscordColorProvider.colors.surface) {
         Canvas(
             modifier = modifier
                 .padding(1.dp)
