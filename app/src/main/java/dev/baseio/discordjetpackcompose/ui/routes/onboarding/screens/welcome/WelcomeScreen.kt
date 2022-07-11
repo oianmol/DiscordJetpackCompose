@@ -11,6 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.ColorFilter.Companion
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -24,14 +26,15 @@ import dev.baseio.discordjetpackcompose.navigator.ComposeNavigator
 import dev.baseio.discordjetpackcompose.R
 import dev.baseio.discordjetpackcompose.navigator.DiscordScreen
 import dev.baseio.discordjetpackcompose.ui.routes.onboarding.commonui.CenteredTitleSubtitle
-import dev.baseio.discordjetpackcompose.ui.theme.design_default_color_background
 
 @Composable
 fun WelcomeScreen(composeNavigator: ComposeNavigator) {
+
     val sysUiController = rememberSystemUiController()
+    val colors = DiscordColorProvider.colors
     SideEffect {
-        sysUiController.setSystemBarsColor(color = design_default_color_background)
-        sysUiController.setNavigationBarColor(color = design_default_color_background)
+        sysUiController.setSystemBarsColor(color = colors.discordBackgroundOne)
+        sysUiController.setNavigationBarColor(color = colors.discordBackgroundOne)
     }
 
     Column(
@@ -64,16 +67,28 @@ fun WelcomeScreen(composeNavigator: ComposeNavigator) {
 
 @Composable
 private fun Header() {
-    Text(
-      modifier = Modifier.padding(top = 32.dp).fillMaxWidth(),
-      text = stringResource(R.string.discord),
-      style = TextStyle(
-        fontWeight = FontWeight.Bold,
-        fontSize = 36.sp
-      ),
-      textAlign = TextAlign.Center,
-      color = DiscordColorProvider.colors.onSurface
-    )
+    Row(
+      modifier = Modifier.fillMaxWidth().padding(top = 32.dp),
+      horizontalArrangement = Arrangement.Center
+    ) {
+        Image(
+          painter = painterResource(id = R.drawable.ic_discord_icon),
+          contentDescription = null,
+          Modifier.padding(end = 16.dp),
+          colorFilter = ColorFilter.tint(color = DiscordColorProvider.colors.brand)
+        )
+
+        Text(
+          modifier = Modifier,
+          text = stringResource(R.string.discord),
+          style = TextStyle(
+            fontWeight = FontWeight.Bold,
+            fontSize = 36.sp
+          ),
+          textAlign = TextAlign.Center,
+          color = DiscordColorProvider.colors.brand
+        )
+    }
 }
 
 

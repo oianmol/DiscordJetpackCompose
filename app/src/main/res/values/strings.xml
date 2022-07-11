@@ -31,4 +31,9 @@
     <string name="invite_format_2">https://discord.gg/hTKzmak</string>
     <string name="invite_format_3">https://discord.gg/cook-people</string>
     <string name="invite_button">I don\'t have one</string>
+    <string name="recent_mentions">Recent Mentions</string>
+    <string name="all_servers">All Servers</string>
+    <string name="startup_conversations">Start up some conversations, then keep track of them here!</string>
+    <string name="pro_tip">PROTIP:</string>
+    <string name="whenever_mentions">Whenever someone mentions you it will be saved here for 7 days.</string>
 </resources>

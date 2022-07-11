@@ -45,8 +45,10 @@ private fun contentColor() = DiscordColorProvider.colors.contentColorFor(Discord
 private fun textFieldColors() = TextFieldDefaults.textFieldColors(
   textColor = contentColor(),
   disabledTextColor = contentColor(),
+  cursorColor = DiscordColorProvider.colors.primary,
   backgroundColor = DiscordColorProvider.colors.secondaryBackground,
   focusedIndicatorColor = Color.Transparent, // hide the indicator
   unfocusedIndicatorColor = Color.Transparent,
-  disabledIndicatorColor = Color.Transparent, placeholderColor = contentColor()
+  disabledIndicatorColor = Color.Transparent,
+  placeholderColor = contentColor()
 )
