@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Discord Compose</string>
+    <string name="discord">Discord</string>
     <string name="country_picker_hint">Search</string>
     <string name="country_picker_preview_text">Click anywhere to open the country picker…</string>
     <string name="welcome_to_discord">Welcome to Discord</string>
@@ -33,4 +34,9 @@
     <string name="server_info_action_title_hide_muted_channels">Hide Muted Channels</string>
     <string name="server_info_action_title_leave_server">Leave Server</string>
     <string name="server_info_action_subtitle_direct_messages">Allow direct messages from server members.</string>
+    <string name="recent_mentions">Recent Mentions</string>
+    <string name="all_servers">All Servers</string>
+    <string name="startup_conversations">Start up some conversations, then keep track of them here!</string>
+    <string name="pro_tip">PROTIP:</string>
+    <string name="whenever_mentions">Whenever someone mentions you it will be saved here for 7 days.</string>
 </resources>
