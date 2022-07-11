@@ -14,6 +14,8 @@ import dev.baseio.discordjetpackcompose.navigator.DiscordRoute
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.dashboardRoute
 import dev.baseio.discordjetpackcompose.ui.routes.onboarding.onBoardingRoute
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordJetpackComposeTheme
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -24,7 +26,9 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        installSplashScreen()
+
+        setTheme(R.style.Theme_DiscordJetpackCompose)
+
         setContent {
             val navController = rememberNavController()
 
