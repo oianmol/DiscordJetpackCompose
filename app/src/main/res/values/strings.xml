@@ -68,5 +68,4 @@
     <string name="server_emoji_nitro_benefit_msg">Use anywhere with nitro</string>
     <string name="emoji_count">%s EMOJIS</string>
     <string name="server_no_emojis">NO EMOJI</string>
-    <string name="friends">Friends</string>
 </resources>
