@@ -7,7 +7,6 @@ import androidx.navigation.navigation
 import dev.baseio.discordjetpackcompose.navigator.ComposeNavigator
 import dev.baseio.discordjetpackcompose.navigator.DiscordRoute
 import dev.baseio.discordjetpackcompose.navigator.DiscordScreen
-import dev.baseio.discordjetpackcompose.ui.routes.onboarding.screens.createServer.CreateServer
 import dev.baseio.discordjetpackcompose.ui.routes.onboarding.screens.login.LoginScreen
 import dev.baseio.discordjetpackcompose.ui.routes.onboarding.screens.welcome.WelcomeScreen
 import dev.baseio.discordjetpackcompose.ui.routes.onboarding.screens.register.RegisterScreen
@@ -27,9 +26,6 @@ fun NavGraphBuilder.onBoardingRoute(
         }
         composable(DiscordScreen.Register.name) {
             RegisterScreen(composeNavigator)
-        }
-        composable(DiscordScreen.CreateServer.name) {
-            CreateServer(composeNavigator)
         }
     }
 

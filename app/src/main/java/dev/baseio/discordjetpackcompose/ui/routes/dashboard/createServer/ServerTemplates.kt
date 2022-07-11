@@ -1,4 +1,4 @@
-package dev.baseio.discordjetpackcompose.ui.routes.onboarding.screens.createServer
+package dev.baseio.discordjetpackcompose.ui.routes.dashboard.createServer
 
 import dev.baseio.discordjetpackcompose.R
 
