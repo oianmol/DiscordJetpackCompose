@@ -18,6 +18,7 @@ private val LightColorPalette = DiscordColorPalette(
     secondaryBackground = design_default_color_secondary_background,
     onSecondaryBackground = design_default_color_on_secondary,
     surface = design_default_color_surface,
+    brand = brand,
     error = design_default_color_error,
     onPrimary = design_dark_default_color_on_primary,
     onSecondary = design_default_color_on_secondary,
@@ -41,6 +42,7 @@ private val DarkColorPalette = DiscordColorPalette(
     secondaryBackground = design_dark_default_color_secondary_background,
     onSecondaryBackground = design_dark_default_color_on_background,
     surface = design_dark_default_color_surface,
+    brand = exo_white,
     error = design_dark_default_color_error,
     onPrimary = design_default_color_on_primary,
     onSecondary = design_dark_default_color_on_secondary,
@@ -108,6 +110,7 @@ class DiscordColorPalette(
     secondaryBackground: Color,
     onSecondaryBackground: Color,
     surface: Color = Color(0xFF121212),
+    brand: Color = Color(0xFF5865f2),
     error: Color = Color(0xFFCF6679),
     onPrimary: Color = Color.Black,
     onSecondary: Color = Color.Black,
@@ -134,6 +137,8 @@ class DiscordColorPalette(
     var secondaryBackground by mutableStateOf(secondaryBackground, structuralEqualityPolicy())
         internal set
     var surface by mutableStateOf(surface, structuralEqualityPolicy())
+        internal set
+    var brand by mutableStateOf(brand, structuralEqualityPolicy())
         internal set
     var error by mutableStateOf(error, structuralEqualityPolicy())
         internal set
