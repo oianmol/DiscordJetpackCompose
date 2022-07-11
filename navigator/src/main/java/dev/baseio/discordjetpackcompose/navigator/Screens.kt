@@ -1,8 +1,6 @@
 package dev.baseio.discordjetpackcompose.navigator
 
 import androidx.navigation.NamedNavArgument
-import androidx.navigation.NavType
-import androidx.navigation.navArgument
 
 sealed class DiscordScreen(
     val route: String,
@@ -15,6 +13,7 @@ sealed class DiscordScreen(
     object Login : DiscordScreen("login")
     object Dashboard : DiscordScreen("dashboard")
     object Friends : DiscordScreen("friends")
+    object Invite : DiscordScreen("invite")
 }
 
 sealed class DiscordRoute(val name: String) {
