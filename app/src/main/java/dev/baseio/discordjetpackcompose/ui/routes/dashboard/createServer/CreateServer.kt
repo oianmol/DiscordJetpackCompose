@@ -78,7 +78,7 @@ fun CreateServer(
             ) {
                 items(1) {
                     CreateServerCard(
-                        textProvider = { R.string.create_your_server },
+                        textProvider = { R.string.create_my_own },
                         onClick = {},
                         iconProvider = { R.drawable.dark_app_logo }
                     )

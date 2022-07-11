@@ -1,6 +1,7 @@
 package dev.baseio.discordjetpackcompose.ui.routes.dashboard.createServer
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -52,13 +53,19 @@ fun CreateServerCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Image(
-                    painter = painterResource(id = iconProvider()),
+                    painter = painterResource(
+                        id = if (isSystemInDarkTheme()) {
+                            R.drawable.dark_app_logo
+                        } else {
+                            R.drawable.light_app_logo
+                        }
+                    ),
                     contentDescription = stringResource(R.string.server_type_icon),
                     modifier = Modifier.size(75.dp)
                 )
                 Text(
                     text = stringResource(id = textProvider()),
-                    style = Typography.h6.copy(fontWeight = FontWeight.Bold)
+                    style = Typography.subtitle1.copy(fontWeight = FontWeight.Bold)
                 )
             }
             Icon(
