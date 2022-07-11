@@ -41,6 +41,14 @@
     <string name="start_from_a_template">START FROM A TEMPLATE</string>
     <string name="have_an_invite_already">Have an Invite Already?</string>
     <string name="clear">Clear</string>
+    <string name="invite_heading">Do you have an invite?</string>
+    <string name="invite_subheading">Get the most out of Discord by joining a server.</string>
+    <string name="invite_link">Invite link</string>
+    <string name="invite_format_heading">INVITES SHOULD LOOK LIKE</string>
+    <string name="invite_format_1">hTKzmak</string>
+    <string name="invite_format_2">https://discord.gg/hTKzmak</string>
+    <string name="invite_format_3">https://discord.gg/cook-people</string>
+    <string name="invite_button">I don\'t have one</string>
     <string name="recent_mentions">Recent Mentions</string>
     <string name="all_servers">All Servers</string>
     <string name="startup_conversations">Start up some conversations, then keep track of them here!</string>

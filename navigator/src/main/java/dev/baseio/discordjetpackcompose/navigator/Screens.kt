@@ -15,6 +15,7 @@ sealed class DiscordScreen(
     object Login : DiscordScreen("login")
     object Dashboard : DiscordScreen("dashboard")
     object CreateServer : DiscordScreen("createServer")
+    object Invite : DiscordScreen("invite")
 }
 
 sealed class DiscordRoute(val name: String) {
