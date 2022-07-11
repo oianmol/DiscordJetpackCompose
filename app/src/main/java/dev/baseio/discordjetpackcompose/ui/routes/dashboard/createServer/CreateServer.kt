@@ -22,7 +22,6 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -63,7 +62,8 @@ fun CreateServer(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(create_server_screen),
+                .padding(paddingValues)
+                .background(color = create_server_screen),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             CenteredTitleSubtitle(
@@ -74,7 +74,7 @@ fun CreateServer(
             LazyColumn(
                 modifier = Modifier
                     .fillMaxHeight(0.8f)
-                    .background(create_server_screen)
+                    .background(color = create_server_screen)
             ) {
                 items(1) {
                     CreateServerCard(
