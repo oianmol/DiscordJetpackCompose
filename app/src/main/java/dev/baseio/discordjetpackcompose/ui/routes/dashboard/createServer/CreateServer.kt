@@ -1,5 +1,6 @@
 package dev.baseio.discordjetpackcompose.ui.routes.dashboard.createServer
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -32,6 +33,9 @@ import dev.baseio.discordjetpackcompose.ui.components.DiscordAppBar
 import dev.baseio.discordjetpackcompose.ui.components.DiscordScaffold
 import dev.baseio.discordjetpackcompose.ui.routes.onboarding.commonui.CenteredTitleSubtitle
 import dev.baseio.discordjetpackcompose.ui.theme.Typography
+import dev.baseio.discordjetpackcompose.ui.theme.create_server_card_bottom_button_bg
+import dev.baseio.discordjetpackcompose.ui.theme.create_server_screen
+import dev.baseio.discordjetpackcompose.ui.theme.white
 
 @Composable
 fun CreateServer(
@@ -51,7 +55,7 @@ fun CreateServer(
                         )
                     }
                 },
-                backgroundColor = Color.Transparent,
+                backgroundColor = create_server_screen,
                 elevation = 0.dp
             )
         }
@@ -59,7 +63,7 @@ fun CreateServer(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues),
+                .background(create_server_screen),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             CenteredTitleSubtitle(
@@ -68,7 +72,9 @@ fun CreateServer(
             )
             Spacer(modifier = Modifier.size(8.dp))
             LazyColumn(
-                modifier = Modifier.fillMaxHeight(0.83f)
+                modifier = Modifier
+                    .fillMaxHeight(0.8f)
+                    .background(create_server_screen)
             ) {
                 items(1) {
                     CreateServerCard(
@@ -119,11 +125,11 @@ fun HaveAnInviteBottomCard(
             .padding(horizontal = 16.dp)
             .padding(bottom = 16.dp),
         shape = RoundedCornerShape(6.dp),
-        colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF464646))
+        colors = ButtonDefaults.buttonColors(backgroundColor = create_server_card_bottom_button_bg)
     ) {
         Text(
             text = stringResource(R.string.have_an_invite_already),
-            style = Typography.body1.copy(fontWeight = FontWeight.SemiBold),
+            style = Typography.body1.copy(fontWeight = FontWeight.SemiBold, color = white),
             modifier = Modifier
                 .fillMaxWidth(),
             textAlign = TextAlign.Center

@@ -4,6 +4,7 @@
 package dev.baseio.discordjetpackcompose.ui.theme
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
@@ -756,3 +757,24 @@ val xbox = Color(0xFF107c10)
 val xbox_500 = Color(0xFF107c10)
 val youtube = Color(0xFFcb2120)
 val youtube_500 = Color(0xFFcb2120)
+
+val create_server_screen
+    @Composable get() = if (isSystemInDarkTheme()) {
+        Color(0xFF373840)
+    } else {
+        Color(0xFFFEFFFE)
+    }
+
+val create_server_card_bg
+    @Composable get() = if (isSystemInDarkTheme()) {
+        Color(0xFF2B2B2E)
+    } else {
+        Color(0xFFEBEDEF)
+    }
+
+val create_server_card_bottom_button_bg
+    @Composable get() = if (isSystemInDarkTheme()) {
+        Color(0xFF4E535D)
+    } else {
+        Color(0xFF747F8C)
+    }

@@ -18,7 +18,6 @@ import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -26,6 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.baseio.discordjetpackcompose.R
 import dev.baseio.discordjetpackcompose.ui.theme.Typography
+import dev.baseio.discordjetpackcompose.ui.theme.create_server_card_bg
 
 @Composable
 fun CreateServerCard(
@@ -34,7 +34,7 @@ fun CreateServerCard(
     onClick: () -> Unit
 ) {
     Button(
-        colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF303030)),
+        colors = ButtonDefaults.buttonColors(backgroundColor = create_server_card_bg),
         shape = RoundedCornerShape(8.dp),
         modifier = Modifier
             .padding(horizontal = 16.dp, vertical = 6.dp),
