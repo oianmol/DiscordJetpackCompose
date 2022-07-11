@@ -137,6 +137,7 @@ dependencies {
     kapt(Lib.Room.roomCompiler)
     implementation(Lib.Room.roomKtx)
     implementation(Lib.Room.roomPaging)
+    implementation("androidx.core:core-splashscreen:1.0.0-rc01")
 
     /*Testing*/
     testImplementation(TestLib.JUNIT)

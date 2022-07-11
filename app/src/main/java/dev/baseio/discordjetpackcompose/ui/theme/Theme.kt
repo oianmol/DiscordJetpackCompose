@@ -26,6 +26,7 @@ private val LightColorPalette = DiscordColorPalette(
     onSurface = design_default_color_on_surface,
     onError = design_default_color_on_error,
     appBarColor = design_default_app_bar_color_light,
+    appBarColor2 = design_default_app_bar_color_light,
     discordBackgroundOne = design_default_app_bar_color_light,
     linkColor = design_default_link_color,
     tabsBackgroundColor = design_default_color_secondary_background,
@@ -50,6 +51,7 @@ private val DarkColorPalette = DiscordColorPalette(
     onSurface = design_dark_default_color_on_surface,
     onError = design_dark_default_color_on_error,
     appBarColor = design_default_app_bar_color_dark,
+    appBarColor2 = design_default_app_bar_color_dark2,
     discordBackgroundOne = design_default_app_bar_color_dark,
     linkColor = design_default_link_color,
     tabsBackgroundColor = Color(0xFF2a2b2f),
@@ -88,6 +90,7 @@ fun DiscordColorPalette.contentColorFor(backgroundColor: Color): Color {
         primary -> onPrimary
         primaryVariant -> onPrimary
         secondary -> onSecondary
+        appBarColor,appBarColor2 -> onSecondaryBackground
         secondaryBackground -> onSecondaryBackground
         secondaryVariant -> onSecondary
         background -> onBackground
@@ -106,7 +109,7 @@ class DiscordColorPalette(
     primaryVariant: Color = Color(0xFF3700B3),
     secondary: Color = Color(0xFF03DAC6),
     secondaryVariant: Color = secondary,
-    background: Color = Color(0xFF121212),
+    background: Color = Color(0xFF2f3238),
     secondaryBackground: Color,
     onSecondaryBackground: Color,
     surface: Color = Color(0xFF121212),
@@ -118,6 +121,7 @@ class DiscordColorPalette(
     onSurface: Color = Color.White,
     onError: Color = Color.Black,
     appBarColor: Color,
+    appBarColor2:Color,
     discordBackgroundOne: Color,
     linkColor: Color,
     tabsBackgroundColor: Color,
@@ -158,6 +162,8 @@ class DiscordColorPalette(
         internal set
     var appBarColor by mutableStateOf(appBarColor, structuralEqualityPolicy())
         internal set
+    var appBarColor2 by mutableStateOf(appBarColor2, structuralEqualityPolicy())
+        internal set
     var discordBackgroundOne by mutableStateOf(discordBackgroundOne, structuralEqualityPolicy())
         internal set
     var linkColor by mutableStateOf(linkColor, structuralEqualityPolicy())
@@ -184,6 +190,7 @@ class DiscordColorPalette(
         onError = other.onError
         isLight = other.isLight
         appBarColor = other.appBarColor
+        appBarColor2 = other.appBarColor2
         discordBackgroundOne = other.discordBackgroundOne
         linkColor = other.linkColor
         tabsBackgroundColor = other.tabsBackgroundColor

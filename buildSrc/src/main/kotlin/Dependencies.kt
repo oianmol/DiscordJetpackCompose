@@ -60,6 +60,7 @@ object Lib {
     const val ACCOMPANIST_INSETS =
       "com.google.accompanist:accompanist-insets:${ACCOMPANIST_VERSION}"
     const val SPLASH_SCREEN_API = "androidx.core:core-splashscreen:${SPLASH_SCREEN_VERSION}"
+
     const val MATERIAL_EXTENDED_ICONS = "androidx.compose.material:material-icons-extended:$COMPOSE_VERSION"
     const val COMPOSE_JUNIT = "androidx.compose.ui:ui-test-junit4:$COMPOSE_VERSION"
     const val COMPOSE_TEST_MANIFEST = "androidx.compose.ui:ui-test-manifest:$COMPOSE_VERSION"
