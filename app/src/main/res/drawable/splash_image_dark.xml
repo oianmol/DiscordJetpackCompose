@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:drawable="@color/black" />
+    <item android:drawable="@color/black_splash" />
 
     <item android:drawable="@drawable/dark_app_logo" android:gravity="center" />
 
