@@ -12,6 +12,8 @@
     <string name="channel_list_header_btn_txt">Invite Members</string>
     <string name="enter_phone_or_email">Enter phone or email</string>
     <string name="password">Password</string>
+    <string name="password_manager">Password Manager</string>
+    <string name="password_manager_text">If you use a password manager, you\'ll need to allow it in Accessibility Settings -> Downloaded Services. Don\'t worry, we can take you there.</string>
     <string name="forgot_password">Forgot your password?</string>
     <string name="use_pass_manager">Use password manager?</string>
     <string name="view_privacy_policy">View our Privacy Policy</string>
@@ -23,6 +25,8 @@
     <string name="welcome_back">Welcome Back!</string>
     <string name="login_excited">We\'re so excited to see you again!</string>
     <string name="email_or_phone">Email or Phone Number</string>
+    <string name="cancel">Cancel</string>
+    <string name="open_settings">Open Settings</string>
     <string name="invite_heading">Do you have an invite?</string>
     <string name="invite_subheading">Get the most out of Discord by joining a server.</string>
     <string name="invite_link">Invite link</string>

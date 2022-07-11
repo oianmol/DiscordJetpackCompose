@@ -4,6 +4,7 @@
 package dev.baseio.discordjetpackcompose.ui.theme
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
@@ -757,3 +758,24 @@ val xbox = Color(0xFF107c10)
 val xbox_500 = Color(0xFF107c10)
 val youtube = Color(0xFFcb2120)
 val youtube_500 = Color(0xFFcb2120)
+
+val discord_dialog_bg
+    @Composable get() = if (isSystemInDarkTheme()) {
+        Color(0xFF36393E)
+    } else {
+        Color(0xFFFEFFFE)
+    }
+
+val discord_dialog_button_row_bg
+    @Composable get() = if (isSystemInDarkTheme()) {
+        Color(0xFF303037)
+    } else {
+        Color(0xFFF9F8F9)
+    }
+val discord_dialog_cancel_button_text
+    @Composable get() = if (isSystemInDarkTheme()) {
+        Color(0xFFA7A8AA)
+    } else {
+        Color(0xFF4F5761)
+    }
+val discord_dialog_button_bg = Color(0xFF5864F1)
