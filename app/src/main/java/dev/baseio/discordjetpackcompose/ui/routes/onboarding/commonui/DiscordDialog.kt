@@ -91,7 +91,7 @@ fun DiscordDialog(
                         Button(
                             onClick = { onClickCancelButton() },
                             elevation = ButtonDefaults.elevation(0.dp),
-                            modifier = Modifier.padding(end = 20.dp),
+                            modifier = Modifier.padding(end = 16.dp),
                             colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent)
                         ) {
                             Text(
