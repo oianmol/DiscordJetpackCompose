@@ -30,6 +30,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
+        /**For Making the App FullScreen*/
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             val navController = rememberNavController()
 
@@ -49,8 +51,6 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-        /**For Making the App FullScreen*/
-        WindowCompat.setDecorFitsSystemWindows(window, false)
     }
 }
 
