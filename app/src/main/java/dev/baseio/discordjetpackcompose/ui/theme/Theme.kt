@@ -3,6 +3,7 @@ package dev.baseio.discordjetpackcompose.ui.theme
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.Colors
 import androidx.compose.material.MaterialTheme
+import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -60,12 +61,6 @@ fun DiscordJetpackComposeTheme(
     content: @Composable () -> Unit
 ) {
     val colors = if (isDarkTheme) DarkColorPalette else LightColorPalette
-    val sysUiController = rememberSystemUiController()
-
-    SideEffect {
-        sysUiController.setSystemBarsColor(color = colors.appBarColor)
-        sysUiController.setNavigationBarColor(color = colors.appBarColor)
-    }
 
     ProvideDiscordColors(colors) {
         MaterialTheme(

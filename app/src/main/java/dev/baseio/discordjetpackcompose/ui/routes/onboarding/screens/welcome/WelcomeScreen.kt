@@ -8,24 +8,28 @@ import androidx.compose.material.ButtonDefaults.buttonColors
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.baseio.discordjetpackcompose.navigator.ComposeNavigator
 import dev.baseio.discordjetpackcompose.R
-import dev.baseio.discordjetpackcompose.navigator.DiscordRoute
 import dev.baseio.discordjetpackcompose.navigator.DiscordScreen
 import dev.baseio.discordjetpackcompose.ui.routes.onboarding.commonui.CenteredTitleSubtitle
-import dev.baseio.discordjetpackcompose.ui.theme.Typography
 import dev.baseio.discordjetpackcompose.ui.theme.design_default_color_background
 
 @Composable
 fun WelcomeScreen(composeNavigator: ComposeNavigator) {
+    val sysUiController = rememberSystemUiController()
+    SideEffect {
+        sysUiController.setSystemBarsColor(color = design_default_color_background)
+        sysUiController.setNavigationBarColor(color = design_default_color_background)
+    }
+
     Column(
         Modifier
             .fillMaxSize()

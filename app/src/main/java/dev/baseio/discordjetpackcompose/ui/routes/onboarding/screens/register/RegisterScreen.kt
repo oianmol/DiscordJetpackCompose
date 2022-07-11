@@ -1,6 +1,5 @@
 package dev.baseio.discordjetpackcompose.ui.routes.onboarding.screens.register
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -18,12 +17,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material.rememberScaffoldState
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -35,11 +29,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.baseio.discordjetpackcompose.entities.CountryEntity
 import dev.baseio.discordjetpackcompose.navigator.ComposeNavigator
-import dev.baseio.discordjetpackcompose.ui.components.CountryPicker
+import dev.baseio.discordjetpackcompose.navigator.DiscordRoute
 import dev.baseio.discordjetpackcompose.ui.components.DiscordScaffold
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordJetpackComposeTheme
+import dev.baseio.discordjetpackcompose.ui.theme.design_default_color_background
 import dev.baseio.discordjetpackcompose.ui.utils.Strings
 import dev.baseio.discordjetpackcompose.viewmodels.RegistrationViewModel
 import kotlinx.coroutines.launch
@@ -47,9 +43,17 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun RegisterScreen(
-    composeNavigator: ComposeNavigator? = null,
+    composeNavigator: ComposeNavigator,
     registrationViewModel: RegistrationViewModel = hiltViewModel()
 ) {
+
+    val sysUiController = rememberSystemUiController()
+    val colors = DiscordColorProvider.colors
+    SideEffect {
+        sysUiController.setSystemBarsColor(color = colors.discordBackgroundOne)
+        sysUiController.setNavigationBarColor(color = colors.discordBackgroundOne)
+    }
+
 
     val scaffoldState = rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()
@@ -127,7 +131,9 @@ fun RegisterScreen(
                         contentColor = Color(0xFFFFFFFF),
                     ),
                     shape = RoundedCornerShape(4.dp),
-                    onClick = { },
+                    onClick = {
+                        composeNavigator.navigate(DiscordRoute.Dashboard.name)
+                    },
                 ) {
                     Text(stringResource(id = Strings.next))
                 }
@@ -151,20 +157,6 @@ fun RegisterScreen(
                 countrySearchQuery = countrySearchQuery,
                 onQueryUpdated = { updatedQuery -> countrySearchQuery = updatedQuery }
             )
-        }
-    }
-}
-
-@Preview
-@Composable
-fun PreviewRegisterScreen() {
-    DiscordJetpackComposeTheme {
-        // A surface container using the 'background' color from the theme
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = DiscordColorProvider.colors.background
-        ) {
-            RegisterScreen()
         }
     }
 }

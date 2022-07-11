@@ -11,6 +11,7 @@ import com.google.accompanist.insets.ProvideWindowInsets
 import dagger.hilt.android.AndroidEntryPoint
 import dev.baseio.discordjetpackcompose.navigator.ComposeNavigator
 import dev.baseio.discordjetpackcompose.navigator.DiscordRoute
+import dev.baseio.discordjetpackcompose.ui.routes.dashboard.dashboardRoute
 import dev.baseio.discordjetpackcompose.ui.routes.onboarding.onBoardingRoute
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordJetpackComposeTheme
 import javax.inject.Inject
@@ -38,6 +39,7 @@ class MainActivity : ComponentActivity() {
                         startDestination = DiscordRoute.OnBoarding.name,
                     ) {
                         onBoardingRoute(composeNavigator)
+                        dashboardRoute(composeNavigator)
                     }
                 }
             }

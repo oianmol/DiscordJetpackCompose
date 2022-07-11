@@ -23,6 +23,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import dev.baseio.discordjetpackcompose.entities.CountryEntity
+import dev.baseio.discordjetpackcompose.ui.routes.onboarding.screens.register.CountryPicker
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordJetpackComposeTheme
 import dev.baseio.discordjetpackcompose.ui.utils.readAssetFile
 import kotlinx.coroutines.launch

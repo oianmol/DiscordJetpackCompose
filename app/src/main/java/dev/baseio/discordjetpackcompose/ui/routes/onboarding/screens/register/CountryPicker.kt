@@ -1,4 +1,4 @@
-package dev.baseio.discordjetpackcompose.ui.components
+package dev.baseio.discordjetpackcompose.ui.routes.onboarding.screens.register
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
@@ -33,6 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.baseio.discordjetpackcompose.R
 import dev.baseio.discordjetpackcompose.entities.CountryEntity
+import dev.baseio.discordjetpackcompose.ui.routes.dashboard.components.SearchBox
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordJetpackComposeTheme
 import dev.baseio.discordjetpackcompose.ui.utils.clickableWithRipple
