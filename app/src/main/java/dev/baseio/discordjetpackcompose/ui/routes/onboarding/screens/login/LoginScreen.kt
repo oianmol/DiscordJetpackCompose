@@ -10,6 +10,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -17,8 +18,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.baseio.discordjetpackcompose.R
 import dev.baseio.discordjetpackcompose.navigator.ComposeNavigator
+import dev.baseio.discordjetpackcompose.navigator.DiscordRoute
 import dev.baseio.discordjetpackcompose.ui.components.DiscordScaffold
 import dev.baseio.discordjetpackcompose.ui.routes.onboarding.commonui.CenteredTitleSubtitle
 import dev.baseio.discordjetpackcompose.ui.routes.onboarding.commonui.DiscordDialog
@@ -33,6 +36,13 @@ fun LoginScreen(composeNavigator: ComposeNavigator) {
     val scaffoldState = rememberScaffoldState()
     val viewModel = LoginScreenViewModel()
 
+    val sysUiController = rememberSystemUiController()
+    val colors = DiscordColorProvider.colors
+    SideEffect {
+        sysUiController.setSystemBarsColor(color = colors.discordBackgroundOne)
+        sysUiController.setNavigationBarColor(color = colors.discordBackgroundOne)
+    }
+
     val keyboardFocusRequester = remember { FocusRequester() }
     var emailField by remember { mutableStateOf("") }
     var passwordField by remember { mutableStateOf("") }
@@ -43,7 +53,8 @@ fun LoginScreen(composeNavigator: ComposeNavigator) {
         }
     }
 
-    DiscordScaffold(scaffoldState = scaffoldState, navigator = composeNavigator) { paddingValues ->
+    DiscordScaffold(scaffoldState = scaffoldState,
+        navigator = composeNavigator, backgroundColor = colors.discordBackgroundOne) { paddingValues ->
         Column(
             Modifier.padding(paddingValues),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -83,7 +94,9 @@ fun LoginScreen(composeNavigator: ComposeNavigator) {
             Spacer(modifier = Modifier.height(8.dp))
 
             Button(
-                onClick = { },
+                onClick = {
+                    composeNavigator.navigate(DiscordRoute.Dashboard.name)
+                },
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor = colorResource(id = R.color.brand),
                     contentColor = colorResource(

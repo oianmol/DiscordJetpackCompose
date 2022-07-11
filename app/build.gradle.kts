@@ -103,6 +103,7 @@ dependencies {
     implementation(Lib.Android.COMPOSE_NAVIGATION)
     implementation(Lib.Kotlin.KT_STD)
     implementation(Lib.Android.MATERIAL_DESIGN)
+    implementation(Lib.Android.MATERIAL_EXTENDED_ICONS)
     implementation(Lib.Android.CONSTRAINT_LAYOUT_COMPOSE)
     implementation(Lib.Android.ACCOMPANIST_INSETS)
     implementation(Lib.Android.SPLASH_SCREEN_API)
@@ -111,6 +112,9 @@ dependencies {
     implementation(Lib.Android.APP_COMPAT)
 
     implementation(Lib.Kotlin.KTX_CORE)
+
+    /* Image Loading */
+    implementation(Lib.Android.COIL_COMPOSE)
 
     /*DI*/
     implementation(Lib.Di.hiltAndroid)
