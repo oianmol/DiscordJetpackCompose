@@ -101,7 +101,7 @@ fun LoginScreen(composeNavigator: ComposeNavigator) {
                     contentColor = colorResource(
                         id = R.color.white
                     )
-                ), modifier = Modifier.fillMaxWidth(0.7f)
+                ), modifier = Modifier.fillMaxWidth(0.9f)
             ) {
                 Text(text = stringResource(id = R.string.login))
             }
