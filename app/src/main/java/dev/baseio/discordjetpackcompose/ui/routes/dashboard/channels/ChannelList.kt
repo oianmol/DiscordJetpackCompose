@@ -27,7 +27,6 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -57,6 +56,9 @@ import com.google.accompanist.insets.navigationBarsPadding
 import dev.baseio.discordjetpackcompose.R
 import dev.baseio.discordjetpackcompose.entities.server.ServerEntity
 import dev.baseio.discordjetpackcompose.ui.theme.ChannelListTypography
+import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
+import dev.baseio.discordjetpackcompose.ui.theme.DiscordSurface
+import dev.baseio.discordjetpackcompose.ui.utils.clickableWithRipple
 import dev.baseio.discordjetpackcompose.utils.UIState
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -66,6 +68,7 @@ fun ChannelList(
     serverState: UIState<ServerEntity>,
     onItemSelection: () -> Unit,
     onInviteButtonClick: (String) -> Unit,
+    openServerInfoBottomSheet: () -> Unit
 ) {
     AnimatedContent(
         targetState = serverState,
@@ -98,10 +101,12 @@ fun ChannelList(
 
                 val cardElevation by animateDpAsState(targetValue = if (shouldLiftCard) 4.dp else 0.dp)
 
-                Surface(elevation = cardElevation) {
+                DiscordSurface(elevation = cardElevation) {
                     Column {
                         BoxWithConstraints(
-                            modifier = headerModifier.fillMaxWidth(),
+                            modifier = headerModifier
+                                .fillMaxWidth()
+                                .clickableWithRipple(onClick = openServerInfoBottomSheet),
                             contentAlignment = Alignment.TopCenter
                         ) {
                             server.posterUri?.let { serverPosterUri ->
@@ -122,9 +127,7 @@ fun ChannelList(
                                                 Color.Black, Color.Transparent
                                             ), startY = with(LocalDensity.current) {
                                                 -maxHeight
-                                                    .times(
-                                                        0.1f
-                                                    )
+                                                    .times(0.1f)
                                                     .toPx()
                                             }),
                                         )
@@ -223,5 +226,9 @@ private fun ServerInviteButton(onInviteButtonClick: () -> Unit) {
 @Preview(showSystemUi = true)
 @Composable
 private fun ChannelScreenPreview() {
-    ChannelList(onItemSelection = {}, serverState = UIState.Loading, onInviteButtonClick = {})
+    ChannelList(
+        onItemSelection = {},
+        serverState = UIState.Loading,
+        onInviteButtonClick = {},
+        openServerInfoBottomSheet = {})
 }

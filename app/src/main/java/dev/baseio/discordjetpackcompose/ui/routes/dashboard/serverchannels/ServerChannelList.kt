@@ -35,6 +35,7 @@ fun ServerChannelList(
     modifier: Modifier = Modifier,
     serverId: String,
     chatUserList: List<ChatUserEntity>,
+    openServerInfoBottomSheet: () -> Unit,
     onItemSelection: () -> Unit,
 ) {
     var serverState: UIState<ServerEntity> by remember { mutableStateOf(UIState.Empty) }
@@ -64,7 +65,8 @@ fun ServerChannelList(
                     modifier = Modifier.fillMaxSize(),
                     serverState = serverState,
                     onItemSelection = onItemSelection,
-                    onInviteButtonClick = { serverId -> } // TODO: Not implemented
+                    onInviteButtonClick = { serverId -> }, // TODO: Not implemented
+                    openServerInfoBottomSheet = openServerInfoBottomSheet
                 )
             }
         }
@@ -81,5 +83,6 @@ private fun ServerChannelListPreview() {
     ServerChannelList(
         serverId = ServerIconSelector.DMScreenId,
         chatUserList = emptyList(),
+        openServerInfoBottomSheet = {}
     ) {}
 }

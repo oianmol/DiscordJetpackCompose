@@ -50,14 +50,16 @@ val DiscordSwitchColors @Composable get() = SwitchDefaults.colors(
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ServerInfoBottomSheet(
+    modifier: Modifier = Modifier,
     sheetState: ModalBottomSheetState,
-    serverEntity: ServerEntity,
+    serverEntity: ServerEntity?,
     onBoostIconClick: () -> Unit = {},
     onNotificationsIconClick: () -> Unit = {},
     onInviteIconClick: () -> Unit = {},
     content: @Composable () -> Unit
 ) {
     ModalBottomSheetLayout(
+        modifier = modifier,
         sheetBackgroundColor = DiscordColorProvider.colors.surface,
         scrimColor = Color.Black.copy(alpha = 0.32f),
         sheetContentColor = DiscordColorProvider.colors.contentColorFor(DiscordColorProvider.colors.surface),
@@ -67,16 +69,16 @@ fun ServerInfoBottomSheet(
             LazyColumn {
                 item {
                     ServerImageWithPoster(
-                        imageUri = serverEntity.thumbnailUri, posterUri = serverEntity.posterUri
+                        imageUri = serverEntity?.thumbnailUri.orEmpty(), posterUri = serverEntity?.posterUri.orEmpty()
                     )
                 }
                 item {
                     ServerNameWithBasicInfo(
                         modifier = Modifier.padding(horizontal = 16.dp),
-                        serverName = serverEntity.name,
-                        serverDescription = serverEntity.description,
-                        onlineMembersCount = serverEntity.onlineMembersCount,
-                        totalMembersCount = serverEntity.totalMembersCount,
+                        serverName = serverEntity?.name.orEmpty(),
+                        serverDescription = serverEntity?.description.orEmpty(),
+                        onlineMembersCount = serverEntity?.onlineMembersCount ?: 0,
+                        totalMembersCount = serverEntity?.totalMembersCount ?: 0,
                     )
                 }
                 item {
@@ -87,7 +89,7 @@ fun ServerInfoBottomSheet(
                                 iconTint = Color.Magenta,
                                 label = stringResource(
                                     R.string.server_info_boost_btn_txt,
-                                    serverEntity.boostCount.toString()
+                                    serverEntity?.boostCount.toString()
                                 ),
                                 onClick = onBoostIconClick,
                             ),
@@ -154,7 +156,7 @@ fun ServerInfoBottomSheet(
                 }
                 item {
                     ServerEmojis(
-                        modifier = Modifier.padding(16.dp), emojiUris = serverEntity.serverEmojiUris
+                        modifier = Modifier.padding(16.dp), emojiUris = serverEntity?.serverEmojiUris.orEmpty()
                     )
                 }
             }
