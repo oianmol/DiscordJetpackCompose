@@ -108,6 +108,7 @@ dependencies {
     implementation(Lib.Android.ACCOMPANIST_INSETS)
     implementation(Lib.Android.SPLASH_SCREEN_API)
     implementation(ACCOMPANIST_SYSTEM_UI_CONTROLLER)
+    implementation(Lib.Android.ACCOMPANIST_FLOW_LAYOUTS)
 
     implementation(Lib.Android.APP_COMPAT)
 

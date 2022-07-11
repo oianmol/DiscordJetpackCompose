@@ -22,4 +22,15 @@
     <string name="welcome_back">Welcome Back!</string>
     <string name="login_excited">We\'re so excited to see you again!</string>
     <string name="email_or_phone">Email or Phone Number</string>
+    <string name="server_desc_online_members_count">%s Online</string>
+    <string name="server_desc_total_members_count">%s Members</string>
+    <string name="server_info_boost_btn_txt">%s Boosts</string>
+    <string name="server_info_notifications_btn_txt">Notifications</string>
+    <string name="server_info_invite_btn_txt">Invite</string>
+    <string name="server_info_action_title_mark_as_read">Mark As Read</string>
+    <string name="server_info_action_title_edit_server_profile">Edit Server Profile</string>
+    <string name="server_info_action_title_direct_messages">Direct Messages</string>
+    <string name="server_info_action_title_hide_muted_channels">Hide Muted Channels</string>
+    <string name="server_info_action_title_leave_server">Leave Server</string>
+    <string name="server_info_action_subtitle_direct_messages">Allow direct messages from server members.</string>
 </resources>

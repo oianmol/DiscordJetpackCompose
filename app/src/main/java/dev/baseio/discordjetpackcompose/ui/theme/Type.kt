@@ -2,6 +2,7 @@ package dev.baseio.discordjetpackcompose.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -65,5 +66,32 @@ val ChannelListTypography = Typography(
     button = TextStyle(
         fontWeight = FontWeight.SemiBold,
         fontSize = 14.sp
+    ),
+)
+
+val ServerInfoTypography = Typography(
+    defaultFontFamily = UniSansFontFamily,
+    h1 = TextStyle(
+        fontWeight = FontWeight.Black,
+        fontSize = 28.sp,
+    ),
+    h2 = TextStyle(
+        fontWeight = FontWeight.Bold,
+        fontSize = 16.sp,
+    ),
+    subtitle1 = TextStyle(
+        fontWeight = FontWeight.Medium,
+        fontSize = 16.sp
+    ),
+    subtitle2 = TextStyle(
+        fontSize = 14.sp,
+    ),
+    caption = TextStyle(
+        fontSize = 12.sp,
+    ),
+    overline = TextStyle(
+        fontWeight = FontWeight.Bold,
+        fontSize = 12.sp,
+        color = Color.Magenta
     ),
 )
