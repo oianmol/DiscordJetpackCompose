@@ -72,7 +72,7 @@ Discord Compose follows the principles of Clean Architecture with Android Archit
     <th>Welcome</th>
     <th>Register</th> 
     <th>Login</th>
-    <th>Chat list</th> 
+    <th>Chat list</th>
   </tr>
   <tr>
     <td><img src = "art/discord_welcome_dark.png" width=240/></td> 
@@ -82,9 +82,13 @@ Discord Compose follows the principles of Clean Architecture with Android Archit
   </tr>
   <tr>
     <th>Invite</th>
+    <th>Password Manager Dialog</th>
+    <th>Create Server</th>
   </tr>
   <tr>
     <td><img src = "art/discord_invite_dark.png" width=240/></td>
+    <td><img src = "art/discord_password_manager_dialog_dark.png" width=240/></td>
+    <td><img src = "art/discord_create_server_dark.png" width=240/></td>
   </tr>
 </table>
 
@@ -95,7 +99,7 @@ Discord Compose follows the principles of Clean Architecture with Android Archit
     <th>Welcome</th>
     <th>Register</th> 
     <th>Login</th>
-    <th>Chat list</th> 
+    <th>Chat list</th>
   </tr>
   <tr>
     <td><img src = "art/discord_welcome_light.png" width=240/></td> 
@@ -105,9 +109,13 @@ Discord Compose follows the principles of Clean Architecture with Android Archit
   </tr>
   <tr>
     <th>Invite</th>
+    <th>Password Manager Dialog</th>
+    <th>Create Server</th>
   </tr>
   <tr>
     <td><img src = "art/discord_invite_light.png" width=240/></td>
+    <td><img src = "art/discord_password_manager_dialog_light.png" width=240/></td>
+    <td><img src = "art/discord_create_server_light.png" width=240/></td>
   </tr>
 </table>
 
