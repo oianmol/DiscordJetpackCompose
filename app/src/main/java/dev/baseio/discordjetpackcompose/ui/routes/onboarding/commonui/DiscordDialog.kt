@@ -25,8 +25,10 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import dev.baseio.discordjetpackcompose.R
-import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
-import dev.baseio.discordjetpackcompose.ui.theme.black
+import dev.baseio.discordjetpackcompose.ui.theme.discord_dialog_bg
+import dev.baseio.discordjetpackcompose.ui.theme.discord_dialog_button_bg
+import dev.baseio.discordjetpackcompose.ui.theme.discord_dialog_button_row_bg
+import dev.baseio.discordjetpackcompose.ui.theme.discord_dialog_cancel_button_text
 import dev.baseio.discordjetpackcompose.ui.theme.white
 
 @Composable
@@ -34,8 +36,8 @@ fun DiscordDialog(
     modifier: Modifier = Modifier,
     show: Boolean,
     shape: Shape = RectangleShape,
-    backgroundColor: Color = white,
-    buttonRowBackgroundColor: Color = Color.LightGray,
+    backgroundColor: Color = discord_dialog_bg,
+    buttonRowBackgroundColor: Color = discord_dialog_button_row_bg,
     titleTextProvider: () -> Int,
     subTitleTextProvider: () -> Int,
     confirmActionButtonTextProvider: () -> Int,
@@ -61,20 +63,18 @@ fun DiscordDialog(
                         text = stringResource(id = titleTextProvider()),
                         style = TextStyle(
                             fontWeight = FontWeight.ExtraBold,
-                            fontSize = 20.sp,
-                            color = black
+                            fontSize = 20.sp
                         ),
                         modifier = Modifier
                             .padding(bottom = 16.dp, top = 10.dp)
                             .padding(horizontal = 16.dp)
                     )
-                    Divider(color = Color.LightGray, thickness = 0.5.dp)
+                    Divider(color = Color.LightGray, thickness = 0.15.dp)
                     Text(
                         text = stringResource(id = subTitleTextProvider()),
                         style = TextStyle(
                             fontWeight = FontWeight.Normal,
-                            fontSize = 16.sp,
-                            color = black
+                            fontSize = 16.sp
                         ),
                         modifier = Modifier.padding(
                             top = 12.dp,
@@ -83,7 +83,7 @@ fun DiscordDialog(
                             bottom = 24.dp
                         )
                     )
-                    Divider(color = Color.LightGray, thickness = 0.5.dp)
+                    Divider(color = Color.LightGray, thickness = 0.15.dp)
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.End,
@@ -101,14 +101,14 @@ fun DiscordDialog(
                                 style = TextStyle(
                                     fontWeight = FontWeight.Black,
                                     fontSize = 14.sp,
-                                    color = Color.DarkGray
+                                    color = discord_dialog_cancel_button_text
                                 )
                             )
                         }
                         Button(
                             onClick = { onClickConfirmActionButton() },
                             elevation = ButtonDefaults.elevation(2.dp),
-                            colors = ButtonDefaults.buttonColors(backgroundColor = DiscordColorProvider.colors.linkColor),
+                            colors = ButtonDefaults.buttonColors(backgroundColor = discord_dialog_button_bg),
                             modifier = Modifier
                                 .padding(end = 10.dp)
                                 .padding(vertical = 6.dp)
