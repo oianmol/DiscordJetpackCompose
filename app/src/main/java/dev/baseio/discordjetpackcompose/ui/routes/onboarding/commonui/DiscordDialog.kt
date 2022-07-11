@@ -40,12 +40,12 @@ fun DiscordDialog(
     show: Boolean,
     shape: Shape = RectangleShape,
     backgroundColor: Color = discord_dialog_bg,
-    buttonRowBackgroundColor: Color = discord_dialog_button_row_bg,
     titleTextProvider: () -> Int,
     subTitleTextProvider: () -> Int,
-    confirmActionButtonTextProvider: () -> Int,
     properties: DialogProperties = DialogProperties(),
     onDismissRequest: () -> Unit,
+    buttonRowBackgroundColor: Color = discord_dialog_button_row_bg,
+    confirmActionButtonTextProvider: () -> Int,
     onClickCancelButton: () -> Unit,
     onClickConfirmActionButton: () -> Unit
 ) {
@@ -62,82 +62,132 @@ fun DiscordDialog(
                 Column(
                     modifier = Modifier.padding(top = 16.dp)
                 ) {
-                    Text(
-                        text = stringResource(id = titleTextProvider()),
-                        style = DiscordDialogTypography.h6,
-                        modifier = Modifier
-                            .padding(bottom = 16.dp, top = 10.dp)
-                            .padding(horizontal = 16.dp)
-                    )
+                    DialogTitle(titleTextProvider = { titleTextProvider() })
                     Divider(color = Color.LightGray, thickness = 0.15.dp)
-                    Text(
-                        text = stringResource(id = subTitleTextProvider()),
-                        style = DiscordDialogTypography.subtitle1,
-                        modifier = Modifier.padding(
-                            top = 12.dp,
-                            start = 16.dp,
-                            end = 16.dp,
-                            bottom = 24.dp
-                        )
-                    )
+                    DialogSubtitle(subTitleTextProvider = { subTitleTextProvider() })
                     Divider(color = Color.LightGray, thickness = 0.15.dp)
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.End,
-                        modifier = Modifier
-                            .background(buttonRowBackgroundColor)
-                            .fillMaxWidth()
-                    ) {
-                        Button(
-                            onClick = { onClickCancelButton() },
-                            elevation = ButtonDefaults.elevation(0.dp),
-                            modifier = Modifier.padding(end = 16.dp),
-                            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent)
-                        ) {
-                            Text(
-                                text = stringResource(R.string.cancel),
-                                style = TextStyle(
-                                    fontWeight = FontWeight.Black,
-                                    fontSize = 14.sp,
-                                    color = discord_dialog_cancel_button_text
-                                )
-                            )
-                        }
-                        Button(
-                            onClick = { onClickConfirmActionButton() },
-                            elevation = ButtonDefaults.elevation(2.dp),
-                            colors = ButtonDefaults.buttonColors(backgroundColor = discord_dialog_button_bg),
-                            modifier = Modifier
-                                .padding(end = 10.dp)
-                                .padding(vertical = 6.dp)
-                        ) {
-                            Text(
-                                text = stringResource(id = confirmActionButtonTextProvider()),
-                                style = TextStyle(
-                                    fontWeight = FontWeight.Black,
-                                    fontSize = 14.sp,
-                                    color = white
-                                )
-                            )
-                        }
-                    }
+                    DialogOptions(
+                        buttonRowBackgroundColor = buttonRowBackgroundColor,
+                        confirmActionButtonTextProvider = { confirmActionButtonTextProvider() },
+                        onClickCancelButton = { onClickCancelButton() },
+                        onClickConfirmActionButton = { onClickConfirmActionButton() }
+                    )
                 }
             }
         }
     }
 }
 
+
+@Composable
+fun DialogTitle(
+    titleTextProvider: () -> Int
+) {
+    Text(
+        text = stringResource(id = titleTextProvider()),
+        style = DiscordDialogTypography.h6,
+        modifier = Modifier
+            .padding(bottom = 16.dp, top = 10.dp)
+            .padding(horizontal = 16.dp)
+    )
+}
+
+@Composable
+fun DialogSubtitle(
+    subTitleTextProvider: () -> Int
+) {
+    Text(
+        text = stringResource(id = subTitleTextProvider()),
+        style = DiscordDialogTypography.subtitle1,
+        modifier = Modifier.padding(
+            top = 12.dp,
+            start = 16.dp,
+            end = 16.dp,
+            bottom = 24.dp
+        )
+    )
+}
+
+@Composable
+fun DialogOptions(
+    buttonRowBackgroundColor: Color,
+    confirmActionButtonTextProvider: () -> Int,
+    onClickCancelButton: () -> Unit,
+    onClickConfirmActionButton: () -> Unit
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.End,
+        modifier = Modifier
+            .background(buttonRowBackgroundColor)
+            .fillMaxWidth()
+    ) {
+        DialogNegativeAction(
+            onClickCancelButton = { onClickCancelButton() }
+        )
+        DialogPositiveAction(
+            confirmActionButtonTextProvider = { confirmActionButtonTextProvider() },
+            onClickConfirmActionButton = { onClickConfirmActionButton() }
+        )
+    }
+}
+
+@Composable
+fun DialogNegativeAction(
+    onClickCancelButton: () -> Unit
+) {
+    Button(
+        onClick = { onClickCancelButton() },
+        elevation = ButtonDefaults.elevation(0.dp),
+        modifier = Modifier.padding(end = 16.dp),
+        colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent)
+    ) {
+        Text(
+            text = stringResource(R.string.cancel),
+            style = TextStyle(
+                fontWeight = FontWeight.Black,
+                fontSize = 14.sp,
+                color = discord_dialog_cancel_button_text
+            )
+        )
+    }
+}
+
+@Composable
+fun DialogPositiveAction(
+    confirmActionButtonTextProvider: () -> Int,
+    onClickConfirmActionButton: () -> Unit
+) {
+    Button(
+        onClick = { onClickConfirmActionButton() },
+        elevation = ButtonDefaults.elevation(2.dp),
+        colors = ButtonDefaults.buttonColors(backgroundColor = discord_dialog_button_bg),
+        modifier = Modifier
+            .padding(end = 10.dp)
+            .padding(vertical = 6.dp)
+    ) {
+        Text(
+            text = stringResource(id = confirmActionButtonTextProvider()),
+            style = TextStyle(
+                fontWeight = FontWeight.Black,
+                fontSize = 14.sp,
+                color = white
+            )
+        )
+    }
+}
+
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 private fun DiscordDialogPreview() {
-    DiscordJetpackComposeTheme() {
+    DiscordJetpackComposeTheme {
         DiscordDialog(
             titleTextProvider = { R.string.password_manager },
             subTitleTextProvider = { R.string.password_manager_text },
             confirmActionButtonTextProvider = { R.string.open_settings },
             onDismissRequest = {},
-            onClickCancelButton = {  },
-            onClickConfirmActionButton = {  },
+            onClickCancelButton = { },
+            onClickConfirmActionButton = { },
             show = true
         )
     }
