@@ -5,13 +5,12 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FractionalThreshold
 import androidx.compose.material.ModalBottomSheetValue
@@ -35,6 +34,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.baseio.discordjetpackcompose.entities.ChatUserEntity
 import dev.baseio.discordjetpackcompose.entities.server.ServerEntity
@@ -158,9 +158,20 @@ fun DashboardScreen(
         derivedStateOf { (swipeableState.offset.value - screenCenterPx).roundToInt() }
     }
 
+    val systemUiController = rememberSystemUiController()
+    val isSystemInDarkTheme = isSystemInDarkTheme()
+
+    SideEffect {
+        systemUiController.setNavigationBarColor(
+            color = Color.Transparent,
+            darkIcons = !isSystemInDarkTheme
+        )
+    }
+
     Box(
         modifier = Modifier
-            .fillMaxSize(),
+            .fillMaxSize()
+            .statusBarsPadding(),
     ) {
         var selectedServerId: String? by remember { mutableStateOf(null) }
         val sheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
