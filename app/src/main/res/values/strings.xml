@@ -39,4 +39,7 @@
     <string name="startup_conversations">Start up some conversations, then keep track of them here!</string>
     <string name="pro_tip">PROTIP:</string>
     <string name="whenever_mentions">Whenever someone mentions you it will be saved here for 7 days.</string>
+    <string name="server_emoji_nitro_benefit_msg">Use anywhere with nitro</string>
+    <string name="emoji_count">%s EMOJIS</string>
+    <string name="server_no_emojis">NO EMOJI</string>
 </resources>

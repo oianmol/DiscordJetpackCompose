@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -39,9 +40,16 @@ fun ServerEmojis(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "${emojiUris.size} EMOJIS", style = ServerInfoTypography.overline.copy(
-                    color = DiscordColorProvider.colors.onSurface.copy(alpha = ContentAlpha.disabled)
-                )
+                text = if (emojiUris.isNotEmpty()) {
+                    stringResource(R.string.emoji_count, emojiUris.size.toString())
+                } else {
+                    stringResource(R.string.server_no_emojis)
+                }, style = ServerInfoTypography
+                    .overline
+                    .copy(
+                        color = DiscordColorProvider.colors.onSurface
+                            .copy(alpha = ContentAlpha.disabled)
+                    )
             )
             DotDivider(modifier = Modifier.padding(horizontal = 8.dp))
             Icon(
@@ -52,22 +60,27 @@ fun ServerEmojis(
                     .padding(end = 4.dp)
                     .size(10.dp),
             )
-            Text(text = "Use anywhere with nitro", style = ServerInfoTypography.overline)
+            Text(
+                text = stringResource(R.string.server_emoji_nitro_benefit_msg),
+                style = ServerInfoTypography.overline
+            )
         }
-        DiscordSurface(
-            elevation = 1.dp,
-            shape = listShape,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 8.dp),
-        ) {
-            FlowRow(modifier = Modifier.padding(12.dp), crossAxisSpacing = 4.dp) {
-                emojiUris.forEach { emojiUri ->
-                    AsyncImage(
-                        model = rememberCoilImageRequest(data = emojiUri),
-                        contentDescription = null,
-                        modifier = Modifier.size(emojiSize),
-                    )
+        if (emojiUris.isNotEmpty()) {
+            DiscordSurface(
+                elevation = 1.dp,
+                shape = listShape,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp),
+            ) {
+                FlowRow(modifier = Modifier.padding(12.dp), crossAxisSpacing = 4.dp) {
+                    emojiUris.forEach { emojiUri ->
+                        AsyncImage(
+                            model = rememberCoilImageRequest(data = emojiUri),
+                            contentDescription = null,
+                            modifier = Modifier.size(emojiSize),
+                        )
+                    }
                 }
             }
         }
