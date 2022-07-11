@@ -22,4 +22,12 @@
     <string name="welcome_back">Welcome Back!</string>
     <string name="login_excited">We\'re so excited to see you again!</string>
     <string name="email_or_phone">Email or Phone Number</string>
+    <string name="invite_heading">Do you have an invite?</string>
+    <string name="invite_subheading">Get the most out of Discord by joining a server.</string>
+    <string name="invite_link">Invite link</string>
+    <string name="invite_format_heading">INVITES SHOULD LOOK LIKE</string>
+    <string name="invite_format_1">hTKzmak</string>
+    <string name="invite_format_2">https://discord.gg/hTKzmak</string>
+    <string name="invite_format_3">https://discord.gg/cook-people</string>
+    <string name="invite_button">I don\'t have one</string>
 </resources>
