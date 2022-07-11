@@ -95,3 +95,15 @@ val ServerInfoTypography = Typography(
         color = Color.Magenta
     ),
 )
+
+val DiscordDialogTypography = Typography(
+    defaultFontFamily = UniSansFontFamily,
+    h6 = TextStyle(
+        fontWeight = FontWeight.Bold,
+        fontSize = 20.sp
+    ),
+    subtitle1 = TextStyle(
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp
+    )
+)

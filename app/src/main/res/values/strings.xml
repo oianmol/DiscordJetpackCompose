@@ -12,6 +12,8 @@
     <string name="channel_list_header_btn_txt">Invite Members</string>
     <string name="enter_phone_or_email">Enter phone or email</string>
     <string name="password">Password</string>
+    <string name="password_manager">Password Manager</string>
+    <string name="password_manager_text">If you use a password manager, you\'ll need to allow it in Accessibility Settings -> Downloaded Services. Don\'t worry, we can take you there.</string>
     <string name="forgot_password">Forgot your password?</string>
     <string name="use_pass_manager">Use password manager?</string>
     <string name="view_privacy_policy">View our Privacy Policy</string>
@@ -21,8 +23,24 @@
     <string name="phone">Phone</string>
     <string name="email">Email</string>
     <string name="welcome_back">Welcome Back!</string>
+    <string name="create_your_server">Create Your Server</string>
+    <string name="create_your_server_subtitle">Your Server is where you and your friends hang out. Make yours and start talking.</string>
     <string name="login_excited">We\'re so excited to see you again!</string>
     <string name="email_or_phone">Email or Phone Number</string>
+    <string name="cancel">Cancel</string>
+    <string name="open_settings">Open Settings</string>
+    <string name="server_type_icon">Server Type Icon</string>
+    <string name="arrow_forward">Arrow Forward</string>
+    <string name="create_my_own">Create My Own</string>
+    <string name="gaming">Gaming</string>
+    <string name="school_club">School Club</string>
+    <string name="study_group">Study Group</string>
+    <string name="friends">Friends</string>
+    <string name="artists_and_creators">Artists &amp; Creators</string>
+    <string name="local_community">Local Community</string>
+    <string name="start_from_a_template">START FROM A TEMPLATE</string>
+    <string name="have_an_invite_already">Have an Invite Already?</string>
+    <string name="clear">Clear</string>
     <string name="invite_heading">Do you have an invite?</string>
     <string name="invite_subheading">Get the most out of Discord by joining a server.</string>
     <string name="invite_link">Invite link</string>
@@ -50,4 +68,5 @@
     <string name="server_emoji_nitro_benefit_msg">Use anywhere with nitro</string>
     <string name="emoji_count">%s EMOJIS</string>
     <string name="server_no_emojis">NO EMOJI</string>
+    <string name="friends">Friends</string>
 </resources>
