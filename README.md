@@ -5,6 +5,7 @@
     <td>
 
 ## Discord Compose
+
 <p align="left"> A clone of Android Discord app in Android built using Jetpack compose. </p>
 
 <p align="left">
@@ -32,9 +33,11 @@
 
 - Build a fully functional Android app built entirely with Kotlin and Jetpack Compose.
 - Follows Android design and development best practices with Compose.
-- Explore the possibilities of creating complex ui and ux of a popular app like Discord using Compose.
+- Explore the possibilities of creating complex ui and ux of a popular app like Discord using
+  Compose.
 
 ### Status: 👨‍💻 In progress
+
 <p>Discord Compose is under active development.</p>
 
 </td> 
@@ -48,20 +51,22 @@
 
 | Tools | Link |
 |     :---      |          :---: |
-| 🤖   Kotlin | [Kotlin](https://kotlinlang.org) |
-| 💚   Jetpack Compose | [Jetpack Compose](https://developer.android.com/jetpack/compose) |
-| 🏛   Architecture Components | [Android Architecture Components](https://developer.android.com/topic/libraries/architecture) |
-| 💉   Dagger Hilt | [Dagger Hilt](https://developer.android.com/training/dependency-injection/hilt-android) |
-| 🌐   Material Design | [Material Design](https://developer.android.com/jetpack/androidx/releases/compose-material) |
-| 🌊   Coroutines | [Kotlin Coroutines](https://developer.android.com/kotlin/coroutines) |
+| 🤖 Kotlin | [Kotlin](https://kotlinlang.org) |
+| 💚 Jetpack Compose | [Jetpack Compose](https://developer.android.com/jetpack/compose) |
+| 🏛 Architecture Components | [Android Architecture Components](https://developer.android.com/topic/libraries/architecture) |
+| 💉 Dagger Hilt | [Dagger Hilt](https://developer.android.com/training/dependency-injection/hilt-android) |
+| 🌐 Material Design | [Material Design](https://developer.android.com/jetpack/androidx/releases/compose-material) |
+| 🌊 Coroutines | [Kotlin Coroutines](https://developer.android.com/kotlin/coroutines) |
 | 🏄🏼‍♀️ Flows | [Flows](https://developer.android.com/kotlin/flow) |
 
 ## 🏛️ Architecture
+
 Discord Compose follows the principles of Clean Architecture with Android Architecture Components.
 
 <p align="right">[<a href="#top">Back to top</a>]</p>
 
 ## 📷 Screenshots (Dark theme)
+
 <table style="width:100%">
   <tr>
     <th>Welcome</th>
@@ -75,10 +80,16 @@ Discord Compose follows the principles of Clean Architecture with Android Archit
     <td><img src = "art/discord_login_dark.png" width=240/></td> 
     <td><img src = "art/discord_chat_list_dark.png" width=240/></td>
   </tr>
+  <tr>
+    <th>Invite</th>
+  </tr>
+  <tr>
+    <td><img src = "art/discord_invite_dark.png" width=240/></td>
+  </tr>
 </table>
 
-
 ## 📷 Screenshots (Light theme)
+
 <table style="width:100%">
   <tr>
     <th>Welcome</th>
@@ -91,6 +102,12 @@ Discord Compose follows the principles of Clean Architecture with Android Archit
     <td><img src = "art/discord_register_light.png" width=240/></td>
     <td><img src = "art/discord_login_light.png" width=240/></td> 
     <td><img src = "art/discord_chat_list_light.png" width=240/></td>
+  </tr>
+  <tr>
+    <th>Invite</th>
+  </tr>
+  <tr>
+    <td><img src = "art/discord_invite_light.png" width=240/></td>
   </tr>
 </table>
 
