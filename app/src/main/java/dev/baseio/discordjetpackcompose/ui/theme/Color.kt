@@ -779,3 +779,25 @@ val create_server_card_bottom_button_bg
     } else {
         Color(0xFF747F8C)
     }
+
+
+val discord_dialog_bg
+    @Composable get() = if (isSystemInDarkTheme()) {
+        Color(0xFF36393E)
+    } else {
+        Color(0xFFFEFFFE)
+    }
+
+val discord_dialog_button_row_bg
+    @Composable get() = if (isSystemInDarkTheme()) {
+        Color(0xFF303037)
+    } else {
+        Color(0xFFF9F8F9)
+    }
+val discord_dialog_cancel_button_text
+    @Composable get() = if (isSystemInDarkTheme()) {
+        Color(0xFFA7A8AA)
+    } else {
+        Color(0xFF4F5761)
+    }
+val discord_dialog_button_bg = Color(0xFF5864F1)

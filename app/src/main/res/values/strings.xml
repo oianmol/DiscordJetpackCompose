@@ -54,4 +54,5 @@
     <string name="startup_conversations">Start up some conversations, then keep track of them here!</string>
     <string name="pro_tip">PROTIP:</string>
     <string name="whenever_mentions">Whenever someone mentions you it will be saved here for 7 days.</string>
+    <string name="friends">Friends</string>
 </resources>
