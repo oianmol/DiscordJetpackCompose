@@ -51,17 +51,6 @@ class MainActivity : ComponentActivity() {
         }
         /**For Making the App FullScreen*/
         WindowCompat.setDecorFitsSystemWindows(window, false)
-
-        /**For getting the system top bar on down swipe
-         * Not Sure if we want this*/
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
-            window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
-        } else {
-            window.insetsController?.apply {
-                hide(WindowInsets.Type.statusBars())
-                systemBarsBehavior = WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-            }
-        }
     }
 }
 
