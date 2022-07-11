@@ -67,3 +67,17 @@ val ChannelListTypography = Typography(
         fontSize = 14.sp
     ),
 )
+
+val DiscordDialogTypography = Typography(
+    defaultFontFamily = UniSansFontFamily,
+    h6 = TextStyle(
+        fontWeight = FontWeight.Bold,
+        fontSize = 20.sp,
+        color = black
+    ),
+    subtitle1 = TextStyle(
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp,
+        color = black
+    )
+)

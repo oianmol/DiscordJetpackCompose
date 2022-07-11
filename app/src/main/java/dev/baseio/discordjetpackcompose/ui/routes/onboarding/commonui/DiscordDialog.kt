@@ -20,11 +20,14 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import dev.baseio.discordjetpackcompose.R
+import dev.baseio.discordjetpackcompose.ui.theme.DiscordDialogTypography
+import dev.baseio.discordjetpackcompose.ui.theme.DiscordJetpackComposeTheme
 import dev.baseio.discordjetpackcompose.ui.theme.discord_dialog_bg
 import dev.baseio.discordjetpackcompose.ui.theme.discord_dialog_button_bg
 import dev.baseio.discordjetpackcompose.ui.theme.discord_dialog_button_row_bg
@@ -61,10 +64,7 @@ fun DiscordDialog(
                 ) {
                     Text(
                         text = stringResource(id = titleTextProvider()),
-                        style = TextStyle(
-                            fontWeight = FontWeight.ExtraBold,
-                            fontSize = 20.sp
-                        ),
+                        style = DiscordDialogTypography.h6,
                         modifier = Modifier
                             .padding(bottom = 16.dp, top = 10.dp)
                             .padding(horizontal = 16.dp)
@@ -72,10 +72,7 @@ fun DiscordDialog(
                     Divider(color = Color.LightGray, thickness = 0.15.dp)
                     Text(
                         text = stringResource(id = subTitleTextProvider()),
-                        style = TextStyle(
-                            fontWeight = FontWeight.Normal,
-                            fontSize = 16.sp
-                        ),
+                        style = DiscordDialogTypography.subtitle1,
                         modifier = Modifier.padding(
                             top = 12.dp,
                             start = 16.dp,
@@ -94,6 +91,7 @@ fun DiscordDialog(
                         Button(
                             onClick = { onClickCancelButton() },
                             elevation = ButtonDefaults.elevation(0.dp),
+                            modifier = Modifier.padding(end = 20.dp),
                             colors = ButtonDefaults.buttonColors(backgroundColor = Color.Transparent)
                         ) {
                             Text(
@@ -126,6 +124,22 @@ fun DiscordDialog(
                 }
             }
         }
+    }
+}
+
+@Preview(showSystemUi = true, showBackground = true)
+@Composable
+private fun DiscordDialogPreview() {
+    DiscordJetpackComposeTheme() {
+        DiscordDialog(
+            titleTextProvider = { R.string.password_manager },
+            subTitleTextProvider = { R.string.password_manager_text },
+            confirmActionButtonTextProvider = { R.string.open_settings },
+            onDismissRequest = {},
+            onClickCancelButton = {  },
+            onClickConfirmActionButton = {  },
+            show = true
+        )
     }
 }
 
