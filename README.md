@@ -107,7 +107,7 @@ Discord Compose follows the principles of Clean Architecture with Android Archit
     <th>Invite</th>
   </tr>
   <tr>
-    <td><img src = "art/discord_invite_dark.png" width=240/></td>
+    <td><img src = "art/discord_invite_light.png" width=240/></td>
   </tr>
 </table>
 
