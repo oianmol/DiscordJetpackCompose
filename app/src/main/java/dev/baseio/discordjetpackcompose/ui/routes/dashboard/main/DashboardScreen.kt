@@ -6,10 +6,12 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FractionalThreshold
 import androidx.compose.material.rememberSwipeableState
@@ -28,6 +30,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.baseio.discordjetpackcompose.entities.ChatUserEntity
 import dev.baseio.discordjetpackcompose.entities.server.ServerEntity
 import dev.baseio.discordjetpackcompose.navigator.ComposeNavigator
+import dev.baseio.discordjetpackcompose.navigator.DiscordScreen
 import dev.baseio.discordjetpackcompose.ui.components.ServerDrawer
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.ui.utils.getSampleServer
@@ -149,7 +152,8 @@ fun DashboardScreen(
     val coroutineScope = rememberCoroutineScope()
 
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize(),
     ) {
         ServerDrawer(modifier = leftDrawerModifier,
             serverList = serverList,
@@ -158,7 +162,7 @@ fun DashboardScreen(
                 isAnyItemSelectedInServers = isSelected
                 coroutineScope.launch { swipeableState.animateTo(CenterScreenState.CENTER) }
             },
-            onAddButtonClick = {})
+            onAddButtonClick = { composeNavigator.navigate(DiscordScreen.CreateServer.name) })
         Box(
             modifier = rightDrawerModifier
                 .fillMaxHeight()

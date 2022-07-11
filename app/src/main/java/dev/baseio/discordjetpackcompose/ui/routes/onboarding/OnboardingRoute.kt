@@ -12,16 +12,16 @@ import dev.baseio.discordjetpackcompose.ui.routes.onboarding.screens.welcome.Wel
 import dev.baseio.discordjetpackcompose.ui.routes.onboarding.screens.register.RegisterScreen
 
 fun NavGraphBuilder.onBoardingRoute(
-    composeNavigator: ComposeNavigator,
+    composeNavigator: ComposeNavigator
 ) {
     navigation(
-      startDestination = DiscordScreen.Welcome.name,
-      route = DiscordRoute.OnBoarding.name
+        startDestination = DiscordScreen.Welcome.name,
+        route = DiscordRoute.OnBoarding.name
     ) {
         composable(DiscordScreen.Welcome.name) {
             WelcomeScreen(composeNavigator)
         }
-        composable(DiscordScreen.Login.name){
+        composable(DiscordScreen.Login.name) {
             LoginScreen(composeNavigator)
         }
         composable(DiscordScreen.Register.name) {
