@@ -49,10 +49,23 @@
     <string name="invite_format_2">https://discord.gg/hTKzmak</string>
     <string name="invite_format_3">https://discord.gg/cook-people</string>
     <string name="invite_button">I don\'t have one</string>
+    <string name="server_desc_online_members_count">%s Online</string>
+    <string name="server_desc_total_members_count">%s Members</string>
+    <string name="server_info_boost_btn_txt">%s Boosts</string>
+    <string name="server_info_notifications_btn_txt">Notifications</string>
+    <string name="server_info_invite_btn_txt">Invite</string>
+    <string name="server_info_action_title_mark_as_read">Mark As Read</string>
+    <string name="server_info_action_title_edit_server_profile">Edit Server Profile</string>
+    <string name="server_info_action_title_direct_messages">Direct Messages</string>
+    <string name="server_info_action_title_hide_muted_channels">Hide Muted Channels</string>
+    <string name="server_info_action_title_leave_server">Leave Server</string>
+    <string name="server_info_action_subtitle_direct_messages">Allow direct messages from server members.</string>
     <string name="recent_mentions">Recent Mentions</string>
     <string name="all_servers">All Servers</string>
     <string name="startup_conversations">Start up some conversations, then keep track of them here!</string>
     <string name="pro_tip">PROTIP:</string>
     <string name="whenever_mentions">Whenever someone mentions you it will be saved here for 7 days.</string>
-    <string name="friends">Friends</string>
+    <string name="server_emoji_nitro_benefit_msg">Use anywhere with nitro</string>
+    <string name="emoji_count">%s EMOJIS</string>
+    <string name="server_no_emojis">NO EMOJI</string>
 </resources>

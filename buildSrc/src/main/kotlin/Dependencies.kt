@@ -52,6 +52,7 @@ object Lib {
     const val COMPOSE_UI = "androidx.compose.ui:ui:${COMPOSE_VERSION}"
     const val ACCOMPANIST_SYSTEM_UI_CONTROLLER =
       "com.google.accompanist:accompanist-systemuicontroller:${ACCOMPANIST_VERSION}"
+    const val ACCOMPANIST_FLOW_LAYOUTS = "com.google.accompanist:accompanist-flowlayout:${ACCOMPANIST_VERSION}"
     const val COIL_COMPOSE = "io.coil-kt:coil-compose:${COMPOSE_COIL_VERSION}"
     const val COMPOSE_LIVEDATA = "androidx.compose.runtime:runtime-livedata:1.2.0-rc03"
     const val COMPOSE_NAVIGATION =

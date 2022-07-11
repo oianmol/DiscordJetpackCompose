@@ -14,9 +14,18 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FractionalThreshold
+import androidx.compose.material.ModalBottomSheetValue
+import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material.rememberSwipeableState
 import androidx.compose.material.swipeable
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -31,7 +40,7 @@ import dev.baseio.discordjetpackcompose.entities.ChatUserEntity
 import dev.baseio.discordjetpackcompose.entities.server.ServerEntity
 import dev.baseio.discordjetpackcompose.navigator.ComposeNavigator
 import dev.baseio.discordjetpackcompose.navigator.DiscordScreen
-import dev.baseio.discordjetpackcompose.ui.components.ServerDrawer
+import dev.baseio.discordjetpackcompose.ui.routes.dashboard.serverinfo.ServerInfoBottomSheet
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.ui.utils.getSampleServer
 import kotlin.math.roundToInt
@@ -149,20 +158,28 @@ fun DashboardScreen(
         derivedStateOf { (swipeableState.offset.value - screenCenterPx).roundToInt() }
     }
 
-    val coroutineScope = rememberCoroutineScope()
-
     Box(
         modifier = Modifier
             .fillMaxSize(),
     ) {
-        ServerDrawer(modifier = leftDrawerModifier,
-            serverList = serverList,
-            chatUserList = chatUserList,
-            onAnyItemSelected = { isSelected ->
-                isAnyItemSelectedInServers = isSelected
-                coroutineScope.launch { swipeableState.animateTo(CenterScreenState.CENTER) }
-            },
-            onAddButtonClick = { composeNavigator.navigate(DiscordScreen.CreateServer.name) })
+        var selectedServerId: String? by remember { mutableStateOf(null) }
+        val sheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
+        val coroutineScope = rememberCoroutineScope()
+        ServerInfoBottomSheet(
+            modifier = leftDrawerModifier,
+            sheetState = sheetState, serverEntity = serverList.find { it.id == selectedServerId }) {
+            ServerDrawer(
+                serverList = serverList,
+                chatUserList = chatUserList,
+                onAnyItemSelected = { isSelected, currentServerId ->
+                    isAnyItemSelectedInServers = isSelected
+                    coroutineScope.launch { swipeableState.animateTo(CenterScreenState.CENTER) }
+                    selectedServerId = currentServerId
+                },
+                onAddButtonClick = { composeNavigator.navigate(DiscordScreen.CreateServer.name) },
+                openServerInfoBottomSheet = { coroutineScope.launch { sheetState.show() } }
+            )
+        }
         Box(
             modifier = rightDrawerModifier
                 .fillMaxHeight()
