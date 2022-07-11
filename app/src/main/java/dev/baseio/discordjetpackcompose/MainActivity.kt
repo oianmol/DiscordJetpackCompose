@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.LaunchedEffect
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.insets.ProvideWindowInsets
@@ -14,8 +13,6 @@ import dev.baseio.discordjetpackcompose.navigator.DiscordRoute
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.dashboardRoute
 import dev.baseio.discordjetpackcompose.ui.routes.onboarding.onBoardingRoute
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordJetpackComposeTheme
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @AndroidEntryPoint
