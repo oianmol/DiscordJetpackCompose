@@ -11,10 +11,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.baseio.discordjetpackcompose.R
 import dev.baseio.discordjetpackcompose.navigator.ComposeNavigator
 import dev.baseio.discordjetpackcompose.ui.components.DiscordScaffold
 import dev.baseio.discordjetpackcompose.ui.routes.onboarding.screens.register.AuthTextField
+import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.ui.theme.Typography
 
 
@@ -22,6 +24,13 @@ import dev.baseio.discordjetpackcompose.ui.theme.Typography
 fun InviteScreen(composeNavigator: ComposeNavigator) {
 
     val scaffoldState = rememberScaffoldState()
+
+    val sysUiController = rememberSystemUiController()
+    val colors = DiscordColorProvider.colors
+    SideEffect {
+        sysUiController.setSystemBarsColor(color = colors.discordBackgroundOne)
+        sysUiController.setNavigationBarColor(color = colors.discordBackgroundOne)
+    }
 
     var inviteLink by remember {
         mutableStateOf("")
@@ -31,7 +40,10 @@ fun InviteScreen(composeNavigator: ComposeNavigator) {
         scaffoldState = scaffoldState,
         topAppBar = {
 
-        }) { _ ->
+        },
+        backgroundColor = colors.discordBackgroundOne,
+        navigator = composeNavigator
+    ) { _ ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
