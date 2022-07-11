@@ -42,6 +42,8 @@ fun SearchBox(currentValue: String, onValueChanged: (String) -> Unit) {
         value = currentValue,
         onValueChange = onValueChanged,
         colors = TextFieldDefaults.textFieldColors(
+            textColor = DiscordColorProvider.colors.onSurface,
+            cursorColor = DiscordColorProvider.colors.primary,
             backgroundColor = DiscordColorProvider.colors.onSurface.copy(alpha = 0.05f),
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent
@@ -53,12 +55,18 @@ fun SearchBox(currentValue: String, onValueChanged: (String) -> Unit) {
                 tint = DiscordColorProvider.colors.onSurface.copy(alpha = ContentAlpha.disabled)
             )
         },
-        placeholder = { Text(text = stringResource(id = R.string.country_picker_hint)) },
+        placeholder = {
+            Text(
+                text = stringResource(id = R.string.country_picker_hint),
+                color = DiscordColorProvider.colors.onSurface
+            )
+        },
         trailingIcon = {
             AnimatedVisibility(visible = currentValue.isNotBlank()) {
                 IconButton(onClick = { onValueChanged("") }) {
                     Icon(
                         imageVector = Icons.Default.Close,
+                        tint = DiscordColorProvider.colors.onSurface,
                         contentDescription = "countryPickerSearchBoxTrailingIcon"
                     )
                 }

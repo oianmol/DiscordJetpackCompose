@@ -172,7 +172,7 @@ val design_dark_default_color_primary_dark = Color(0xFF000000)
 val design_dark_default_color_primary_variant = Color(0xFF3700b3)
 val design_dark_default_color_secondary = Color(0xFF03dac6)
 val design_dark_default_color_secondary_variant = Color(0xFF03dac6)
-val design_dark_default_color_surface = Color(0xFF121212)
+val design_dark_default_color_surface = Color(0xFF2f3238)
 val design_default_color_background = Color(0xFFffffff)
 val design_default_color_secondary_background = Color(0xffe4e5e8)
 
