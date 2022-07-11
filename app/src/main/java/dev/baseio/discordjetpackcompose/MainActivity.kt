@@ -1,9 +1,14 @@
 package dev.baseio.discordjetpackcompose
 
+import android.os.Build
 import android.os.Bundle
+import android.view.WindowInsets
+import android.view.WindowInsetsController
+import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.LaunchedEffect
+import androidx.core.view.WindowCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.insets.ProvideWindowInsets
@@ -26,6 +31,8 @@ class MainActivity : ComponentActivity() {
 
         setTheme(R.style.Theme_DiscordJetpackCompose)
 
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        
         setContent {
             val navController = rememberNavController()
 
@@ -47,3 +54,4 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+

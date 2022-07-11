@@ -107,6 +107,7 @@ dependencies {
     implementation(Lib.Android.CONSTRAINT_LAYOUT_COMPOSE)
     implementation(Lib.Android.ACCOMPANIST_INSETS)
     implementation(ACCOMPANIST_SYSTEM_UI_CONTROLLER)
+    implementation(Lib.Android.ACCOMPANIST_FLOW_LAYOUTS)
 
     implementation(Lib.Android.APP_COMPAT)
 
