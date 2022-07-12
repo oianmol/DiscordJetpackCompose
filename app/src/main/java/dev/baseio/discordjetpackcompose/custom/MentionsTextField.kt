@@ -3,6 +3,7 @@ package dev.baseio.discordjetpackcompose.custom
 import android.widget.Toast
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.TextField
@@ -65,40 +66,22 @@ fun MentionsTextField() {
     Timber.e(spans.toString())
     val annotatedString = buildAnnotatedString(mentionText.text, spans)
 
-    BasicTextField(value = mentionText.copy(annotatedString = annotatedString),
+    TextField(
+        value = mentionText.copy(annotatedString = annotatedString),
         onValueChange = { update ->
             mentionText = update
-        }, onTextLayout = { textLayoutResult ->
-            layoutResult = textLayoutResult
         },
-        modifier = Modifier.pointerInput(Unit) {
-            // TODO fix this logic to detect tap gesture in a textfield!
-            detectTapGestures { offsetPosition ->
-                layoutResult?.let { textLayoutResult ->
-                    val position = textLayoutResult.getOffsetForPosition(offsetPosition)
-                    annotatedString.getStringAnnotations(position, position).firstOrNull()
-                        ?.let { result ->
-                            when (result.tag) {
-                                URL_TAG -> {
-                                    // handle uri
-                                    result.item
-                                }
-                                HASH_TAG -> {
-                                    //handle click on hashtag
-                                    result.item
-                                }
-                                AT_THE_RATE -> {
-                                    //handle click on mention
-                                    result.item
-                                }
-                                else -> {
-                                    //handle text click
-                                }
-                            }
-                        }
-                }
-            }
-        })
+        colors = TextFieldDefaults.textFieldColors(
+            textColor = contentColor(),
+            disabledTextColor = contentColor(),
+            cursorColor = DiscordColorProvider.colors.primary,
+            backgroundColor = DiscordColorProvider.colors.secondaryBackground,
+            focusedIndicatorColor = Color.Transparent, // hide the indicator
+            unfocusedIndicatorColor = Color.Transparent,
+            disabledIndicatorColor = Color.Transparent,
+            placeholderColor = contentColor()
+        ), modifier = Modifier.fillMaxWidth()
+    )
 }
 
 @Composable
