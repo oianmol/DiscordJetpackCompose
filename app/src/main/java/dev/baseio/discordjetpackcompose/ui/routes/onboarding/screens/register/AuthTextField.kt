@@ -140,7 +140,7 @@ fun TextFieldTrailingIcon(
 }
 
 @Composable
-private fun contentColor() =
+fun contentColor() =
     DiscordColorProvider.colors.contentColorFor(DiscordColorProvider.colors.secondaryBackground)
 
 @Composable
