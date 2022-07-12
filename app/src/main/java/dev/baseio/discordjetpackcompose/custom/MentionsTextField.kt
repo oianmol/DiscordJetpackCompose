@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.ClickableText
+import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.rememberScaffoldState
@@ -21,6 +23,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import dev.baseio.discordjetpackcompose.custom.MentionsPatterns.AT_THE_RATE
 import dev.baseio.discordjetpackcompose.custom.MentionsPatterns.HASH_TAG
 import dev.baseio.discordjetpackcompose.custom.MentionsPatterns.URL_TAG
@@ -54,18 +57,14 @@ object MentionsPatterns {
 
 
 @Composable
-fun MentionsTextField() {
+fun MentionsTextField(onSpanUpdate: (String, List<SpanInfos>) -> Unit) {
     var mentionText by remember {
         mutableStateOf(TextFieldValue())
     }
-    var layoutResult by remember {
-        mutableStateOf<TextLayoutResult?>(null)
-    }
     val spans =
         extractSpans(mentionText.text, listOf(urlPattern, mentionTagPattern, hashTagPattern))
-    Timber.e(spans.toString())
+    onSpanUpdate(mentionText.text, spans)
     val annotatedString = buildAnnotatedString(mentionText.text, spans)
-
     TextField(
         value = mentionText.copy(annotatedString = annotatedString),
         onValueChange = { update ->
@@ -80,8 +79,29 @@ fun MentionsTextField() {
             unfocusedIndicatorColor = Color.Transparent,
             disabledIndicatorColor = Color.Transparent,
             placeholderColor = contentColor()
-        ), modifier = Modifier.fillMaxWidth()
+        ), modifier = Modifier
+            .padding(16.dp)
+            .fillMaxWidth()
     )
+}
+
+@Composable
+fun MentionsText(mentionText: String) {
+    val spans =
+        extractSpans(mentionText, listOf(urlPattern, mentionTagPattern, hashTagPattern))
+    val annotatedString = buildAnnotatedString(mentionText, spans)
+
+    ClickableText(text = annotatedString,
+        modifier = Modifier
+            .padding(16.dp), onClick = { offset->
+            annotatedString.getStringAnnotations(start = offset,
+                end = offset)
+                .firstOrNull()?.let { annotation ->
+                    // If yes, we log its value
+                    Timber.e("Clicked ${ annotation.item}")
+                }
+
+        })
 }
 
 @Composable
@@ -155,8 +175,15 @@ data class SpanInfos(
 fun PreviewMentionsTF() {
     DiscordJetpackComposeTheme {
         DiscordScaffold(scaffoldState = rememberScaffoldState()) {
+            var mentionText by remember {
+                mutableStateOf("")
+            }
             Column(Modifier.padding(it)) {
-                MentionsTextField()
+                MentionsTextField { text, spans ->
+                    mentionText = text
+                }
+
+                MentionsText(mentionText = mentionText)
             }
         }
     }
