@@ -26,6 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.insets.statusBarsPadding
 import dev.baseio.discordjetpackcompose.R
 import dev.baseio.discordjetpackcompose.navigator.ComposeNavigator
 import dev.baseio.discordjetpackcompose.ui.components.DiscordAppBar
@@ -42,6 +43,7 @@ fun CreateServer(
 ) {
     val scaffoldState = rememberScaffoldState()
     DiscordScaffold(
+        modifier = Modifier.statusBarsPadding(),
         scaffoldState = scaffoldState,
         topAppBar = {
             DiscordAppBar(

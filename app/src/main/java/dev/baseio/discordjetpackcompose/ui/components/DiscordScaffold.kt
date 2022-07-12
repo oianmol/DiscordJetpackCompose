@@ -16,6 +16,7 @@ import dev.baseio.discordjetpackcompose.ui.theme.contentColorFor
 
 @Composable
 fun DiscordScaffold(
+    modifier: Modifier = Modifier,
     scaffoldState: ScaffoldState,
     navigator: ComposeNavigator? = null,
     backgroundColor: Color = DiscordColorProvider.colors.background,
@@ -42,7 +43,7 @@ fun DiscordScaffold(
     Scaffold(
         backgroundColor = backgroundColor,
         contentColor = contentColor,
-        modifier = Modifier.statusBarsPadding(),
+        modifier = modifier,
         scaffoldState = scaffoldState,
         topBar = topAppBar,
         snackbarHost = {
