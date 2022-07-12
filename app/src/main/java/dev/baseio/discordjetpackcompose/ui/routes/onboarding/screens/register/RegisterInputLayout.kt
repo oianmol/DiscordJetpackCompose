@@ -53,8 +53,7 @@ fun RegisterInputLayout(
     ) {
 
         AnimatedVisibility(visible = selectedOption == RegistrationType.Phone) {
-            AuthTextField(
-                isCountryCodeTextFieldProvider = { true },
+            CountryPickerTextField(
                 modifier = Modifier
                     .width(120.dp)
                     .padding(end = 8.dp),

@@ -96,6 +96,31 @@ fun AuthTextField(
 }
 
 @Composable
+fun CountryPickerTextField(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit = {},
+    value: String,
+    onValueChange: (String) -> Unit,
+    label: String,
+    isEnabled: Boolean = true,
+    focusRequester: FocusRequester = remember { FocusRequester() }
+) {
+    TextField(
+        modifier = modifier
+            .fillMaxHeight()
+            .clickable { onClick() }
+            .focusRequester(focusRequester),
+        shape = RoundedCornerShape(4.dp),
+        enabled = isEnabled,
+        colors = textFieldColors(),
+        value = value,
+        onValueChange = onValueChange,
+        singleLine = true,
+        label = { Text(label, color = contentColor()) }
+    )
+}
+
+@Composable
 fun TextFieldTrailingIcon(
     @DrawableRes iconId: Int? = null,
     iconSize: Dp = 24.dp,
