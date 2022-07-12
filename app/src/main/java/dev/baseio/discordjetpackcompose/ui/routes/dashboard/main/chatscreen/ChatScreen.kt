@@ -53,7 +53,7 @@ fun ChatScreen(
     modifier = Modifier.clip(RoundedCornerShape(2)),
     navigator = composeNavigator,
     scaffoldState = scaffoldState,
-    backgroundColor = DiscordColorProvider.colors.discordBackgroundOne,
+    backgroundColor = DiscordColorProvider.colors.chatBackground,
     topAppBar = {
       ChatScreenAppBar(
         name = "Thomas",
@@ -110,20 +110,20 @@ fun ChatScreenAppBar(
       Icon(
         imageVector = Filled.Call,
         contentDescription = null,
-        modifier = Modifier.padding(end = 8.dp),
+        modifier = Modifier.padding(end = 16.dp),
       )
       Icon(
         imageVector = Filled.VideoCall,
         contentDescription = null,
-        modifier = Modifier.padding(end = 8.dp),
+        modifier = Modifier.padding(end = 16.dp),
       )
       Icon(
         imageVector = Filled.People,
         contentDescription = null,
-        modifier = Modifier.padding(end = 8.dp),
+        modifier = Modifier.padding(end = 16.dp),
       )
     },
-    backgroundColor = create_server_screen,
+    backgroundColor = DiscordColorProvider.colors.chatTopBar,
     elevation = 0.dp
   )
 }

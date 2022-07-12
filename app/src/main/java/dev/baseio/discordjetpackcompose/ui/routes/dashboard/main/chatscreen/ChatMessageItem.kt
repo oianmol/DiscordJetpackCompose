@@ -36,11 +36,14 @@ fun ChatMessageItem(message: DiscordMessageEntity) {
         imageUrl = "https://images.unsplash.com/photo-1464863979621-258859e62245?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=686&q=80"
       )
     },
-    modifier = Modifier.padding(2.dp), secondaryText = {
-    ChatMedia(message)
-  }, text = {
-    ChatUserDateTime(message)
-  })
+    modifier = Modifier.padding(2.dp),
+    secondaryText = {
+      ChatMedia(message)
+    },
+    text = {
+      ChatUserDateTime(message)
+    }
+  )
 }
 
 @Composable
@@ -67,7 +70,8 @@ fun ChatMedia(message: DiscordMessageEntity) {
       message.message,
       style = MessageTypography.subtitle2.copy(
         color = DiscordColorProvider.colors.textSecondary
-      ), modifier = Modifier.padding(4.dp)
+      ),
+      modifier = Modifier.padding(4.dp)
     )
   }
 }
@@ -77,10 +81,10 @@ fun ChatUserDateTime(message: DiscordMessageEntity) {
   Row(verticalAlignment = Alignment.CenterVertically) {
     Text(
       message.createdBy,
-      style = MessageTypography.subtitle1.copy(
-        fontWeight = FontWeight.Bold,
+      style = MessageTypography.h1.copy(
         color = DiscordColorProvider.colors.textPrimary
-      ), modifier = Modifier.padding(4.dp)
+      ),
+      modifier = Modifier.padding(4.dp)
     )
     Text(
       message.createdDate.calendar().formattedTime(),

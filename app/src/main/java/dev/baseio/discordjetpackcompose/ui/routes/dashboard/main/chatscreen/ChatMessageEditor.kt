@@ -40,7 +40,7 @@ fun ChatMessageEditor(
     Row(
       modifier = Modifier
         .background(
-          color = DiscordColorProvider.colors.surface,
+          color = DiscordColorProvider.colors.chatEditor,
           shape = RoundedCornerShape(50)
         )
         .fillMaxHeight()

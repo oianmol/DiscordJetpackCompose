@@ -3,10 +3,8 @@ package dev.baseio.discordjetpackcompose.ui.theme
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.Colors
 import androidx.compose.material.MaterialTheme
-import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 
 private val LightColorPalette = DiscordColorPalette(
@@ -17,6 +15,9 @@ private val LightColorPalette = DiscordColorPalette(
     textPrimary = Color.Black,
     textSecondary = Color.DarkGray,
     background = design_default_color_background,
+    chatTopBar = Color(0xFFFFFFFF),
+    chatBackground = Color(0xFFFFFFFF),
+    chatEditor = Color(0xFFecedef),
     secondaryBackground = design_default_color_secondary_background,
     onSecondaryBackground = design_default_color_on_secondary,
     surface = design_default_color_surface,
@@ -45,6 +46,9 @@ private val DarkColorPalette = DiscordColorPalette(
     textPrimary = Color.White,
     textSecondary = Color.LightGray,
     background = design_dark_default_color_background,
+    chatTopBar = Color(0xFF303136),
+    chatBackground = Color(0xFF363940),
+    chatEditor = Color(0xFF2a2b2f),
     secondaryBackground = design_dark_default_color_secondary_background,
     onSecondaryBackground = design_dark_default_color_on_background,
     surface = design_dark_default_color_surface,
@@ -118,6 +122,9 @@ class DiscordColorPalette(
     textPrimary: Color = Color(0xFF5865f2),
     textSecondary: Color,
     background: Color = Color(0xFF2f3238),
+    chatTopBar: Color,
+    chatBackground: Color,
+    chatEditor: Color,
     secondaryBackground: Color,
     onSecondaryBackground: Color,
     surface: Color = Color(0xFF121212),
@@ -150,6 +157,12 @@ class DiscordColorPalette(
     var textSecondary by mutableStateOf(textSecondary)
         private set
     var background by mutableStateOf(background, structuralEqualityPolicy())
+        internal set
+    var chatTopBar by mutableStateOf(chatTopBar, structuralEqualityPolicy())
+        internal set
+    var chatBackground by mutableStateOf(chatBackground, structuralEqualityPolicy())
+        internal set
+    var chatEditor by mutableStateOf(chatEditor, structuralEqualityPolicy())
         internal set
     var secondaryBackground by mutableStateOf(secondaryBackground, structuralEqualityPolicy())
         internal set
