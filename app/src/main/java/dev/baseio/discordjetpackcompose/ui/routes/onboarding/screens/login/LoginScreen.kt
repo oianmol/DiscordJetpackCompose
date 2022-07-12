@@ -74,10 +74,10 @@ fun LoginScreen(composeNavigator: ComposeNavigator) {
         Box(
             modifier = Modifier.fillMaxSize()
         ) {
-            val bgImage =
+            val backgroundImage =
                 if (isSystemInDarkTheme()) R.drawable.background_image_dark else R.drawable.background_image_light
             Image(
-                painter = painterResource(id = bgImage),
+                painter = painterResource(id = backgroundImage),
                 contentDescription = null,
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.FillBounds
