@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -25,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import dev.baseio.discordjetpackcompose.R
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordJetpackComposeTheme
+import dev.baseio.discordjetpackcompose.ui.theme.DiscordSurface
 
 enum class DiscordIndicatorPosition {
     Start, End, Top, Bottom
@@ -37,6 +37,7 @@ fun DiscordIndicator(
     indicatorPosition: DiscordIndicatorPosition = DiscordIndicatorPosition.Start,
     indicatorColor: Color = DiscordColorProvider.colors.onSurface,
     indicatorSize: Dp = 8.dp,
+    includeInvisibleIndicatorPadding: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val indicatorAlignment by remember {
@@ -75,16 +76,25 @@ fun DiscordIndicator(
     Box(modifier = modifier) {
         Box(
             modifier = Modifier.padding(
-                start = if (indicatorPosition == DiscordIndicatorPosition.Start && isEnabled) indicatorSize else 0.dp,
-                top = if (indicatorPosition == DiscordIndicatorPosition.Top && isEnabled) indicatorSize else 0.dp,
-                end = if (indicatorPosition == DiscordIndicatorPosition.End && isEnabled) indicatorSize else 0.dp,
-                bottom = if (indicatorPosition == DiscordIndicatorPosition.Bottom && isEnabled) indicatorSize else 0.dp,
+                start = if (indicatorPosition == DiscordIndicatorPosition.Start && (isEnabled || includeInvisibleIndicatorPadding)) indicatorSize else 0.dp,
+                top = if (indicatorPosition == DiscordIndicatorPosition.Top && (isEnabled || includeInvisibleIndicatorPadding)) indicatorSize else 0.dp,
+                end = if (indicatorPosition == DiscordIndicatorPosition.End && (isEnabled || includeInvisibleIndicatorPadding)) indicatorSize else 0.dp,
+                bottom = if (indicatorPosition == DiscordIndicatorPosition.Bottom && (isEnabled || includeInvisibleIndicatorPadding)) indicatorSize else 0.dp,
             ),
         ) { content() }
         if (isEnabled) {
-            Surface(
+            DiscordSurface(
                 modifier = Modifier
-                    .size(width = indicatorSize.times(0.7f), height = indicatorSize)
+                    .size(
+                        width = when (indicatorPosition) {
+                            DiscordIndicatorPosition.Start, DiscordIndicatorPosition.End -> indicatorSize.times(0.7f)
+                            DiscordIndicatorPosition.Top, DiscordIndicatorPosition.Bottom -> indicatorSize
+                        },
+                        height = when (indicatorPosition) {
+                            DiscordIndicatorPosition.Start, DiscordIndicatorPosition.End -> indicatorSize
+                            DiscordIndicatorPosition.Top, DiscordIndicatorPosition.Bottom -> indicatorSize.times(0.7f)
+                        },
+                    )
                     .align(indicatorAlignment),
                 shape = indicatorShape,
                 color = indicatorColor
