@@ -39,7 +39,7 @@ fun AuthTextField(
 }
 
 @Composable
-private fun contentColor() = DiscordColorProvider.colors.contentColorFor(DiscordColorProvider.colors.secondaryBackground)
+fun contentColor() = DiscordColorProvider.colors.contentColorFor(DiscordColorProvider.colors.secondaryBackground)
 
 @Composable
 private fun textFieldColors() = TextFieldDefaults.textFieldColors(

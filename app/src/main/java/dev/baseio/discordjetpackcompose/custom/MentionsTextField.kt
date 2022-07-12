@@ -1,22 +1,36 @@
 package dev.baseio.discordjetpackcompose.custom
 
+import android.widget.Toast
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.TextField
+import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextLayoutResult
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.tooling.preview.Preview
 import dev.baseio.discordjetpackcompose.custom.MentionsPatterns.AT_THE_RATE
 import dev.baseio.discordjetpackcompose.custom.MentionsPatterns.HASH_TAG
 import dev.baseio.discordjetpackcompose.custom.MentionsPatterns.URL_TAG
 import dev.baseio.discordjetpackcompose.custom.MentionsPatterns.hashTagPattern
 import dev.baseio.discordjetpackcompose.custom.MentionsPatterns.mentionTagPattern
 import dev.baseio.discordjetpackcompose.custom.MentionsPatterns.urlPattern
+import dev.baseio.discordjetpackcompose.ui.components.DiscordScaffold
+import dev.baseio.discordjetpackcompose.ui.routes.onboarding.screens.register.contentColor
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
+import dev.baseio.discordjetpackcompose.ui.theme.DiscordJetpackComposeTheme
+import timber.log.Timber
 import java.util.regex.Pattern
 
 object MentionsPatterns {
@@ -32,57 +46,59 @@ object MentionsPatterns {
         Pattern.CASE_INSENSITIVE or Pattern.MULTILINE or Pattern.DOTALL
     )
 
-    val hashTagPattern: Pattern = Pattern.compile(".*?\\s(#\\w+).*?")
+    val hashTagPattern: Pattern = Pattern.compile("\\B(\\#[a-zA-Z0-9]+\\b)(?!;)")
 
-    val mentionTagPattern: Pattern = Pattern.compile(".*?\\s(@\\w+).*?")
+    val mentionTagPattern: Pattern = Pattern.compile("\\B(\\@[a-zA-Z0-9]+\\b)(?!;)")
 }
 
 
 @Composable
 fun MentionsTextField() {
     var mentionText by remember {
-        mutableStateOf("")
+        mutableStateOf(TextFieldValue())
     }
     var layoutResult by remember {
         mutableStateOf<TextLayoutResult?>(null)
     }
-
     val spans =
-        extractSpans(mentionText, listOf<Pattern>(urlPattern, mentionTagPattern, hashTagPattern))
+        extractSpans(mentionText.text, listOf(urlPattern, mentionTagPattern, hashTagPattern))
+    Timber.e(spans.toString())
+    val annotatedString = buildAnnotatedString(mentionText.text, spans)
 
-    val annotatedString = buildAnnotatedString(mentionText, spans)
-
-    BasicTextField(value = annotatedString.text, onValueChange = { update ->
-        mentionText = update
-    }, onTextLayout = { textLayoutResult ->
-        layoutResult = textLayoutResult
-    }, modifier = Modifier.pointerInput(Unit) {
-        detectTapGestures { offsetPosition ->
-            layoutResult?.let { textLayoutResult ->
-                val position = textLayoutResult.getOffsetForPosition(offsetPosition)
-                annotatedString.getStringAnnotations(position, position).firstOrNull()
-                    ?.let { result ->
-                        when (result.tag) {
-                            URL_TAG -> {
-                                // handle uri
-                                result.item
-                            }
-                            HASH_TAG -> {
-                                //handle click on hashtag
-                                result.item
-                            }
-                            AT_THE_RATE -> {
-                                //handle click on mention
-                                result.item
-                            }
-                            else -> {
-                                //handle text click
+    BasicTextField(value = mentionText.copy(annotatedString = annotatedString),
+        onValueChange = { update ->
+            mentionText = update
+        }, onTextLayout = { textLayoutResult ->
+            layoutResult = textLayoutResult
+        },
+        modifier = Modifier.pointerInput(Unit) {
+            // TODO fix this logic to detect tap gesture in a textfield!
+            detectTapGestures { offsetPosition ->
+                layoutResult?.let { textLayoutResult ->
+                    val position = textLayoutResult.getOffsetForPosition(offsetPosition)
+                    annotatedString.getStringAnnotations(position, position).firstOrNull()
+                        ?.let { result ->
+                            when (result.tag) {
+                                URL_TAG -> {
+                                    // handle uri
+                                    result.item
+                                }
+                                HASH_TAG -> {
+                                    //handle click on hashtag
+                                    result.item
+                                }
+                                AT_THE_RATE -> {
+                                    //handle click on mention
+                                    result.item
+                                }
+                                else -> {
+                                    //handle text click
+                                }
                             }
                         }
-                    }
+                }
             }
-        }
-    })
+        })
 }
 
 @Composable
@@ -95,7 +111,7 @@ private fun buildAnnotatedString(
         addStyle(
             style = SpanStyle(
                 color = DiscordColorProvider.colors.linkColor,
-                textDecoration = TextDecoration.Underline
+                textDecoration = if (it.tag == URL_TAG) TextDecoration.Underline else TextDecoration.None
             ),
             start = it.start,
             end = it.end
@@ -149,3 +165,16 @@ data class SpanInfos(
     val end: Int,
     val tag: String,
 )
+
+
+@Preview
+@Composable
+fun PreviewMentionsTF() {
+    DiscordJetpackComposeTheme {
+        DiscordScaffold(scaffoldState = rememberScaffoldState()) {
+            Column(Modifier.padding(it)) {
+                MentionsTextField()
+            }
+        }
+    }
+}
