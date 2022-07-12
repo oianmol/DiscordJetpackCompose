@@ -5,9 +5,12 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dev.baseio.discordjetpackcompose.repositories.CountryRepo
+import dev.baseio.discordjetpackcompose.repositories.MessagesRepo
 import dev.baseio.discordjetpackcompose.repositories.ServerRepo
 import dev.baseio.discordjetpackcompose.usecases.FetchCountriesUseCase
 import dev.baseio.discordjetpackcompose.usecases.GetServerUseCase
+import dev.baseio.discordjetpackcompose.usecases.chat.FetchMessagesUseCase
+import dev.baseio.discordjetpackcompose.usecases.chat.SendMessageUseCase
 import javax.inject.Singleton
 
 @Module
@@ -21,4 +24,10 @@ object UseCaseModule {
     @Provides
     @Singleton
     fun provideGetServerUseCase(serverRepo: ServerRepo) = GetServerUseCase(serverRepo = serverRepo)
+
+    @Provides
+    fun provideFetchMessageUseCase(messagesRepo: MessagesRepo) = FetchMessagesUseCase(messagesRepo)
+
+    @Provides
+    fun provideSendMessageUseCase(messagesRepo: MessagesRepo) = SendMessageUseCase(messagesRepo)
 }
