@@ -27,9 +27,9 @@ class MainActivity : ComponentActivity() {
     lateinit var composeNavigator: ComposeNavigator
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
         setTheme(R.style.Theme_DiscordJetpackCompose)
+
+        super.onCreate(savedInstanceState)
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
         
