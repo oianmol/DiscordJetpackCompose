@@ -1,6 +1,7 @@
 package dev.baseio.discordjetpackcompose.ui.routes.dashboard.main
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
+import androidx.compose.material.ContentAlpha
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FractionalThreshold
 import androidx.compose.material.ModalBottomSheetValue
@@ -213,10 +215,19 @@ fun DashboardScreen(
             enter = fadeIn(),
             exit = fadeOut()
         ) {
+            val shouldNotFocusCenterScreen by remember {
+                derivedStateOf {
+                    !swipeableState.isAnimationRunning &&
+                            swipeableState.progress.fraction !in 0.05f..0.95f &&
+                            swipeableState.currentValue != CenterScreenState.CENTER
+                }
+            }
+            val focusOpacity by animateFloatAsState(targetValue = if (shouldNotFocusCenterScreen) ContentAlpha.disabled else 0f)
             Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(Color.Green)
+                    .background(Color.Black.copy(alpha = focusOpacity))
             )
         }
     }
