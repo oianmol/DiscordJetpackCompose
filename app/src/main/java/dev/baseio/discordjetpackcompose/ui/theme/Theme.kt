@@ -14,6 +14,8 @@ private val LightColorPalette = DiscordColorPalette(
     primaryVariant = design_default_color_primary_variant,
     secondary = design_default_color_secondary,
     secondaryVariant = design_default_color_secondary_variant,
+    textPrimary = Color.Black,
+    textSecondary = Color.DarkGray,
     background = design_default_color_background,
     secondaryBackground = design_default_color_secondary_background,
     onSecondaryBackground = design_default_color_on_secondary,
@@ -40,6 +42,8 @@ private val DarkColorPalette = DiscordColorPalette(
     primaryVariant = design_dark_default_color_primary_variant,
     secondary = design_dark_default_color_secondary,
     secondaryVariant = design_dark_default_color_secondary_variant,
+    textPrimary = Color.White,
+    textSecondary = Color.LightGray,
     background = design_dark_default_color_background,
     secondaryBackground = design_dark_default_color_secondary_background,
     onSecondaryBackground = design_dark_default_color_on_background,
@@ -111,6 +115,8 @@ class DiscordColorPalette(
     primaryVariant: Color = Color(0xFF3700B3),
     secondary: Color = Color(0xFF03DAC6),
     secondaryVariant: Color = secondary,
+    textPrimary: Color = Color(0xFF5865f2),
+    textSecondary: Color,
     background: Color = Color(0xFF2f3238),
     secondaryBackground: Color,
     onSecondaryBackground: Color,
@@ -139,6 +145,10 @@ class DiscordColorPalette(
         internal set
     var secondaryVariant by mutableStateOf(secondaryVariant, structuralEqualityPolicy())
         internal set
+    var textPrimary by mutableStateOf(textPrimary)
+        private set
+    var textSecondary by mutableStateOf(textSecondary)
+        private set
     var background by mutableStateOf(background, structuralEqualityPolicy())
         internal set
     var secondaryBackground by mutableStateOf(secondaryBackground, structuralEqualityPolicy())

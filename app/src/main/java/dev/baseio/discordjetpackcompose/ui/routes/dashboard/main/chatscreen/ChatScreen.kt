@@ -17,6 +17,7 @@ import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.filled.VideoCall
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -24,12 +25,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.google.accompanist.insets.navigationBarsPadding
+import com.google.accompanist.insets.statusBarsPadding
 import dev.baseio.discordjetpackcompose.R.string
 import dev.baseio.discordjetpackcompose.navigator.ComposeNavigator
 import dev.baseio.discordjetpackcompose.ui.components.DiscordAppBar
 import dev.baseio.discordjetpackcompose.ui.components.DiscordScaffold
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.components.OnlineIndicator
-import dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.chatscreen.ChatScreenContent
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.ui.theme.create_server_screen
 import dev.baseio.discordjetpackcompose.viewmodels.ChatScreenViewModel
@@ -43,6 +45,10 @@ fun ChatScreen(
 ) {
   val scaffoldState = rememberScaffoldState()
 
+  SideEffect {
+    viewModel.fetchMessages()
+  }
+
   DiscordScaffold(
     modifier = Modifier.clip(RoundedCornerShape(2)),
     navigator = composeNavigator,
@@ -50,7 +56,7 @@ fun ChatScreen(
     backgroundColor = DiscordColorProvider.colors.discordBackgroundOne,
     topAppBar = {
       ChatScreenAppBar(
-        name = "PushpalRoy",
+        name = "Thomas",
         isOnline = true,
         composeNavigator = composeNavigator
       )

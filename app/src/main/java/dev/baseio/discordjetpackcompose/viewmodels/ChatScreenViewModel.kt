@@ -22,7 +22,7 @@ class ChatScreenViewModel @Inject constructor(
   var chatMessagesFlow = MutableStateFlow<Flow<PagingData<DiscordMessageEntity>>?>(null)
   var message = MutableStateFlow("")
 
-  fun requestFetch() {
+  fun fetchMessages() {
     chatMessagesFlow.value = fetchMessagesUseCase.performStreaming("1")
   }
 
