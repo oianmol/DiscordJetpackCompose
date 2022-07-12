@@ -31,58 +31,60 @@ private const val DEFAULT_COUNTRY_CODE = "+91"
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterialApi::class)
 @Composable
 fun RegisterInputLayout(
-  selectedOption: RegistrationType,
-  coroutineScope: CoroutineScope,
-  bottomSheetState: ModalBottomSheetState,
-  selectedCountry: CountryEntity?
+    selectedOption: RegistrationType,
+    coroutineScope: CoroutineScope,
+    bottomSheetState: ModalBottomSheetState,
+    selectedCountry: CountryEntity?
 ) {
-  val keyboardFocusRequester = remember { FocusRequester() }
-  val keyboardController = LocalSoftwareKeyboardController.current
-  var textFieldValue by remember { mutableStateOf("") }
+    val keyboardFocusRequester = remember { FocusRequester() }
+    val keyboardController = LocalSoftwareKeyboardController.current
+    var textFieldValue by remember { mutableStateOf("") }
 
-  LaunchedEffect(Unit) {
-    this.coroutineContext.job.invokeOnCompletion {
-      keyboardFocusRequester.requestFocus()
+    LaunchedEffect(Unit) {
+        this.coroutineContext.job.invokeOnCompletion {
+            keyboardFocusRequester.requestFocus()
+        }
     }
-  }
 
-  Row(
-    modifier = Modifier
-      .height(55.dp)
-      .fillMaxWidth()
-  ) {
-
-    AnimatedVisibility(visible = selectedOption == RegistrationType.Phone) {
-      AuthTextField(
+    Row(
         modifier = Modifier
-          .width(120.dp)
-          .padding(end = 8.dp),
-        onClick = {
-          coroutineScope.launch {
-            keyboardController?.hide()
-            bottomSheetState.show()
-          }
-        },
-        isEnabled = false,
-        value = selectedCountry?.phoneCountryCode ?: DEFAULT_COUNTRY_CODE,
-        onValueChange = {},
-        label = stringResource(id = Strings.country_code)
-      )
-    }
+            .height(55.dp)
+            .fillMaxWidth()
+    ) {
 
-    AuthTextField(
-      modifier = Modifier
-        .fillMaxWidth(),
-      value = textFieldValue,
-      onValueChange = { textFieldValue = it },
-      label = if (selectedOption == RegistrationType.Phone) {
-        stringResource(
-          id = Strings.phone_number
+        AnimatedVisibility(visible = selectedOption == RegistrationType.Phone) {
+            CountryPickerTextField(
+                modifier = Modifier
+                    .width(120.dp)
+                    .padding(end = 8.dp),
+                onClick = {
+                    coroutineScope.launch {
+                        keyboardController?.hide()
+                        bottomSheetState.show()
+                    }
+                },
+                isEnabled = false,
+                value = selectedCountry?.phoneCountryCode ?: DEFAULT_COUNTRY_CODE,
+                onValueChange = {},
+                label = stringResource(id = Strings.country_code)
+            )
+        }
+
+        AuthTextField(
+            modifier = Modifier
+                .fillMaxWidth(),
+            isPhoneNumberTextFieldProvider = { selectedOption == RegistrationType.Phone },
+            trailingIconOnClick = { textFieldValue = "" },
+            value = textFieldValue,
+            onValueChange = { textFieldValue = it },
+            label = if (selectedOption == RegistrationType.Phone) {
+                stringResource(
+                    id = Strings.phone_number
+                )
+            } else {
+                stringResource(id = Strings.email)
+            },
+            focusRequester = keyboardFocusRequester
         )
-      } else {
-        stringResource(id = Strings.email)
-      },
-      focusRequester = keyboardFocusRequester
-    )
-  }
+    }
 }

@@ -58,9 +58,6 @@ fun MentionsTextField() {
     var mentionText by remember {
         mutableStateOf(TextFieldValue())
     }
-    var layoutResult by remember {
-        mutableStateOf<TextLayoutResult?>(null)
-    }
     val spans =
         extractSpans(mentionText.text, listOf(urlPattern, mentionTagPattern, hashTagPattern))
     Timber.e(spans.toString())
