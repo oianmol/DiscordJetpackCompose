@@ -1,5 +1,6 @@
 package dev.baseio.discordjetpackcompose.ui.routes.onboarding.screens.welcome
 
+import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults.buttonColors
 import androidx.compose.material.Icon
@@ -18,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -53,11 +56,14 @@ fun WelcomeScreen(composeNavigator: ComposeNavigator) {
     ) {
 
         Header()
-        Image(
-            painter = painterResource(id = R.drawable.welcomelogo),
-            contentDescription = null,
-            modifier = Modifier.padding(32.dp)
-        )
+
+        if (LocalConfiguration.current.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            Image(
+                painter = painterResource(id = R.drawable.welcomelogo),
+                contentDescription = null,
+                modifier = Modifier.padding(32.dp)
+            )
+        }
 
         CenteredTitleSubtitle(
             modifier = Modifier.padding(horizontal = 40.dp),
@@ -68,12 +74,12 @@ fun WelcomeScreen(composeNavigator: ComposeNavigator) {
 
         Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
             OnboardingScreensButton(
-                buttonTextProvider = {R.string.register},
+                buttonTextProvider = { R.string.register },
                 onClick = { composeNavigator.navigate(DiscordScreen.Register.name) }
             )
             Spacer(modifier = Modifier.size(2.dp))
             OnboardingScreensButton(
-                buttonTextProvider = {R.string.login},
+                buttonTextProvider = { R.string.login },
                 buttonBackgroundColor = onboarding_button_grey,
                 onClick = { composeNavigator.navigate(DiscordScreen.Login.name) }
             )
@@ -92,7 +98,7 @@ private fun Header() {
             painter = painterResource(id = R.drawable.discord_welcome_header_light),
             contentDescription = "",
             modifier = Modifier
-                .fillMaxWidth(0.5f),
+                .width(200.dp),
             tint = DiscordColorProvider.colors.brand
         )
     }
