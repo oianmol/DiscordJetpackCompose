@@ -12,13 +12,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.ui.theme.Typography
 
 @Composable
-fun CenteredTitleSubtitle(title: Int, subtitle: Int) {
-    Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+fun CenteredTitleSubtitle(modifier: Modifier = Modifier, title: Int, subtitle: Int) {
+    Column(modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
         Title(title)
-        Spacer(modifier = Modifier.height(4.dp))
+        Spacer(modifier = Modifier.height(8.dp))
         SubTitle(subtitle)
     }
 }
@@ -27,7 +28,9 @@ fun CenteredTitleSubtitle(title: Int, subtitle: Int) {
 private fun SubTitle(title: Int) {
     Text(
         text = stringResource(id = title),
-        style = Typography.subtitle1, textAlign = TextAlign.Center
+        style = Typography.subtitle1,
+        textAlign = TextAlign.Center,
+        color = DiscordColorProvider.colors.onSurface
     )
 }
 
@@ -35,6 +38,8 @@ private fun SubTitle(title: Int) {
 private fun Title(subtitle: Int) {
     Text(
         text = stringResource(id = subtitle),
-        style = Typography.h5.copy(fontWeight = FontWeight.Bold), textAlign = TextAlign.Center
+        style = Typography.h5.copy(fontWeight = FontWeight.Bold),
+        textAlign = TextAlign.Center,
+        color = DiscordColorProvider.colors.onSurface
     )
 }

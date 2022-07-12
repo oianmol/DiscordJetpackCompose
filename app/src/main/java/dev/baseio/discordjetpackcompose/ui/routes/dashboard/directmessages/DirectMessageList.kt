@@ -14,7 +14,6 @@ import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -38,6 +37,7 @@ import com.google.accompanist.insets.navigationBarsPadding
 import dev.baseio.discordjetpackcompose.R
 import dev.baseio.discordjetpackcompose.entities.ChatUserEntity
 import dev.baseio.discordjetpackcompose.ui.theme.DirectMessageListTypography
+import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.ui.theme.contentColorFor
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -70,7 +70,7 @@ fun DirectMessageList(
         val cardElevation by animateDpAsState(targetValue = if (shouldLiftCard) 2.dp else 0.dp)
         Card(
             elevation = cardElevation,
-            backgroundColor = DiscordColorProvider.colors.secondaryBackground,
+            backgroundColor = DiscordColorProvider.colors.surface,
             contentColor = DiscordColorProvider.colors.contentColorFor(DiscordColorProvider.colors.secondaryBackground)
         ) {
             Column(
@@ -96,7 +96,7 @@ fun DirectMessageList(
                 Surface(
                     modifier = Modifier.padding(bottom = 16.dp, end = 16.dp),
                     shape = RoundedCornerShape(8.dp),
-                    color = DiscordColorProvider.colors.background.copy(alpha = 0.3f),
+                    color = DiscordColorProvider.colors.onSurface.copy(alpha = 0.2f),
                     onClick = openSearchScreen,
                 ) {
                     Row(

@@ -12,6 +12,11 @@ import dev.baseio.discordjetpackcompose.utils.Constants
  * @param channels List of channels ([ChannelEntity]) this server contains
  * @param allChannelsUnreadCount Total unread message count of all the channels (Optional)
  * @param hasNitroSubscription Whether the channel has purchased the Discord Nitro subscription (this will lead to a special icon being displayed before the channel name)
+ * @param totalMembersCount Displays how many members have joined this server so far
+ * @param onlineMembersCount Displays how many members are online right now
+ * @param description A short description about the server (Optional)
+ * @param boostCount Displays how many Discord Boosts does this channel have
+ * @param serverEmojiUris List of URIs for emojis which are specific to this server by default (Can be used in other servers too with the Discord Nitro Subscription)
  * */
 data class ServerEntity(
     val id: String,
@@ -21,5 +26,10 @@ data class ServerEntity(
     val posterUri: String? = null,
     val channels: List<ChannelEntity> = emptyList(),
     val allChannelsUnreadCount: Int = channels.sumOf { it.unreadCount },
-    val hasNitroSubscription: Boolean
+    val hasNitroSubscription: Boolean,
+    val totalMembersCount: Int = 0,
+    val onlineMembersCount: Int = 0,
+    val description: String? = null,
+    val boostCount: Int = 0,
+    val serverEmojiUris: List<String> = emptyList()
 )

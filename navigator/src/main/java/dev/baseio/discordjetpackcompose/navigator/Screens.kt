@@ -14,6 +14,8 @@ sealed class DiscordScreen(
     object Register : DiscordScreen("register")
     object Login : DiscordScreen("login")
     object Dashboard : DiscordScreen("dashboard")
+    object CreateServer : DiscordScreen("createServer")
+    object Invite : DiscordScreen("invite")
     object NotificationSettings : DiscordScreen("notification_settings")
 }
 

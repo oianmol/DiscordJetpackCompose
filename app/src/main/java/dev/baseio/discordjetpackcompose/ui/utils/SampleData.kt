@@ -44,5 +44,13 @@ fun getSampleServer(serverId: String) = ServerEntity(
             isUnread = true,
         ),
     ),
-    hasNitroSubscription = serverId.toIntOrNull()?.rem(2) == 0
+    hasNitroSubscription = serverId.toIntOrNull()?.rem(2) == 0,
+    onlineMembersCount = 415,
+    totalMembersCount = 1009,
+    serverEmojiUris = mutableListOf<String>().apply {
+        repeat(16) {
+            add("https://cdn.shopify.com/s/files/1/1061/1924/files/Hugging_Face_Emoji_2028ce8b-c213-4d45-94aa-21e1a0842b4d_large.png?15202324258887420558")
+        }
+    },
+    boostCount = 7,
 )

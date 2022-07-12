@@ -55,7 +55,8 @@ fun CountryPicker(
         coroutineScope.launch { sheetState.hide() }
     }
     ModalBottomSheetLayout(
-        sheetState = sheetState, sheetContent = {
+        sheetState = sheetState,
+        sheetContent = {
             Box(modifier = Modifier.fillMaxSize()) {
                 Column {
                     SearchBox(
@@ -82,7 +83,11 @@ fun CountryPicker(
                     }
                 }
             }
-        }, sheetShape = RoundedCornerShape(0), scrimColor = Color.Black.copy(alpha = 0.32f)
+        },
+      sheetShape = RoundedCornerShape(0),
+      sheetBackgroundColor = DiscordColorProvider.colors.surface,
+      sheetContentColor = DiscordColorProvider.colors.onPrimary,
+      scrimColor = Color.Black.copy(alpha = 0.32f)
     ) {
         backgroundContent()
     }

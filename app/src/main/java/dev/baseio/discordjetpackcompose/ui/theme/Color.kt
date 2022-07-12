@@ -4,6 +4,7 @@
 package dev.baseio.discordjetpackcompose.ui.theme
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
@@ -159,7 +160,7 @@ val creator_revenue_start_500 = Color(0xFF11a574)
 val dark_grey_2 = Color(0xFF36393e)
 val dark_grey_2_alpha_10 = Color(0xFF303337)
 val design_bottom_navigation_shadow_color = Color(0xFF14000000)
-val design_dark_default_color_background = Color(0xFF121212)
+val design_dark_default_color_background = Color(0xFF2f3238)
 val design_dark_default_color_secondary_background = Color(0xff28252f)
 val design_dark_default_color_error = Color(0xFFcf6679)
 val design_dark_default_color_on_background = Color(0xFFffffff)
@@ -172,7 +173,7 @@ val design_dark_default_color_primary_dark = Color(0xFF000000)
 val design_dark_default_color_primary_variant = Color(0xFF3700b3)
 val design_dark_default_color_secondary = Color(0xFF03dac6)
 val design_dark_default_color_secondary_variant = Color(0xFF03dac6)
-val design_dark_default_color_surface = Color(0xFF121212)
+val design_dark_default_color_surface = Color(0xFF2f3238)
 val design_default_color_background = Color(0xFFffffff)
 val design_default_color_secondary_background = Color(0xffe4e5e8)
 
@@ -185,6 +186,7 @@ val design_default_link_color = Color(0xFF2e8eca)
 
 val design_default_app_bar_color_light = Color(0xffffffff)
 val design_default_app_bar_color_dark = Color(0xFF383842)
+val design_default_app_bar_color_dark2 = Color(0xff2b2b2f)
 val design_default_color_on_error = Color(0xFFffffff)
 val design_default_color_on_primary = Color(0xFFffffff)
 val design_default_color_on_secondary = Color(0xFF000000)
@@ -756,3 +758,46 @@ val xbox = Color(0xFF107c10)
 val xbox_500 = Color(0xFF107c10)
 val youtube = Color(0xFFcb2120)
 val youtube_500 = Color(0xFFcb2120)
+
+val create_server_screen
+    @Composable get() = if (isSystemInDarkTheme()) {
+        Color(0xFF373840)
+    } else {
+        Color(0xFFFEFFFE)
+    }
+
+val create_server_card_bg
+    @Composable get() = if (isSystemInDarkTheme()) {
+        Color(0xFF2B2B2E)
+    } else {
+        Color(0xFFEBEDEF)
+    }
+
+val create_server_card_bottom_button_bg
+    @Composable get() = if (isSystemInDarkTheme()) {
+        Color(0xFF4E535D)
+    } else {
+        Color(0xFF747F8C)
+    }
+
+
+val discord_dialog_bg
+    @Composable get() = if (isSystemInDarkTheme()) {
+        Color(0xFF36393E)
+    } else {
+        Color(0xFFFEFFFE)
+    }
+
+val discord_dialog_button_row_bg
+    @Composable get() = if (isSystemInDarkTheme()) {
+        Color(0xFF303037)
+    } else {
+        Color(0xFFF9F8F9)
+    }
+val discord_dialog_cancel_button_text
+    @Composable get() = if (isSystemInDarkTheme()) {
+        Color(0xFFA7A8AA)
+    } else {
+        Color(0xFF4F5761)
+    }
+val discord_dialog_button_bg = Color(0xFF5864F1)

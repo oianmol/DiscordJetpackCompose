@@ -108,6 +108,7 @@ dependencies {
     implementation(Lib.Android.ACCOMPANIST_INSETS)
     implementation(Lib.Android.SPLASH_SCREEN_API)
     implementation(ACCOMPANIST_SYSTEM_UI_CONTROLLER)
+    implementation(Lib.Android.ACCOMPANIST_FLOW_LAYOUTS)
 
     implementation(Lib.Android.APP_COMPAT)
 
@@ -137,6 +138,7 @@ dependencies {
     kapt(Lib.Room.roomCompiler)
     implementation(Lib.Room.roomKtx)
     implementation(Lib.Room.roomPaging)
+    implementation("androidx.core:core-splashscreen:1.0.0-rc01")
 
     /*Testing*/
     testImplementation(TestLib.JUNIT)
