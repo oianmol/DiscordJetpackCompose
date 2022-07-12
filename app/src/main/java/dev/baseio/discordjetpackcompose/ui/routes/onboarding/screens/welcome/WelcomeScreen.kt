@@ -18,10 +18,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -31,9 +29,10 @@ import dev.baseio.discordjetpackcompose.R
 import dev.baseio.discordjetpackcompose.navigator.ComposeNavigator
 import dev.baseio.discordjetpackcompose.navigator.DiscordScreen
 import dev.baseio.discordjetpackcompose.ui.routes.onboarding.commonui.CenteredTitleSubtitle
+import dev.baseio.discordjetpackcompose.ui.routes.onboarding.commonui.OnboardingScreensButton
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
-import dev.baseio.discordjetpackcompose.ui.theme.brand
-import dev.baseio.discordjetpackcompose.ui.theme.material_grey_600
+import dev.baseio.discordjetpackcompose.ui.theme.onboarding_button_blue
+import dev.baseio.discordjetpackcompose.ui.theme.onboarding_button_grey
 
 @Composable
 fun WelcomeScreen(composeNavigator: ComposeNavigator) {
@@ -42,7 +41,7 @@ fun WelcomeScreen(composeNavigator: ComposeNavigator) {
     val colors = DiscordColorProvider.colors
     SideEffect {
         sysUiController.setSystemBarsColor(color = colors.discordBackgroundOne)
-        sysUiController.setNavigationBarColor(color = colors.discordBackgroundOne)
+        sysUiController.setNavigationBarColor(color = colors.background)
     }
 
     Column(
@@ -68,13 +67,14 @@ fun WelcomeScreen(composeNavigator: ComposeNavigator) {
         )
 
         Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-            WelcomeScreenButton(
-                buttonText = ButtonText.REGISTER,
+            OnboardingScreensButton(
+                buttonTextProvider = {R.string.register},
                 onClick = { composeNavigator.navigate(DiscordScreen.Register.name) }
             )
             Spacer(modifier = Modifier.size(2.dp))
-            WelcomeScreenButton(
-                buttonText = ButtonText.LOGIN,
+            OnboardingScreensButton(
+                buttonTextProvider = {R.string.login},
+                buttonBackgroundColor = onboarding_button_grey,
                 onClick = { composeNavigator.navigate(DiscordScreen.Login.name) }
             )
         }
@@ -98,33 +98,3 @@ private fun Header() {
     }
 }
 
-@Composable
-fun WelcomeScreenButton(
-    buttonText: ButtonText,
-    onClick: () -> Unit
-) {
-    Button(
-        onClick = { onClick() },
-        colors = buttonColors(
-            backgroundColor = if (buttonText.text == "Login") {
-                material_grey_600
-            } else {
-                brand
-            },
-            contentColor = colorResource(id = R.color.white)
-        ),
-        modifier = Modifier
-            .fillMaxWidth(0.9f)
-    ) {
-        Text(
-            text = buttonText.text,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(vertical = 4.dp)
-        )
-    }
-}
-
-enum class ButtonText(val text: String) {
-    LOGIN(text = "Login"),
-    REGISTER(text = "Register")
-}

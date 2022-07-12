@@ -31,6 +31,7 @@ private val LightColorPalette = DiscordColorPalette(
     linkColor = design_default_link_color,
     tabsBackgroundColor = design_default_color_secondary_background,
     tabSelectedColor = design_default_tab_selected_color,
+    textFieldContentColor = text_field_content_color_light,
     isLight = true
 )
 
@@ -56,6 +57,7 @@ private val DarkColorPalette = DiscordColorPalette(
     linkColor = design_default_link_color,
     tabsBackgroundColor = Color(0xFF2a2b2f),
     tabSelectedColor = Color(0xFF4f535c),
+    textFieldContentColor = text_field_content_color_Dark,
     isLight = false
 )
 
@@ -90,7 +92,7 @@ fun DiscordColorPalette.contentColorFor(backgroundColor: Color): Color {
         primary -> onPrimary
         primaryVariant -> onPrimary
         secondary -> onSecondary
-        appBarColor,appBarColor2 -> onSecondaryBackground
+        appBarColor, appBarColor2 -> onSecondaryBackground
         secondaryBackground -> onSecondaryBackground
         secondaryVariant -> onSecondary
         background -> onBackground
@@ -121,11 +123,12 @@ class DiscordColorPalette(
     onSurface: Color = Color.White,
     onError: Color = Color.Black,
     appBarColor: Color,
-    appBarColor2:Color,
+    appBarColor2: Color,
     discordBackgroundOne: Color,
     linkColor: Color,
     tabsBackgroundColor: Color,
-    tabSelectedColor:Color,
+    tabSelectedColor: Color,
+    textFieldContentColor: Color,
     isLight: Boolean = false
 ) {
     var primary by mutableStateOf(primary, structuralEqualityPolicy())
@@ -170,6 +173,8 @@ class DiscordColorPalette(
         internal set
     var tabsBackgroundColor by mutableStateOf(tabsBackgroundColor, structuralEqualityPolicy())
         internal set
+    var textFieldContentColor by mutableStateOf(textFieldContentColor, structuralEqualityPolicy())
+        internal set
     var tabSelectedColor by mutableStateOf(tabSelectedColor, structuralEqualityPolicy())
         internal set
 
@@ -194,6 +199,7 @@ class DiscordColorPalette(
         discordBackgroundOne = other.discordBackgroundOne
         linkColor = other.linkColor
         tabsBackgroundColor = other.tabsBackgroundColor
+        textFieldContentColor = other.textFieldContentColor
         tabSelectedColor = other.tabSelectedColor
     }
 }
