@@ -22,11 +22,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.baseio.discordjetpackcompose.R
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.ui.theme.contentColorFor
-import dev.baseio.discordjetpackcompose.ui.theme.white
+import dev.baseio.discordjetpackcompose.ui.theme.text_field_cursor_color
 
 @Composable
 fun AuthTextField(
@@ -82,7 +83,7 @@ fun AuthTextField(
                     onClick = { isPasswordVisible.value = !isPasswordVisible.value }
                 )
             } else if (isCountryCodeTextFieldProvider()) {
-                TextFieldTrailingIcon()
+                TextFieldTrailingIcon(iconSize = 0.dp)
             } else if (value.isNotEmpty() || value != "") {
                 TextFieldTrailingIcon(
                     iconId = R.drawable.ic_outline_cancel,
@@ -97,16 +98,17 @@ fun AuthTextField(
 @Composable
 fun TextFieldTrailingIcon(
     @DrawableRes iconId: Int? = null,
+    iconSize: Dp = 24.dp,
     color: Color = DiscordColorProvider.colors.textFieldContentColor,
     onClick: () -> Unit = {}
 ) {
-    IconButton(onClick = { onClick() }) {
-        iconId?.let { painterResource(id = it) }?.let {
+    iconId?.let {
+        IconButton(onClick = { onClick() }) {
             Icon(
-                painter = it,
+                painter = painterResource(id = iconId),
                 contentDescription = null,
                 tint = color,
-                modifier = Modifier.size(24.dp)
+                modifier = Modifier.size(iconSize)
             )
         }
     }
@@ -120,7 +122,7 @@ private fun contentColor() =
 private fun textFieldColors() = TextFieldDefaults.textFieldColors(
     textColor = DiscordColorProvider.colors.textFieldContentColor,
     disabledTextColor = contentColor(),
-    cursorColor = DiscordColorProvider.colors.primary,
+    cursorColor = text_field_cursor_color,
     backgroundColor = DiscordColorProvider.colors.secondaryBackground,
     focusedIndicatorColor = Color.Transparent, // hide the indicator
     unfocusedIndicatorColor = Color.Transparent,
