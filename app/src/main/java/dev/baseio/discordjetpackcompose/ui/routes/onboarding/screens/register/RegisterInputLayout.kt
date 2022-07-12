@@ -75,6 +75,7 @@ fun RegisterInputLayout(
             modifier = Modifier
                 .fillMaxWidth(),
             isPhoneNumberTextFieldProvider = { selectedOption == RegistrationType.Phone },
+            trailingIconOnClick = { textFieldValue = "" },
             value = textFieldValue,
             onValueChange = { textFieldValue = it },
             label = if (selectedOption == RegistrationType.Phone) {

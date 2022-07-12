@@ -70,8 +70,7 @@ fun RegisterScreen(
 
     DiscordScaffold(
         navigator = composeNavigator,
-        scaffoldState = scaffoldState,
-        backgroundColor = DiscordColorProvider.colors.discordBackgroundOne,
+        scaffoldState = scaffoldState
     ) {
         Box(
             modifier = Modifier

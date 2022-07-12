@@ -41,7 +41,7 @@ fun AuthTextField(
     isPasswordTextFieldProvider: () -> Boolean = { false },
     isCountryCodeTextFieldProvider: () -> Boolean = { false },
     isPhoneNumberTextFieldProvider: () -> Boolean = { false },
-    trailingIconOnClick: () -> Unit? = { null }
+    trailingIconOnClick: () -> Unit = { }
 ) {
     val isPasswordVisible = remember {
         mutableStateOf(false)

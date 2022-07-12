@@ -107,7 +107,7 @@ fun LoginScreen(composeNavigator: ComposeNavigator) {
                         },
                         label = stringResource(id = Strings.email_or_phone),
                         focusRequester = keyboardFocusRequester,
-                        trailingIconOnClick = { }
+                        trailingIconOnClick = { emailField = "" }
                     )
                     Spacer(modifier = Modifier.height(12.dp))
                     AuthTextField(
