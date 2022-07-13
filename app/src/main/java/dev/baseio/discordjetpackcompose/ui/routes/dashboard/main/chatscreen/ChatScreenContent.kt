@@ -56,7 +56,7 @@ private fun decoupledConstraints(): ConstraintSet {
     constrain(chatMessageEditor) {
       start.linkTo(parent.start)
       end.linkTo(parent.end)
-      bottom.linkTo(parent.bottom, margin = 16.dp)
+      bottom.linkTo(parent.bottom, margin = 8.dp)
     }
   }
 }

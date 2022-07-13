@@ -75,7 +75,7 @@ fun ChatScreen(
   ) { paddingValues ->
     Box(
       modifier = modifier
-        .padding(top = paddingValues.calculateTopPadding() + 16.dp)
+        .padding(top = paddingValues.calculateTopPadding() + 4.dp)
         .fillMaxSize()
         .background(Color.Black.copy(alpha = focusOpacity))
     ) {

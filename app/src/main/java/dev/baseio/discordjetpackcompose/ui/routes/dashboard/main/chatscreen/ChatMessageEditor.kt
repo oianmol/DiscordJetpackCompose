@@ -18,7 +18,6 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowForwardIos
 import androidx.compose.material.icons.filled.CardGiftcard
 import androidx.compose.material.icons.filled.EmojiEmotions
-import androidx.compose.material.icons.filled.Send
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
@@ -62,20 +61,13 @@ fun ChatMessageEditor(
           }
       )
     }
+
     AnimatedVisibility(visible = showExtraButtons) {
-      AttachmentButton(
-        modifier = Modifier
-          .padding(end = 8.dp)
-          .weight(1f)
+      ExtraButtons(
+        modifier = Modifier.weight(1f)
       )
     }
-    AnimatedVisibility(visible = showExtraButtons) {
-      GiftButton(
-        modifier = Modifier
-          .padding(end = 8.dp)
-          .weight(1f)
-      )
-    }
+
     MessageEditorBar(
       modifier = Modifier
         .weight(2f),
@@ -95,6 +87,25 @@ fun ChatMessageEditor(
         search = messageText
       )
     }
+  }
+}
+
+@Composable
+private fun ExtraButtons(
+  modifier: Modifier = Modifier,
+) {
+  Row(
+    modifier = modifier.fillMaxHeight(),
+    verticalAlignment = Alignment.CenterVertically
+  ) {
+    AttachmentButton(
+      modifier = Modifier
+        .padding(end = 8.dp)
+    )
+    GiftButton(
+      modifier = Modifier
+        .padding(end = 8.dp)
+    )
   }
 }
 
