@@ -2,12 +2,16 @@ package dev.baseio.discordjetpackcompose.ui.routes.dashboard.components
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Fill
@@ -16,9 +20,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
+import dev.baseio.discordjetpackcompose.ui.theme.DiscordJetpackComposeTheme
 
 @Composable
-fun OnlineIndicator(
+private fun OnlineIndicator(
     modifier: Modifier = Modifier,
     isOnline: Boolean,
     indicatorSize: Dp = 12.dp,
@@ -40,8 +45,35 @@ fun OnlineIndicator(
     }
 }
 
+@Composable
+fun OnlineIndicator(
+    modifier: Modifier = Modifier,
+    isOnline: Boolean,
+    indicatorSize: Dp = 12.dp,
+    indicatorAlignment: Alignment = Alignment.BottomEnd,
+    content: @Composable BoxScope.() -> Unit = {},
+) {
+    Box(contentAlignment = indicatorAlignment) {
+        content()
+        OnlineIndicator(
+            modifier = modifier,
+            isOnline = isOnline,
+            indicatorSize = indicatorSize
+        )
+    }
+}
+
 @Preview(showSystemUi = true)
 @Composable
 private fun OnlineIndicatorPreview() {
-    OnlineIndicator(isOnline = true)
+    DiscordJetpackComposeTheme {
+        Column {
+            OnlineIndicator(isOnline = true)
+            OnlineIndicator(isOnline = true) {
+                Surface(
+                    modifier = Modifier.size(48.dp), shape = CircleShape, color = Color.Green
+                ) {}
+            }
+        }
+    }
 }

@@ -2,6 +2,7 @@ package dev.baseio.discordjetpackcompose.ui.routes.dashboard.serverinfo
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -26,6 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.insets.navigationBarsPadding
 import dev.baseio.discordjetpackcompose.R
 import dev.baseio.discordjetpackcompose.entities.server.ServerEntity
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.serverinfo.components.ServerEmojis
@@ -159,6 +161,7 @@ fun ServerInfoBottomSheet(
                         modifier = Modifier.padding(16.dp), emojiUris = serverEntity?.serverEmojiUris.orEmpty()
                     )
                 }
+                item { Spacer(modifier = Modifier.navigationBarsPadding()) }
             }
         },
     )

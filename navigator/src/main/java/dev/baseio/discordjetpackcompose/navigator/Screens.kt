@@ -15,11 +15,15 @@ sealed class DiscordScreen(
     object Friends : DiscordScreen("friends")
     object CreateServer : DiscordScreen("createServer")
     object Invite : DiscordScreen("invite")
+    object Home : DiscordScreen("home")
+    object Friends : DiscordScreen("friends")
+    object Search : DiscordScreen("search")
 }
 
 sealed class DiscordRoute(val name: String) {
     object OnBoarding : DiscordRoute("onboardingRoute")
     object Dashboard : DiscordRoute("dashboardRoute")
+    object DashboardBottomNav: DiscordRoute("dashboardBottomNav")
 }
 
 private fun String.appendArguments(navArguments: List<NamedNavArgument>): String {
