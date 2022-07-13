@@ -23,7 +23,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.request.ImageRequest
-import coil.transform.CircleCropTransformation
 import dev.baseio.discordjetpackcompose.R
 
 @Composable
@@ -115,7 +114,6 @@ fun rememberCoilImageRequest(
             .Builder(context)
             .data(data)
             .placeholder(placeholder)
-            .transformations(CircleCropTransformation())
             .crossfade(true)
             .build()
     }

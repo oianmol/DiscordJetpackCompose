@@ -1,5 +1,4 @@
 import Lib.Networking
-import groovy.xml.Entity.Dagger
 
 /** This file contains versions of all the dependencies used in the module  */
 
@@ -59,6 +58,8 @@ object Lib {
     const val MATERIAL_DESIGN = "androidx.compose.material:material:${MATERIAL_DESIGN_VERSION}"
     const val ACCOMPANIST_INSETS =
       "com.google.accompanist:accompanist-insets:${ACCOMPANIST_VERSION}"
+    const val ACCOMPANIST_INSETS_UI =
+      "com.google.accompanist:accompanist-insets-ui:${ACCOMPANIST_VERSION}"
 
     const val MATERIAL_EXTENDED_ICONS = "androidx.compose.material:material-icons-extended:$COMPOSE_VERSION"
     const val COMPOSE_JUNIT = "androidx.compose.ui:ui-test-junit4:$COMPOSE_VERSION"

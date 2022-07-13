@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -19,6 +20,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -27,11 +29,12 @@ import dev.baseio.discordjetpackcompose.ui.theme.DiscordJetpackComposeTheme
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordSurface
 
 @Composable
-fun CountIndicator(
+private fun CountIndicator(
     modifier: Modifier = Modifier,
     count: Int?,
     showCardBackground: Boolean = true,
-    textSize: TextUnit = 8.sp
+    textSize: TextUnit = 8.sp,
+    forceCircleShape: Boolean = true,
 ) {
     AnimatedVisibility(
         modifier = modifier,
@@ -45,7 +48,12 @@ fun CountIndicator(
             Box(
                 modifier = Modifier
                     .padding(2.dp)
-                    .size(textSizeInDp * 2)
+                    .sizeIn(
+                        minWidth = textSizeInDp * 2,
+                        minHeight = textSizeInDp * 2,
+                        maxWidth = if (forceCircleShape) textSizeInDp * 2 else Dp.Unspecified,
+                        maxHeight = if (forceCircleShape) textSizeInDp * 2 else Dp.Unspecified,
+                    )
                     .clip(CircleShape)
                     .background(DiscordColorProvider.colors.error),
                 contentAlignment = Alignment.Center
@@ -56,7 +64,9 @@ fun CountIndicator(
                     color = Color.White,
                     fontWeight = FontWeight.Black,
                     maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
+                    modifier = Modifier.padding(2.dp),
+                    overflow = TextOverflow.Ellipsis,
+                    softWrap = false
                 )
             }
         }
@@ -70,7 +80,8 @@ fun CountIndicator(
     showCardBackground: Boolean = true,
     textSize: TextUnit = 8.sp,
     indicatorAlignment: Alignment = Alignment.BottomEnd,
-    content: @Composable BoxScope.() -> Unit
+    forceCircleShape: Boolean = true,
+    content: @Composable BoxScope.() -> Unit = {}
 ) {
     Box(contentAlignment = indicatorAlignment) {
         content()
@@ -78,7 +89,8 @@ fun CountIndicator(
             modifier = modifier,
             count = count,
             showCardBackground = showCardBackground,
-            textSize = textSize
+            textSize = textSize,
+            forceCircleShape = forceCircleShape,
         )
     }
 }
@@ -88,8 +100,28 @@ fun CountIndicator(
 private fun CountIndicatorPreview() {
     DiscordJetpackComposeTheme {
         Column {
-            CountIndicator(count = 100)
-            CountIndicator(count = 100) {
+            CountIndicator(
+                count = 99,
+                forceCircleShape = true
+            )
+            CountIndicator(
+                count = 99970,
+                forceCircleShape = true
+            )
+            CountIndicator(
+                count = 99970,
+                forceCircleShape = !true
+            )
+            CountIndicator(
+                count = 100,
+                forceCircleShape = true
+            ) {
+                Surface(modifier = Modifier.size(48.dp), shape = CircleShape, color = Color.Green) {}
+            }
+            CountIndicator(
+                count = 100,
+                forceCircleShape = !true
+            ) {
                 Surface(modifier = Modifier.size(48.dp), shape = CircleShape, color = Color.Green) {}
             }
         }
