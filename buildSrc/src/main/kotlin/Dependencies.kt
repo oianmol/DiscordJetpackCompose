@@ -40,7 +40,6 @@ object Lib {
     private const val COMPOSE_NAVIGATION_VERSION = "2.5.0-alpha01"
     private const val COMPOSE_COIL_VERSION = "2.1.0"
     private const val ACCOMPANIST_VERSION = "0.24.1-alpha"
-    private const val SPLASH_SCREEN_VERSION = "1.0.0-rc01"
     private const val MATERIAL_EXTENDED_ICONS_VERSION = COMPOSE_VERSION
 
     const val APP_COMPAT = "androidx.appcompat:appcompat:1.3.0-beta01"
@@ -60,7 +59,6 @@ object Lib {
     const val MATERIAL_DESIGN = "androidx.compose.material:material:${MATERIAL_DESIGN_VERSION}"
     const val ACCOMPANIST_INSETS =
       "com.google.accompanist:accompanist-insets:${ACCOMPANIST_VERSION}"
-    const val SPLASH_SCREEN_API = "androidx.core:core-splashscreen:${SPLASH_SCREEN_VERSION}"
 
     const val MATERIAL_EXTENDED_ICONS = "androidx.compose.material:material-icons-extended:$COMPOSE_VERSION"
     const val COMPOSE_JUNIT = "androidx.compose.ui:ui-test-junit4:$COMPOSE_VERSION"
