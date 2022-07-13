@@ -1,8 +1,13 @@
 package dev.baseio.discordjetpackcompose.ui.utils
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Tag
 import dev.baseio.discordjetpackcompose.entities.server.ChannelEntity
 import dev.baseio.discordjetpackcompose.entities.server.ChannelType
 import dev.baseio.discordjetpackcompose.entities.server.ServerEntity
+import dev.baseio.discordjetpackcompose.ui.routes.dashboard.search.SearchFilter
+import dev.baseio.discordjetpackcompose.ui.routes.dashboard.search.components.models.SearchSheetListItem
+import dev.baseio.discordjetpackcompose.utils.Constants
 import dev.baseio.discordjetpackcompose.utils.UIState
 
 fun getSampleServerUIState(serverId: String) = UIState.Success(getSampleServer(serverId))
@@ -53,4 +58,32 @@ fun getSampleServer(serverId: String) = ServerEntity(
         }
     },
     boostCount = 7,
+)
+
+fun getSampleSheetListItems() = mutableListOf<SearchSheetListItem>().apply {
+    repeat(10) { index ->
+        add(SearchSheetListItem(
+            id = "channel1$index",
+            itemType = SearchFilter.TextChannels,
+            iconUri = Icons.Default.Tag,
+            title = "announcements$index",
+            subtitle = "!INFO",
+            serverName = "Coding in Flow",
+            unreadCount = 92
+        ))
+        add(SearchSheetListItem(
+            id = "channel2$index",
+            itemType = SearchFilter.Users,
+            iconUri = Constants.MMLogoUrl,
+            title = "YouTube$index",
+            subtitle = null,
+            serverName = "Youtube#1316",
+            unreadCount = null
+        ))
+    }
+}
+
+fun getSampleServerList() = listOf(
+    getSampleServer(serverId = "1"),
+    getSampleServer(serverId = "2"),
 )
