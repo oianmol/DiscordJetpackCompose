@@ -9,19 +9,20 @@ import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
-import com.google.accompanist.insets.imePadding
-import com.google.accompanist.insets.systemBarsPadding
+import com.google.accompanist.insets.navigationBarsWithImePadding
+import com.google.accompanist.insets.statusBarsPadding
 import dev.baseio.discordjetpackcompose.viewmodels.ChatScreenViewModel
 
 @Composable
 fun ChatScreenContent(
+  modifier: Modifier = Modifier,
   viewModel: ChatScreenViewModel,
   userName: State<String>
 ) {
   BoxWithConstraints(
-    modifier = Modifier
-      .systemBarsPadding(top = true)
-      .imePadding()
+    modifier = modifier
+      .statusBarsPadding()
+      .navigationBarsWithImePadding()
   ) {
     val constraints = decoupledConstraints()
     ConstraintLayout(constraints) {

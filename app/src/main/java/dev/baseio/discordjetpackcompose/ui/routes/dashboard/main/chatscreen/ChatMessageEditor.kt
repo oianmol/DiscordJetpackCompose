@@ -12,6 +12,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.EmojiEmotions
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
@@ -61,13 +62,18 @@ fun ChatMessageEditor(
           color = DiscordColorProvider.colors.textPrimary,
         ),
         decorationBox = { innerTextField ->
-          ChatPlaceHolder(search, Modifier, userName, innerTextField)
+          ChatPlaceHolder(
+            search = search,
+            userName = userName,
+            innerTextField = innerTextField
+          )
         },
         modifier = Modifier
           .weight(1f)
           .fillMaxHeight()
           .padding(start = 16.dp, end = 16.dp)
       )
+      EmojiButton()
     }
     SendMessageButton(viewModel, search)
   }
@@ -97,6 +103,18 @@ private fun SendMessageButton(
       tint = DiscordColorProvider.colors.brand
     )
   }
+}
+
+@Composable
+private fun EmojiButton(
+  modifier: Modifier = Modifier
+) {
+  Icon(
+    modifier = modifier.padding(end = 4.dp),
+    imageVector = Icons.Default.EmojiEmotions,
+    contentDescription = null,
+    tint = Color(0xFFbabbbf)
+  )
 }
 
 @Composable

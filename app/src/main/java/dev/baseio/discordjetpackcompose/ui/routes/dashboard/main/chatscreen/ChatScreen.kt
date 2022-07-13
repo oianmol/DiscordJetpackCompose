@@ -70,13 +70,15 @@ fun ChatScreen(
         swipeableState = swipeableState
       )
     }
-  ) {
+  ) { paddingValues ->
     Box(
       modifier = modifier
+        .padding(top = paddingValues.calculateTopPadding() + 16.dp)
         .fillMaxSize()
         .background(Color.Black.copy(alpha = focusOpacity))
     ) {
       ChatScreenContent(
+        modifier = Modifier,
         viewModel = viewModel,
         userName = userName
       )
