@@ -1,23 +1,16 @@
 package dev.baseio.discordjetpackcompose.custom
 
-import android.widget.Toast
-import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.ClickableText
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
-import androidx.compose.material.TextFieldDefaults
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.TextFieldValue
@@ -50,21 +43,23 @@ object MentionsPatterns {
         Pattern.CASE_INSENSITIVE or Pattern.MULTILINE or Pattern.DOTALL
     )
 
-    val hashTagPattern: Pattern = Pattern.compile("\\B(\\#[a-zA-Z0-9]+\\b)(?!;)")
+    val hashTagPattern: Pattern = Pattern.compile("\\B(\\#[a-zA-Z0-9._]+\\b)(?!;)")
 
-    val mentionTagPattern: Pattern = Pattern.compile("\\B(\\@[a-zA-Z0-9]+\\b)(?!;)")
+    val mentionTagPattern: Pattern = Pattern.compile("\\B(\\@[a-zA-Z0-9._]+\\b)(?!;)")
 }
 
 
 @Composable
-fun MentionsTextField(onSpanUpdate: (String, List<SpanInfos>) -> Unit) {
+fun MentionsTextField(
+    onSpanUpdate: (String, List<SpanInfos>, TextRange) -> Unit,
+) {
     var mentionText by remember {
         mutableStateOf(TextFieldValue())
     }
     val spans =
         extractSpans(mentionText.text, listOf(urlPattern, mentionTagPattern, hashTagPattern))
-    onSpanUpdate(mentionText.text, spans)
     val annotatedString = buildAnnotatedString(mentionText.text, spans)
+    onSpanUpdate(mentionText.text, spans, mentionText.selection)
     TextField(
         value = mentionText.copy(annotatedString = annotatedString),
         onValueChange = { update ->
@@ -93,12 +88,14 @@ fun MentionsText(mentionText: String) {
 
     ClickableText(text = annotatedString,
         modifier = Modifier
-            .padding(16.dp), onClick = { offset->
-            annotatedString.getStringAnnotations(start = offset,
-                end = offset)
+            .padding(16.dp), onClick = { offset ->
+            annotatedString.getStringAnnotations(
+                start = offset,
+                end = offset
+            )
                 .firstOrNull()?.let { annotation ->
                     // If yes, we log its value
-                    Timber.e("Clicked ${ annotation.item}")
+                    Timber.e("Clicked ${annotation.item}")
                 }
 
         })
@@ -167,9 +164,12 @@ data class SpanInfos(
     val start: Int,
     val end: Int,
     val tag: String,
-)
+) {
+    var range = TextRange(start, end)
+}
 
 
+@OptIn(ExperimentalMaterialApi::class)
 @Preview
 @Composable
 fun PreviewMentionsTF() {
@@ -178,9 +178,38 @@ fun PreviewMentionsTF() {
             var mentionText by remember {
                 mutableStateOf("")
             }
+            var spanInfoList by remember {
+                mutableStateOf(listOf<SpanInfos>())
+            }
+            var currentlyEditing by remember {
+                mutableStateOf<SpanInfos?>(null)
+            }
+
             Column(Modifier.padding(it)) {
-                MentionsTextField { text, spans ->
+                LazyColumn(content = {
+                    items(spanInfoList) { span ->
+                        ListItem(text = {
+                            Text(text = span.spanText)
+                        }, secondaryText = {
+                            if (currentlyEditing?.spanText == span.spanText) {
+                                Text(text = "Currently Editing")
+                            } else {
+                                Text(text = span.tag)
+                            }
+                        })
+                    }
+                })
+
+                MentionsTextField { text, spans, range ->
+                    spanInfoList = spans
                     mentionText = text
+                    spanInfoList.firstOrNull { infos ->
+                        range.intersects(infos.range) || range.end == infos.range.end
+                    }?.let { infos ->
+                        currentlyEditing = infos
+                    } ?: kotlin.run {
+                        currentlyEditing = null
+                    }
                 }
 
                 MentionsText(mentionText = mentionText)
