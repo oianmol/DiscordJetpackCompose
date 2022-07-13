@@ -20,7 +20,6 @@ import androidx.compose.material.icons.filled.CardGiftcard
 import androidx.compose.material.icons.filled.EmojiEmotions
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -43,14 +42,8 @@ fun ChatMessageEditor(
   userName: State<String>,
   viewModel: ChatScreenViewModel
 ) {
-  val search by viewModel.message.collectAsState()
-  var showExtraButtons by remember { mutableStateOf(value = search.isEmpty()) }
-
-  SideEffect {
-    if (search.isNotEmpty()) {
-      showExtraButtons = false
-    }
-  }
+  val messageText by viewModel.message.collectAsState()
+  var showExtraButtons by remember { mutableStateOf(value = messageText.isEmpty()) }
 
   Row(
     modifier = modifier
@@ -84,17 +77,20 @@ fun ChatMessageEditor(
     MessageEditorBar(
       modifier = Modifier
         .weight(2f),
-      search = search,
+      search = messageText,
       userName = userName,
-      onMessageEdited = { viewModel.message.value = it }
+      onMessageEdited = {
+        showExtraButtons = false
+        viewModel.message.value = it
+      }
     )
-    AnimatedVisibility(visible = search.isNotEmpty()) {
+    AnimatedVisibility(visible = messageText.isNotEmpty()) {
       SendMessageButton(
         modifier = Modifier
           .padding(start = 8.dp)
           .weight(1f),
         viewModel = viewModel,
-        search = search
+        search = messageText
       )
     }
   }
