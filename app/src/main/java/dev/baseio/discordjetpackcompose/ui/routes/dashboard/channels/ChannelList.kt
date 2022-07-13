@@ -50,6 +50,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.google.accompanist.insets.navigationBarsPadding
@@ -60,12 +61,14 @@ import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordSurface
 import dev.baseio.discordjetpackcompose.ui.utils.clickableWithRipple
 import dev.baseio.discordjetpackcompose.utils.UIState
+import dev.baseio.discordjetpackcompose.viewmodels.DashboardScreenViewModel
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun ChannelList(
     modifier: Modifier = Modifier,
     serverState: UIState<ServerEntity>,
+    viewModel: DashboardScreenViewModel,
     onItemSelection: () -> Unit,
     onInviteButtonClick: (String) -> Unit,
     openServerInfoBottomSheet: () -> Unit
@@ -78,8 +81,8 @@ fun ChannelList(
             is UIState.Empty -> Unit
             is UIState.Loading -> CircularProgressIndicator(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .wrapContentSize(),
+                  .fillMaxSize()
+                  .wrapContentSize(),
             )
             is UIState.Failure -> Text(text = "Failure")
             is UIState.Success -> Column(modifier = modifier) {
@@ -229,6 +232,7 @@ private fun ChannelScreenPreview() {
     ChannelList(
         onItemSelection = {},
         serverState = UIState.Loading,
+        viewModel = hiltViewModel(),
         onInviteButtonClick = {},
         openServerInfoBottomSheet = {})
 }

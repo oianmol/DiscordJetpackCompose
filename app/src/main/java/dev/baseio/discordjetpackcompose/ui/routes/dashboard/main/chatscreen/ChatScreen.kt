@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -18,22 +19,21 @@ import androidx.compose.material.icons.filled.VideoCall
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.google.accompanist.insets.navigationBarsPadding
-import com.google.accompanist.insets.statusBarsPadding
 import dev.baseio.discordjetpackcompose.R.string
 import dev.baseio.discordjetpackcompose.navigator.ComposeNavigator
 import dev.baseio.discordjetpackcompose.ui.components.DiscordAppBar
 import dev.baseio.discordjetpackcompose.ui.components.DiscordScaffold
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.components.OnlineIndicator
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
-import dev.baseio.discordjetpackcompose.ui.theme.create_server_screen
 import dev.baseio.discordjetpackcompose.viewmodels.ChatScreenViewModel
 
 @Composable
@@ -41,7 +41,8 @@ fun ChatScreen(
   modifier: Modifier = Modifier,
   composeNavigator: ComposeNavigator,
   viewModel: ChatScreenViewModel = hiltViewModel(),
-  focusOpacity: Float
+  focusOpacity: Float,
+  userName: State<String>
 ) {
   val scaffoldState = rememberScaffoldState()
 
@@ -56,7 +57,7 @@ fun ChatScreen(
     backgroundColor = DiscordColorProvider.colors.chatBackground,
     topAppBar = {
       ChatScreenAppBar(
-        name = "Thomas",
+        name = userName.value,
         isOnline = true,
         composeNavigator = composeNavigator
       )
@@ -67,7 +68,10 @@ fun ChatScreen(
         .fillMaxSize()
         .background(Color.Black.copy(alpha = focusOpacity))
     ) {
-      ChatScreenContent(viewModel = viewModel)
+      ChatScreenContent(
+        viewModel = viewModel,
+        userName = userName
+      )
     }
   }
 }
@@ -96,7 +100,9 @@ fun ChatScreenAppBar(
           modifier = Modifier.padding(start = 8.dp),
         )
         Text(
-          modifier = Modifier.padding(start = 8.dp, end = 8.dp),
+          modifier = Modifier.padding(start = 8.dp, end = 8.dp).width(80.dp),
+          maxLines = 1,
+          overflow = TextOverflow.Ellipsis,
           text = name,
           color = DiscordColorProvider.colors.onSurface
         )

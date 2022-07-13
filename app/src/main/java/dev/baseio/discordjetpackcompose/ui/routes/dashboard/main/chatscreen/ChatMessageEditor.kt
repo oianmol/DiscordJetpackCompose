@@ -14,6 +14,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -28,6 +29,7 @@ import dev.baseio.discordjetpackcompose.viewmodels.ChatScreenViewModel
 @Composable
 fun ChatMessageEditor(
   modifier: Modifier = Modifier,
+  userName: State<String>,
   viewModel: ChatScreenViewModel
 ) {
   val search by viewModel.message.collectAsState()
@@ -59,7 +61,7 @@ fun ChatMessageEditor(
           color = DiscordColorProvider.colors.textPrimary,
         ),
         decorationBox = { innerTextField ->
-          ChatPlaceHolder(search, Modifier, innerTextField)
+          ChatPlaceHolder(search, Modifier, userName, innerTextField)
         },
         modifier = Modifier
           .weight(1f)
@@ -101,6 +103,7 @@ private fun SendMessageButton(
 private fun ChatPlaceHolder(
   search: String,
   modifier: Modifier = Modifier,
+  userName: State<String>,
   innerTextField: @Composable () -> Unit
 ) {
   Row(
@@ -109,7 +112,7 @@ private fun ChatPlaceHolder(
   ) {
     if (search.isEmpty()) {
       Text(
-        text = "Message Thomas",
+        text = "Message ${userName.value}",
         style = MessageTypography.subtitle1.copy(
           color = DiscordColorProvider.colors.textSecondary,
         ),

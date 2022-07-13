@@ -33,12 +33,14 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.insets.navigationBarsPadding
 import dev.baseio.discordjetpackcompose.R
 import dev.baseio.discordjetpackcompose.entities.ChatUserEntity
 import dev.baseio.discordjetpackcompose.ui.theme.DirectMessageListTypography
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.ui.theme.contentColorFor
+import dev.baseio.discordjetpackcompose.viewmodels.DashboardScreenViewModel
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -47,7 +49,8 @@ fun DirectMessageList(
     openNewDMScreen: () -> Unit,
     openSearchScreen: () -> Unit,
     onItemSelection: () -> Unit,
-    chats: List<ChatUserEntity>
+    chats: List<ChatUserEntity>,
+    viewModel: DashboardScreenViewModel
 ) {
     var currentSelectedChatUsername: String? by rememberSaveable { mutableStateOf(null) }
     val config = LocalConfiguration.current
@@ -127,6 +130,7 @@ fun DirectMessageList(
                     onItemClick = {
                         onItemSelection()
                         currentSelectedChatUsername = chats[index].username
+                        viewModel.setCurrentSelectedChatUserName(chats[index].username)
                     })
             }
             item {
@@ -159,5 +163,6 @@ private fun DirectMessageScreenPreview() {
                 isOnline = true,
             )
         ),
+      viewModel = hiltViewModel()
     )
 }

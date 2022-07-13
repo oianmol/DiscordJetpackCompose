@@ -21,6 +21,7 @@ import androidx.compose.material.rememberSwipeableState
 import androidx.compose.material.swipeable
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -36,7 +37,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import com.google.accompanist.insets.ProvideWindowInsets
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.baseio.discordjetpackcompose.entities.ChatUserEntity
@@ -47,6 +48,7 @@ import dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.ServerDrawer
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.chatscreen.ChatScreen
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.serverinfo.ServerInfoBottomSheet
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
+import dev.baseio.discordjetpackcompose.viewmodels.DashboardScreenViewModel
 import kotlin.math.roundToInt
 import kotlinx.coroutines.launch
 
@@ -63,6 +65,7 @@ private enum class CenterScreenState {
 fun DashboardScreen(
     serverList: List<ServerEntity> = getFakeServerList(),
     chatUserList: List<ChatUserEntity> = getFakeChatUserList(),
+    viewModel: DashboardScreenViewModel = hiltViewModel(),
     composeNavigator: ComposeNavigator
 ) {
 
@@ -123,17 +126,17 @@ fun DashboardScreen(
 
     val leftDrawerModifier by remember(drawerOnTop, isAnyItemSelectedInServers) {
         mutableStateOf(
-            swipeableModifier
-                .zIndex(if (drawerOnTop == DrawerTypes.LEFT) 1f else 0f)
-                .alpha(if (drawerOnTop == DrawerTypes.LEFT) 1f else 0f)
+          swipeableModifier
+            .zIndex(if (drawerOnTop == DrawerTypes.LEFT) 1f else 0f)
+            .alpha(if (drawerOnTop == DrawerTypes.LEFT) 1f else 0f)
         )
     }
 
     val rightDrawerModifier by remember(drawerOnTop, isAnyItemSelectedInServers) {
         mutableStateOf(
-            swipeableModifier
-                .zIndex(if (drawerOnTop == DrawerTypes.RIGHT) 1f else 0f)
-                .alpha(if (drawerOnTop == DrawerTypes.RIGHT) 1f else 0f)
+          swipeableModifier
+            .zIndex(if (drawerOnTop == DrawerTypes.RIGHT) 1f else 0f)
+            .alpha(if (drawerOnTop == DrawerTypes.RIGHT) 1f else 0f)
         )
     }
 
@@ -172,7 +175,8 @@ fun DashboardScreen(
                     selectedServerId = currentServerId
                 },
                 onAddButtonClick = { composeNavigator.navigate(DiscordScreen.CreateServer.name) },
-                openServerInfoBottomSheet = { coroutineScope.launch { sheetState.show() } }
+                openServerInfoBottomSheet = { coroutineScope.launch { sheetState.show() } },
+                viewModel = viewModel
             )
         }
 
@@ -212,7 +216,8 @@ fun DashboardScreen(
             val focusOpacity by animateFloatAsState(targetValue = if (shouldNotFocusCenterScreen) ContentAlpha.disabled else 0f)
             ChatScreen(
                 composeNavigator = composeNavigator,
-                focusOpacity = focusOpacity
+                focusOpacity = focusOpacity,
+                userName = viewModel.currentSelectedChatUsername.collectAsState()
             )
         }
     }
