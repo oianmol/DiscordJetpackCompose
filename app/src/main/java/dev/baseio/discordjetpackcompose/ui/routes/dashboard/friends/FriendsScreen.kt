@@ -41,7 +41,8 @@ fun FriendsScreen(
 
     val colors = DiscordColorProvider.colors
     SideEffect {
-        sysUiController.setSystemBarsColor(color = colors.background)
+        sysUiController.setSystemBarsColor(color = colors.discordBackgroundOne)
+        sysUiController.setNavigationBarColor(color = colors.background)
     }
 
     val suggestionsList by viewModel.friendsSuggestionsList.collectAsState()
@@ -84,7 +85,7 @@ fun FriendsScreen(
 
                         }
                     )
-                    Spacer(modifier = Modifier.width(40.dp))
+                    Spacer(modifier = Modifier.width(30.dp))
                     Icon(
                         painter = painterResource(id = R.drawable.ic_baseline_person_add_alt_1_24),
                         contentDescription = stringResource(
@@ -95,7 +96,7 @@ fun FriendsScreen(
 
                         }
                     )
-                    Spacer(modifier = Modifier.width(20.dp))
+                    Spacer(modifier = Modifier.width(10.dp))
                 }
             )
         }

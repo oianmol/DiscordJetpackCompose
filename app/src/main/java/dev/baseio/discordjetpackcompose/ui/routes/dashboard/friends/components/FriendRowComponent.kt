@@ -1,11 +1,11 @@
 package dev.baseio.discordjetpackcompose.ui.routes.dashboard.friends.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Call
@@ -43,14 +43,14 @@ fun FriendRowComponent(chatUserEntity: ChatUserEntity, isFriend: Boolean) {
         ProfileComponent(chatUserEntity = chatUserEntity, isFriend)
         if (isFriend) {
             Row(
-                modifier = Modifier.wrapContentWidth(),
+                modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.End
             ) {
                 ActionButton(
                     icon = Icons.Default.Call,
                     contentDescription = stringResource(id = R.string.call_friend)
                 )
-                Spacer(modifier = Modifier.width(30.dp))
+                Spacer(modifier = Modifier.width(20.dp))
                 ActionButton(
                     painterResource =
                     R.drawable.ic_chat_bubble,
@@ -59,7 +59,7 @@ fun FriendRowComponent(chatUserEntity: ChatUserEntity, isFriend: Boolean) {
             }
         } else {
             Row(
-                modifier = Modifier.wrapContentWidth(),
+                modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.End
             ) {
                 ActionButton(
@@ -67,7 +67,7 @@ fun FriendRowComponent(chatUserEntity: ChatUserEntity, isFriend: Boolean) {
                     tintColor = Color.Red,
                     contentDescription = stringResource(id = R.string.remove_friend)
                 )
-                Spacer(modifier = Modifier.width(30.dp))
+                Spacer(modifier = Modifier.width(20.dp))
                 ActionButton(
                     painterResource =
                     R.drawable.ic_baseline_person_add_alt_1_24,
@@ -86,28 +86,31 @@ fun ActionButton(
     contentDescription: String,
     tintColor: Color = icon_button
 ) {
-    IconButton(
-        onClick = { }, modifier = Modifier
-            .size(25.dp)
-            .clip(CircleShape)
-            .background(background)
-    ) {
-        if (icon != null) {
-            Icon(
-                icon,
-                contentDescription = contentDescription,
-                tint = tintColor,
-                modifier = Modifier.size(20.dp)
-            )
-        } else if (painterResource != null) {
-            Icon(
-                painter = painterResource(id = painterResource),
-                contentDescription = contentDescription,
-                tint = tintColor,
-                modifier = Modifier.size(20.dp)
-            )
-        }
+
+    if (icon != null) {
+        Icon(
+            icon,
+            contentDescription = contentDescription,
+            tint = tintColor,
+            modifier = Modifier
+                .clip(CircleShape)
+                .background(background)
+                .size(40.dp)
+                .padding(10.dp).clickable {  },
+        )
+    } else if (painterResource != null) {
+        Icon(
+            painter = painterResource(id = painterResource),
+            contentDescription = contentDescription,
+            tint = tintColor,
+            modifier = Modifier
+                .clip(CircleShape)
+                .background(background)
+                .size(40.dp)
+                .padding(10.dp).clickable {  },
+        )
     }
+
 }
 
 @Composable
@@ -142,7 +145,8 @@ fun ProfileComponent(chatUserEntity: ChatUserEntity, isFriend: Boolean = true) {
             modifier = Modifier.padding(start = 8.dp),
         ) {
             Text(
-                text = chatUserEntity.username, style = DirectMessageListTypography.h6.copy(
+                text = chatUserEntity.username,
+                style = DirectMessageListTypography.h6.copy(
                     fontWeight = if (isFriend) {
                         FontWeight.Normal
                     } else {
@@ -154,7 +158,7 @@ fun ProfileComponent(chatUserEntity: ChatUserEntity, isFriend: Boolean = true) {
             )
             if (isFriend) {
                 Text(
-                    text = chatUserEntity.currentStatus?:"",
+                    text = chatUserEntity.currentStatus.orEmpty(),
                     style = DirectMessageListTypography.body2.copy(
                         fontSize = 14.sp
                     ),
