@@ -37,9 +37,9 @@ import dev.baseio.discordjetpackcompose.ui.routes.dashboard.bottombar.DashboardB
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.bottombar.DashboardBottomBarItem
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.bottombar.DashboardBottomBarItemType
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.components.OnlineIndicator
-import dev.baseio.discordjetpackcompose.ui.routes.dashboard.dashboardBottomNavScreens
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.search.SearchBottomSheet
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.serverinfo.ServerInfoBottomSheet
+import dev.baseio.discordjetpackcompose.ui.routes.dashboard.setupDashboardBottomNavScreens
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.ui.theme.contentColorFor
 import dev.baseio.discordjetpackcompose.ui.utils.getSampleServerList
@@ -79,9 +79,12 @@ fun DashboardScreen(
         sheetState = searchSheetState,
         content = {
             val serverList = remember { getSampleServerList() }
-            val sheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
+            val sheetState =
+                rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
+            var isBottomBarDisplayed by remember { mutableStateOf(true) }
             ServerInfoBottomSheet(
-                sheetState = sheetState, serverEntity = serverList.find { it.id == selectedServerId }) {
+                sheetState = sheetState,
+                serverEntity = serverList.find { it.id == selectedServerId }) {
                 Scaffold(
                     bottomBar = {
                         DashboardBottomBar(
@@ -168,7 +171,8 @@ fun DashboardScreen(
                                     },
                                     type = DashboardBottomBarItemType.Profile
                                 ),
-                            )
+                            ),
+                            isDisplayed = isBottomBarDisplayed
                         )
                     },
                     backgroundColor = surfaceColor,
@@ -178,9 +182,15 @@ fun DashboardScreen(
                         navController = navController,
                         startDestination = DiscordRoute.DashboardBottomNav.name,
                     ) {
-                        dashboardBottomNavScreens(composeNavigator = composeNavigator, sheetState = sheetState, onSelectServer = { serverId ->
-                            selectedServerId = serverId
-                        })
+                        setupDashboardBottomNavScreens(
+                            composeNavigator = composeNavigator,
+                            sheetState = sheetState,
+                            onSelectServer = { serverId ->
+                                selectedServerId = serverId
+                            },
+                            shouldDisplayBottomBar = { isDisplayed ->
+                                isBottomBarDisplayed = isDisplayed
+                            })
                     }
                 }
             }

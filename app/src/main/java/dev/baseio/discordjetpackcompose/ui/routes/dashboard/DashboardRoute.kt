@@ -35,10 +35,11 @@ fun NavGraphBuilder.dashboardRoute(
 }
 
 @OptIn(ExperimentalMaterialApi::class)
-fun NavGraphBuilder.dashboardBottomNavScreens(
+fun NavGraphBuilder.setupDashboardBottomNavScreens(
     composeNavigator: ComposeNavigator,
     sheetState: ModalBottomSheetState,
     onSelectServer: (String) -> Unit,
+    shouldDisplayBottomBar: (Boolean) -> Unit,
 ) {
     navigation(
         startDestination = DiscordScreen.Home.route,
@@ -49,7 +50,8 @@ fun NavGraphBuilder.dashboardBottomNavScreens(
                 composeNavigator = composeNavigator,
                 serverList = getSampleServerList(),
                 onSelectServer = onSelectServer,
-                sheetState = sheetState
+                sheetState = sheetState,
+                shouldDisplayBottomBar = shouldDisplayBottomBar
             )
         }
         composable(DiscordScreen.Friends.route) {

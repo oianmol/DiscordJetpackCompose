@@ -1,6 +1,10 @@
 package dev.baseio.discordjetpackcompose.ui.routes.dashboard.bottombar
 
 import android.content.res.Configuration
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -50,39 +54,46 @@ data class DashboardBottomBarItem(
 
 @Composable
 fun DashboardBottomBar(
+    isDisplayed: Boolean,
     bottomBarItems: List<DashboardBottomBarItem>
 ) {
     val surfaceColor = DiscordColorProvider.colors.surface
     val contentColor = DiscordColorProvider.colors.contentColorFor(surfaceColor)
 
-    BottomNavigation(
-        backgroundColor = surfaceColor,
-        contentColor = contentColor,
-        contentPadding = rememberInsetsPaddingValues(
-            insets = LocalWindowInsets.current.navigationBars
-        )
+    AnimatedVisibility(
+        visible = isDisplayed,
+        enter = slideInVertically(animationSpec = tween(), initialOffsetY = { it }),
+        exit = slideOutVertically(animationSpec = tween(), targetOffsetY = { it })
     ) {
-        bottomBarItems.forEach { item ->
-            if (!DashboardBottomBarItemType.values().contains(item.type)) {
-                throw Exception(stringResource(R.string.unknown_bottom_bar_item_type))
-            }
-
-            BottomNavigationItem(
-                selected = item.isSelected,
-                onClick = item.onClick,
-                icon = {
-                    CountIndicator(
-                        count = item.unreadCount,
-                        forceCircleShape = false,
-                        modifier = Modifier.padding(8.dp)
-                    ) {
-                        item.icon()
-                    }
-                },
-                alwaysShowLabel = false,
-                selectedContentColor = contentColor,
-                unselectedContentColor = contentColor.copy(alpha = ContentAlpha.disabled)
+        BottomNavigation(
+            backgroundColor = surfaceColor,
+            contentColor = contentColor,
+            contentPadding = rememberInsetsPaddingValues(
+                insets = LocalWindowInsets.current.navigationBars
             )
+        ) {
+            bottomBarItems.forEach { item ->
+                if (!DashboardBottomBarItemType.values().contains(item.type)) {
+                    throw Exception(stringResource(R.string.unknown_bottom_bar_item_type))
+                }
+
+                BottomNavigationItem(
+                    selected = item.isSelected,
+                    onClick = item.onClick,
+                    icon = {
+                        CountIndicator(
+                            count = item.unreadCount,
+                            forceCircleShape = false,
+                            modifier = Modifier.padding(8.dp)
+                        ) {
+                            item.icon()
+                        }
+                    },
+                    alwaysShowLabel = false,
+                    selectedContentColor = contentColor,
+                    unselectedContentColor = contentColor.copy(alpha = ContentAlpha.disabled)
+                )
+            }
         }
     }
 }
@@ -186,7 +197,8 @@ private fun DashboardBottomBarPreview() {
                         },
                         type = DashboardBottomBarItemType.Profile
                     ),
-                )
+                ),
+                isDisplayed = true
             )
         }
     }

@@ -19,6 +19,7 @@ import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.rememberSwipeableState
 import androidx.compose.material.swipeable
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -77,6 +78,7 @@ fun HomeScreen(
     },
     onSelectServer: (String) -> Unit,
     sheetState: ModalBottomSheetState,
+    shouldDisplayBottomBar: (Boolean) -> Unit,
     composeNavigator: ComposeNavigator
 ) {
 
@@ -165,6 +167,16 @@ fun HomeScreen(
         )
     }
 
+    val displayBottomBar by remember {
+        derivedStateOf {
+            swipeableState.direction >= 0 && swipeableState.currentValue == CenterScreenState.RIGHT_ANCHORED
+        }
+    }
+
+    LaunchedEffect(displayBottomBar) {
+        shouldDisplayBottomBar(displayBottomBar)
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize(),
@@ -177,7 +189,9 @@ fun HomeScreen(
             chatUserList = chatUserList,
             onAnyItemSelected = { isSelected, currentServerId ->
                 isAnyItemSelectedInServers = isSelected
-                coroutineScope.launch { swipeableState.animateTo(CenterScreenState.CENTER) }
+                if (isSelected) {
+                    coroutineScope.launch { swipeableState.animateTo(CenterScreenState.CENTER) }
+                }
                 onSelectServer(currentServerId)
             },
             onAddButtonClick = { composeNavigator.navigate(DiscordScreen.CreateServer.name) },
