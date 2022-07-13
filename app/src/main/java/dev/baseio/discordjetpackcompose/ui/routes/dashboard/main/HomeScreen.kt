@@ -41,6 +41,7 @@ import dev.baseio.discordjetpackcompose.entities.ChatUserEntity
 import dev.baseio.discordjetpackcompose.entities.server.ServerEntity
 import dev.baseio.discordjetpackcompose.navigator.ComposeNavigator
 import dev.baseio.discordjetpackcompose.navigator.DiscordScreen
+import dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.chatscreen.ChatScreen
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import kotlin.math.roundToInt
 import kotlinx.coroutines.launch
@@ -227,12 +228,7 @@ fun HomeScreen(
                 }
             }
             val focusOpacity by animateFloatAsState(targetValue = if (shouldNotFocusCenterScreen) ContentAlpha.disabled else 0f)
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.Green)
-                    .background(Color.Black.copy(alpha = focusOpacity))
-            )
+            ChatScreen(composeNavigator = composeNavigator, focusOpacity = focusOpacity)
         }
     }
 }
