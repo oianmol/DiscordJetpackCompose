@@ -6,6 +6,7 @@ import androidx.navigation.navigation
 import dev.baseio.discordjetpackcompose.navigator.ComposeNavigator
 import dev.baseio.discordjetpackcompose.navigator.DiscordRoute
 import dev.baseio.discordjetpackcompose.navigator.DiscordScreen
+import dev.baseio.discordjetpackcompose.ui.routes.dashboard.createServer.CreateServer
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.DashboardScreen
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.FriendsScreen
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.InviteScreen
@@ -25,6 +26,9 @@ fun NavGraphBuilder.dashboardRoute(
         }
         composable(DiscordScreen.Invite.name) {
             InviteScreen(composeNavigator = composeNavigator)
+        }
+        composable(DiscordScreen.CreateServer.name) {
+            CreateServer(composeNavigator)
         }
     }
 }

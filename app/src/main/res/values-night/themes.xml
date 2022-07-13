@@ -5,13 +5,9 @@
         <item name="android:statusBarColor">@color/purple_700</item>
     </style>
 
-    <style name="SplashTheme" parent="Theme.SplashScreen">
-        <!-- Use windowSplashScreenAnimatedIcon to add either a drawable or an
-             animated drawable. One of these is required. -->
-        <item name="windowSplashScreenAnimatedIcon">@drawable/dark_app_logo</item>
-
-        <!-- Set the theme of the Activity that directly follows your splash screen. -->
-        <!-- Required -->
-        <item name="postSplashScreenTheme">@style/Theme.DiscordJetpackCompose</item>
+    <style name="SplashTheme" parent="Theme.DiscordJetpackCompose">
+        <item name="android:windowBackground">@drawable/splash_image_dark</item>
+        <item name="android:statusBarColor">@color/transparent</item>
+        <item name="android:navigationBarColor">@color/transparent</item>
     </style>
 </resources>

@@ -1,6 +1,7 @@
 package dev.baseio.discordjetpackcompose.ui.utils
 
 import android.annotation.SuppressLint
+import androidx.annotation.DrawableRes
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Indication
@@ -18,8 +19,11 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import coil.request.ImageRequest
+import dev.baseio.discordjetpackcompose.R
 
 @Composable
 fun rememberWindowInfo(): WindowInfo {
@@ -98,3 +102,19 @@ fun Modifier.clickableWithRipple(
     indication = indication,
     onClick = onClick
 )
+
+@Composable
+fun rememberCoilImageRequest(
+    data: Any?,
+    @DrawableRes placeholder: Int = R.drawable.ic_refresh
+): ImageRequest {
+    val context = LocalContext.current
+    return remember(data) {
+        ImageRequest
+            .Builder(context)
+            .data(data)
+            .placeholder(placeholder)
+            .crossfade(true)
+            .build()
+    }
+}

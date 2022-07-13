@@ -1,4 +1,4 @@
-package dev.baseio.discordjetpackcompose.ui.components
+package dev.baseio.discordjetpackcompose.ui.routes.dashboard.main
 
 import android.content.res.Configuration
 import androidx.compose.animation.core.animateFloatAsState
@@ -31,8 +31,9 @@ fun ServerDrawer(
     modifier: Modifier = Modifier,
     serverList: List<ServerEntity>,
     chatUserList: List<ChatUserEntity>,
-    onAnyItemSelected: (Boolean) -> Unit,
+    onAnyItemSelected: (Boolean, serverId: String) -> Unit,
     onAddButtonClick: () -> Unit,
+    openServerInfoBottomSheet: () -> Unit,
 ) {
     Row(
         modifier = modifier
@@ -50,7 +51,10 @@ fun ServerDrawer(
             serverList = serverList,
             onAddButtonClick = onAddButtonClick,
             currentSelectedItem = currentSelectedServer,
-            onSelectedItemChanged = { updatedItem -> currentSelectedServer = updatedItem },
+            onSelectedItemChanged = { updatedItem ->
+                currentSelectedServer = updatedItem
+                onAnyItemSelected(false, currentSelectedServer)
+            },
         )
         val widthFactor by animateFloatAsState(
             targetValue = if (!isAnyItemSelectedInCurrentServer) 1f
@@ -60,10 +64,11 @@ fun ServerDrawer(
         ServerChannelList(
             modifier = Modifier.fillMaxWidth(widthFactor),
             serverId = currentSelectedServer,
-            chatUserList = chatUserList
+            chatUserList = chatUserList,
+            openServerInfoBottomSheet = openServerInfoBottomSheet,
         ) {
             isAnyItemSelectedInCurrentServer = true
-            onAnyItemSelected(true)
+            onAnyItemSelected(true, currentSelectedServer)
         }
     }
 }
@@ -71,6 +76,10 @@ fun ServerDrawer(
 @Preview(
     showBackground = true,
     uiMode = Configuration.UI_MODE_NIGHT_YES or Configuration.UI_MODE_TYPE_NORMAL
+)
+@Preview(
+    showBackground = true,
+    uiMode = Configuration.UI_MODE_NIGHT_NO or Configuration.UI_MODE_TYPE_NORMAL
 )
 @Composable
 private fun ServerDrawerPreview() {
@@ -100,7 +109,8 @@ private fun ServerDrawerPreview() {
                     getSampleServer(serverId = "1"),
                     getSampleServer(serverId = "2"),
                 ),
-                onAnyItemSelected = {}
+                onAnyItemSelected = { _, _ -> },
+                openServerInfoBottomSheet = {}
             )
         }
     }

@@ -4,6 +4,7 @@
 package dev.baseio.discordjetpackcompose.ui.theme
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
@@ -13,6 +14,7 @@ val Purple200 = Color(0xFFBB86FC)
 val Purple500 = Color(0xFF6200EE)
 val Purple700 = Color(0xFF3700B3)
 val Teal200 = Color(0xFF03DAC5)
+
 
 val abc_decor_view_status_guard = Color(0xFF000000)
 val abc_decor_view_status_guard_light = Color(0xFFffffff)
@@ -33,6 +35,8 @@ val background_floating_material_dark @Composable get() = colorResource(id = R.c
 val background_floating_material_light @Composable get() = colorResource(id = R.color.white)
 val background_material_dark @Composable get() = colorResource(id = R.color.material_grey_850)
 val background_material_light @Composable get() = colorResource(id = R.color.material_grey_50)
+val text_field_content_color_light = Color(0xFF51565f)
+val text_field_content_color_Dark = Color(0xFFFFFFFF)
 val battlenet = Color(0xFF009ae5)
 val battlenet_500 = Color(0xFF009ae5)
 val black = Color(0xFF000000)
@@ -159,7 +163,7 @@ val creator_revenue_start_500 = Color(0xFF11a574)
 val dark_grey_2 = Color(0xFF36393e)
 val dark_grey_2_alpha_10 = Color(0xFF303337)
 val design_bottom_navigation_shadow_color = Color(0xFF14000000)
-val design_dark_default_color_background = Color(0xFF2f3238)
+val design_dark_default_color_background = Color(0xFF36383F)
 val design_dark_default_color_secondary_background = Color(0xff28252f)
 val design_dark_default_color_error = Color(0xFFcf6679)
 val design_dark_default_color_on_background = Color(0xFFffffff)
@@ -183,8 +187,8 @@ val design_default_color_on_background = Color(0xFF000000)
 
 val design_default_link_color = Color(0xFF2e8eca)
 
-val design_default_app_bar_color_light = Color(0xffffffff)
-val design_default_app_bar_color_dark = Color(0xFF383842)
+val design_default_app_bar_color_light = Color(0xffE2E4E6)
+val design_default_app_bar_color_dark = Color(0xFF292B2F)
 val design_default_app_bar_color_dark2 = Color(0xff2b2b2f)
 val design_default_color_on_error = Color(0xFFffffff)
 val design_default_color_on_primary = Color(0xFFffffff)
@@ -368,6 +372,8 @@ val link_low_saturation_860 = Color(0xFF021c26)
 val link_low_saturation_900 = Color(0xFF01090d)
 val lol = Color(0xFF021f25)
 val lol_500 = Color(0xFF021f25)
+val onboarding_button_grey = Color(0xFF4F555D)
+val onboarding_button_blue = Color(0xFF5964f0)
 val material_blue_grey_800 = Color(0xFFff37474f)
 val material_blue_grey_900 = Color(0xFFff263238)
 val material_blue_grey_950 = Color(0xFFff21272b)
@@ -705,6 +711,7 @@ val switch_thumb_normal_material_light = Color(0xFFfff1f1f1)
 val tooltip_background_dark = Color(0xFFe6616161)
 val tooltip_background_light = Color(0xFFe6ffffff)
 val transparent @Composable get() = colorResource(id = R.color.transparent)
+val text_field_cursor_color = Color(0xFF949DF6)
 val twitch = Color(0xFF593695)
 val twitch_500 = Color(0xFF593695)
 val twitter = Color(0xFF1da1f2)
@@ -757,3 +764,46 @@ val xbox = Color(0xFF107c10)
 val xbox_500 = Color(0xFF107c10)
 val youtube = Color(0xFFcb2120)
 val youtube_500 = Color(0xFFcb2120)
+
+val create_server_screen
+    @Composable get() = if (isSystemInDarkTheme()) {
+        Color(0xFF373840)
+    } else {
+        Color(0xFFFEFFFE)
+    }
+
+val create_server_card_bg
+    @Composable get() = if (isSystemInDarkTheme()) {
+        Color(0xFF2B2B2E)
+    } else {
+        Color(0xFFEBEDEF)
+    }
+
+val create_server_card_bottom_button_bg
+    @Composable get() = if (isSystemInDarkTheme()) {
+        Color(0xFF4E535D)
+    } else {
+        Color(0xFF747F8C)
+    }
+
+
+val discord_dialog_bg
+    @Composable get() = if (isSystemInDarkTheme()) {
+        Color(0xFF36393E)
+    } else {
+        Color(0xFFFEFFFE)
+    }
+
+val discord_dialog_button_row_bg
+    @Composable get() = if (isSystemInDarkTheme()) {
+        Color(0xFF303037)
+    } else {
+        Color(0xFFF9F8F9)
+    }
+val discord_dialog_cancel_button_text
+    @Composable get() = if (isSystemInDarkTheme()) {
+        Color(0xFFA7A8AA)
+    } else {
+        Color(0xFF4F5761)
+    }
+val discord_dialog_button_bg = Color(0xFF5864F1)

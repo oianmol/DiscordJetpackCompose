@@ -13,6 +13,7 @@ sealed class DiscordScreen(
     object Login : DiscordScreen("login")
     object Dashboard : DiscordScreen("dashboard")
     object Friends : DiscordScreen("friends")
+    object CreateServer : DiscordScreen("createServer")
     object Invite : DiscordScreen("invite")
 }
 
