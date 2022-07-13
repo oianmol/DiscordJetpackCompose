@@ -18,7 +18,9 @@ import androidx.compose.material.icons.filled.AlternateEmail
 import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.People
+import androidx.compose.material.icons.filled.PhoneInTalk
 import androidx.compose.material.icons.filled.VideoCall
+import androidx.compose.material.icons.filled.Videocam
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
@@ -132,12 +134,12 @@ fun ChatScreenAppBar(
     },
     actions = {
       Icon(
-        imageVector = Filled.Call,
+        imageVector = Filled.PhoneInTalk,
         contentDescription = null,
         modifier = Modifier.padding(end = 16.dp),
       )
       Icon(
-        imageVector = Filled.VideoCall,
+        imageVector = Filled.Videocam,
         contentDescription = null,
         modifier = Modifier.padding(end = 16.dp),
       )

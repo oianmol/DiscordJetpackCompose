@@ -30,8 +30,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import dev.baseio.discordjetpackcompose.R.drawable
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.ui.theme.MessageTypography
 import dev.baseio.discordjetpackcompose.viewmodels.ChatScreenViewModel
@@ -172,7 +174,7 @@ private fun SendMessageButton(
     enabled = search.isNotEmpty()
   ) {
     Icon(
-      Icons.Default.Send,
+      painter = painterResource(id = drawable.ic_send_rounded),
       contentDescription = null,
       tint = DiscordColorProvider.colors.brand
     )
