@@ -1,6 +1,8 @@
 package dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.chatscreen
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
@@ -13,13 +15,18 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowForwardIos
 import androidx.compose.material.icons.filled.CardGiftcard
 import androidx.compose.material.icons.filled.EmojiEmotions
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -37,29 +44,59 @@ fun ChatMessageEditor(
   viewModel: ChatScreenViewModel
 ) {
   val search by viewModel.message.collectAsState()
+  var showExtraButtons by remember { mutableStateOf(value = search.isEmpty()) }
+
+  SideEffect {
+    if (search.isNotEmpty()) {
+      showExtraButtons = false
+    }
+  }
+
   Row(
     modifier = modifier
       .height(48.dp)
       .padding(start = 8.dp, end = 8.dp),
     verticalAlignment = Alignment.CenterVertically
   ) {
-    AttachmentButton(
-      modifier = Modifier.padding(end = 8.dp)
-    )
-    GiftButton(
-      modifier = Modifier.padding(end = 8.dp)
-    )
+    AnimatedVisibility(visible = showExtraButtons.not()) {
+      MoreButton(
+        modifier = Modifier
+          .weight(1f)
+          .clickable {
+            showExtraButtons = true
+          }
+      )
+    }
+    AnimatedVisibility(visible = showExtraButtons) {
+      AttachmentButton(
+        modifier = Modifier
+          .padding(end = 8.dp)
+          .weight(1f)
+      )
+    }
+    AnimatedVisibility(visible = showExtraButtons) {
+      GiftButton(
+        modifier = Modifier
+          .padding(end = 8.dp)
+          .weight(1f)
+      )
+    }
     MessageEditorBar(
-      modifier = Modifier.weight(1f),
+      modifier = Modifier
+        .weight(2f),
       search = search,
       userName = userName,
       onMessageEdited = { viewModel.message.value = it }
     )
-    SendMessageButton(
-      modifier = Modifier.padding(start = 8.dp),
-      viewModel = viewModel,
-      search = search
-    )
+    AnimatedVisibility(visible = search.isNotEmpty()) {
+      SendMessageButton(
+        modifier = Modifier
+          .padding(start = 8.dp)
+          .weight(1f),
+        viewModel = viewModel,
+        search = search
+      )
+    }
   }
 }
 
@@ -189,6 +226,18 @@ private fun GiftButton(
 }
 
 @Composable
+private fun MoreButton(
+  modifier: Modifier = Modifier
+) {
+  Icon(
+    modifier = modifier.padding(end = 4.dp),
+    imageVector = Icons.Default.ArrowForwardIos,
+    contentDescription = null,
+    tint = Color(0xFFbabbbf)
+  )
+}
+
+@Composable
 private fun EmojiButton(
   modifier: Modifier = Modifier
 ) {
@@ -213,7 +262,7 @@ private fun ChatPlaceHolder(
   ) {
     if (search.isEmpty()) {
       Text(
-        text = "Message ${userName.value}",
+        text = "Message @${userName.value}",
         style = MessageTypography.caption.copy(
           color = DiscordColorProvider.colors.textSecondary,
         ),
