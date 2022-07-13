@@ -1,5 +1,6 @@
 package dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.chatscreen
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -7,8 +8,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.SwipeableState
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons.Filled
 import androidx.compose.material.icons.filled.AlternateEmail
@@ -20,6 +23,7 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.State
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -33,16 +37,20 @@ import dev.baseio.discordjetpackcompose.navigator.ComposeNavigator
 import dev.baseio.discordjetpackcompose.ui.components.DiscordAppBar
 import dev.baseio.discordjetpackcompose.ui.components.DiscordScaffold
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.components.OnlineIndicator
+import dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.dasboard.CenterScreenState
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.viewmodels.ChatScreenViewModel
+import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ChatScreen(
   modifier: Modifier = Modifier,
   composeNavigator: ComposeNavigator,
   viewModel: ChatScreenViewModel = hiltViewModel(),
   focusOpacity: Float,
-  userName: State<String>
+  userName: State<String>,
+  swipeableState: SwipeableState<CenterScreenState>
 ) {
   val scaffoldState = rememberScaffoldState()
 
@@ -59,7 +67,7 @@ fun ChatScreen(
       ChatScreenAppBar(
         name = userName.value,
         isOnline = true,
-        composeNavigator = composeNavigator
+        swipeableState = swipeableState
       )
     }
   ) {
@@ -76,15 +84,21 @@ fun ChatScreen(
   }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ChatScreenAppBar(
   name: String,
   isOnline: Boolean,
-  composeNavigator: ComposeNavigator
+  swipeableState: SwipeableState<CenterScreenState>
 ) {
+  val coroutineScope = rememberCoroutineScope()
   DiscordAppBar(
     navigationIcon = {
-      IconButton(onClick = { composeNavigator.navigateUp() }) {
+      IconButton(onClick = {
+        coroutineScope.launch {
+          swipeableState.animateTo(CenterScreenState.RIGHT_ANCHORED)
+        }
+      }) {
         Icon(
           imageVector = Filled.Menu,
           contentDescription = stringResource(string.menu),
@@ -100,7 +114,9 @@ fun ChatScreenAppBar(
           modifier = Modifier.padding(start = 8.dp),
         )
         Text(
-          modifier = Modifier.padding(start = 8.dp, end = 8.dp).width(80.dp),
+          modifier = Modifier
+            .padding(start = 8.dp, end = 8.dp)
+            .width(80.dp),
           maxLines = 1,
           overflow = TextOverflow.Ellipsis,
           text = name,

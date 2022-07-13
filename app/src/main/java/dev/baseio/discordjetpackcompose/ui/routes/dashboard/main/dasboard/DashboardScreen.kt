@@ -1,5 +1,6 @@
 package dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.dasboard
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.fadeIn
@@ -16,6 +17,7 @@ import androidx.compose.material.ContentAlpha
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FractionalThreshold
 import androidx.compose.material.ModalBottomSheetValue
+import androidx.compose.material.SwipeableState
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material.rememberSwipeableState
 import androidx.compose.material.swipeable
@@ -49,6 +51,7 @@ import dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.chatscreen.Chat
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.serverinfo.ServerInfoBottomSheet
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.viewmodels.DashboardScreenViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlin.math.roundToInt
 import kotlinx.coroutines.launch
 
@@ -56,7 +59,7 @@ private enum class DrawerTypes {
     LEFT, RIGHT
 }
 
-private enum class CenterScreenState {
+enum class CenterScreenState {
     LEFT_ANCHORED, CENTER, RIGHT_ANCHORED
 }
 
@@ -217,8 +220,33 @@ fun DashboardScreen(
             ChatScreen(
                 composeNavigator = composeNavigator,
                 focusOpacity = focusOpacity,
-                userName = viewModel.currentSelectedChatUsername.collectAsState()
+                userName = viewModel.currentSelectedChatUsername.collectAsState(),
+                swipeableState = swipeableState
             )
+        }
+
+        HandleBackPress(
+          coroutineScope = coroutineScope,
+          swipeableState = swipeableState,
+          composeNavigator = composeNavigator
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun HandleBackPress(
+    coroutineScope: CoroutineScope,
+    swipeableState: SwipeableState<CenterScreenState>,
+    composeNavigator: ComposeNavigator
+) {
+    BackHandler(enabled = true) {
+        coroutineScope.launch {
+            when (swipeableState.currentValue) {
+                CenterScreenState.LEFT_ANCHORED -> swipeableState.animateTo(CenterScreenState.CENTER)
+                CenterScreenState.CENTER -> swipeableState.animateTo(CenterScreenState.RIGHT_ANCHORED)
+                CenterScreenState.RIGHT_ANCHORED -> composeNavigator.navigateUp()
+            }
         }
     }
 }
