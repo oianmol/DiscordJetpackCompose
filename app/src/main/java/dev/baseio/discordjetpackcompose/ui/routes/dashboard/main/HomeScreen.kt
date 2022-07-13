@@ -131,9 +131,9 @@ fun HomeScreen(
 
     val leftDrawerModifier by remember(drawerOnTop, isAnyItemSelectedInServers) {
         mutableStateOf(
-            swipeableModifier
-                .zIndex(if (drawerOnTop == DrawerTypes.LEFT) 1f else 0f)
-                .alpha(if (drawerOnTop == DrawerTypes.LEFT) 1f else 0f)
+          swipeableModifier
+            .zIndex(if (drawerOnTop == DrawerTypes.LEFT) 1f else 0f)
+            .alpha(if (drawerOnTop == DrawerTypes.LEFT) 1f else 0f)
         )
     }
 
@@ -224,6 +224,7 @@ fun HomeScreen(
               composeNavigator = composeNavigator,
               focusOpacity = focusOpacity,
               userName = viewModel.currentSelectedChatUsername.collectAsState(),
+              isOnline = viewModel.currentSelectedChatOnlineStatus.collectAsState(),
               swipeableState = swipeableState
             )
         }

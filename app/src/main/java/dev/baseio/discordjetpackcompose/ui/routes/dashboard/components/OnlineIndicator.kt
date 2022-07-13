@@ -28,7 +28,7 @@ private fun OnlineIndicator(
     isOnline: Boolean,
     indicatorSize: Dp = 12.dp,
 ) {
-    val color by animateColorAsState(targetValue = if (isOnline) Color.Green else Color.Gray)
+    val color by animateColorAsState(targetValue = if (isOnline) Color(0xFF3da45c) else Color(0xFF6f7c8a))
     Surface(shape = CircleShape, color = DiscordColorProvider.colors.surface) {
         Canvas(
             modifier = modifier
@@ -71,7 +71,7 @@ private fun OnlineIndicatorPreview() {
             OnlineIndicator(isOnline = true)
             OnlineIndicator(isOnline = true) {
                 Surface(
-                    modifier = Modifier.size(48.dp), shape = CircleShape, color = Color.Green
+                    modifier = Modifier.size(48.dp), shape = CircleShape, color = Color(0xFF3da45c)
                 ) {}
             }
         }

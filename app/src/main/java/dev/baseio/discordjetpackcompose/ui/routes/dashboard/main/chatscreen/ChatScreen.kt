@@ -1,12 +1,12 @@
 package dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.chatscreen
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
@@ -15,11 +15,9 @@ import androidx.compose.material.SwipeableState
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons.Filled
 import androidx.compose.material.icons.filled.AlternateEmail
-import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.filled.PhoneInTalk
-import androidx.compose.material.icons.filled.VideoCall
 import androidx.compose.material.icons.filled.Videocam
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
@@ -41,6 +39,7 @@ import dev.baseio.discordjetpackcompose.ui.components.DiscordScaffold
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.components.OnlineIndicator
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.CenterScreenState
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
+import dev.baseio.discordjetpackcompose.ui.theme.MessageTypography
 import dev.baseio.discordjetpackcompose.viewmodels.ChatScreenViewModel
 import kotlinx.coroutines.launch
 
@@ -52,6 +51,7 @@ fun ChatScreen(
   viewModel: ChatScreenViewModel = hiltViewModel(),
   focusOpacity: Float,
   userName: State<String>,
+  isOnline: State<Boolean>,
   swipeableState: SwipeableState<CenterScreenState>
 ) {
   val scaffoldState = rememberScaffoldState()
@@ -68,7 +68,7 @@ fun ChatScreen(
     topAppBar = {
       ChatScreenAppBar(
         name = userName.value,
-        isOnline = true,
+        isOnline = isOnline.value,
         swipeableState = swipeableState
       )
     }
@@ -115,13 +115,14 @@ fun ChatScreenAppBar(
         Icon(
           imageVector = Filled.AlternateEmail,
           contentDescription = null,
-          modifier = Modifier.padding(start = 8.dp),
+          tint = Color.Gray
         )
         Text(
           modifier = Modifier
             .padding(start = 8.dp, end = 8.dp)
-            .width(80.dp),
+            .wrapContentWidth(),
           maxLines = 1,
+          style = MessageTypography.h2,
           overflow = TextOverflow.Ellipsis,
           text = name,
           color = DiscordColorProvider.colors.onSurface

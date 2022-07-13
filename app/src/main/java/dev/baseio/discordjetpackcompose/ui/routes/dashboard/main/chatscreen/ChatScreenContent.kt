@@ -30,6 +30,7 @@ fun ChatScreenContent(
         modifier = Modifier
           .layoutId("chatMessages")
           .fillMaxSize(),
+        userName = userName,
         viewModel = viewModel
       )
       ChatMessageEditor(

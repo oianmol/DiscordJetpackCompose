@@ -6,18 +6,26 @@ import dev.baseio.discordjetpackcompose.ui.utils.getSampleServer
 
 fun getFakeChatUserList(): MutableList<ChatUserEntity> {
   return mutableListOf<ChatUserEntity>().apply {
+    add(
+      ChatUserEntity(
+        username = "MEE6",
+        name = "MEE6",
+        isOnline = false,
+      )
+    )
     repeat(20) {
       add(
         if (it % 2 == 0) {
           ChatUserEntity(
-            username = "testusername$it",
-            name = "Test User",
+            username = "TestUser$it",
+            name = "Test User $it",
             currentStatus = "Studying",
             isOnline = false,
           )
         } else {
           ChatUserEntity(
-            username = "testusername$it",
+            username = "TestUser$it",
+            name = "Test User $it",
             isOnline = true,
           )
         }

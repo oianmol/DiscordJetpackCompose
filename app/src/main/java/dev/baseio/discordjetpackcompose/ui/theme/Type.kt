@@ -103,6 +103,11 @@ val MessageTypography = Typography(
     fontWeight = FontWeight.Medium,
     fontSize = 20.sp,
   ),
+  h2 = TextStyle(
+    fontFamily = UniSansFontFamily,
+    fontWeight = FontWeight.Bold,
+    fontSize = 20.sp,
+  ),
   body1 = TextStyle(
     fontFamily = UniSansFontFamily,
     fontWeight = FontWeight.Normal,

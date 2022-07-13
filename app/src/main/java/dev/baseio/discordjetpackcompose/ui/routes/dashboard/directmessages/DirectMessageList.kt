@@ -131,6 +131,7 @@ fun DirectMessageList(
                         onItemSelection()
                         currentSelectedChatUsername = chats[index].username
                         viewModel.setCurrentSelectedChatUserName(chats[index].username)
+                        viewModel.setCurrentSelectedChatOnlineStatus(chats[index].isOnline)
                     })
             }
             item {
