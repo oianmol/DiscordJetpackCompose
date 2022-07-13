@@ -82,3 +82,8 @@ fun getSampleSheetListItems() = mutableListOf<SearchSheetListItem>().apply {
         ))
     }
 }
+
+fun getSampleServerList() = listOf(
+    getSampleServer(serverId = "1"),
+    getSampleServer(serverId = "2"),
+)

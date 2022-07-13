@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.google.accompanist.insets.navigationBarsPadding
 import dev.baseio.discordjetpackcompose.R
 import dev.baseio.discordjetpackcompose.ui.components.DiscordText
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.components.CountIndicator
@@ -79,6 +80,13 @@ fun SearchSheetFilteredItemList(
                 SearchSheetFilteredItem(
                     searchSheetListItem = listItems[index],
                     onItemClick = onItemClick
+                )
+            }
+            item {
+                Spacer(
+                    modifier = Modifier
+                        .navigationBarsPadding()
+                        .padding(bottom = 8.dp)
                 )
             }
         }

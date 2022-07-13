@@ -31,6 +31,7 @@ import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.insets.statusBarsPadding
 import dev.baseio.discordjetpackcompose.R
 import dev.baseio.discordjetpackcompose.ui.components.DiscordText
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.search.components.SearchSheetFilteredItemList
@@ -136,6 +137,7 @@ fun SearchBottomSheet(
         sheetBackgroundColor = surfaceColor,
         backgroundColor = surfaceColor,
         sheetPeekHeight = 0.dp,
+        modifier = Modifier.statusBarsPadding()
     )
 }
 
