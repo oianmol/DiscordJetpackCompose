@@ -1,5 +1,6 @@
 package dev.baseio.discordjetpackcompose.ui.routes.dashboard.main
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.fadeIn
@@ -16,11 +17,13 @@ import androidx.compose.material.ContentAlpha
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FractionalThreshold
 import androidx.compose.material.ModalBottomSheetState
+import androidx.compose.material.SwipeableState
 import androidx.compose.material.rememberSwipeableState
 import androidx.compose.material.swipeable
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -36,13 +39,18 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.baseio.discordjetpackcompose.entities.ChatUserEntity
 import dev.baseio.discordjetpackcompose.entities.server.ServerEntity
 import dev.baseio.discordjetpackcompose.navigator.ComposeNavigator
 import dev.baseio.discordjetpackcompose.navigator.DiscordScreen
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.chatscreen.ChatScreen
+import dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.dasboard.getFakeChatUserList
+import dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.dasboard.getFakeServerList
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
+import dev.baseio.discordjetpackcompose.viewmodels.DashboardScreenViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlin.math.roundToInt
 import kotlinx.coroutines.launch
 
@@ -50,37 +58,20 @@ private enum class DrawerTypes {
     LEFT, RIGHT
 }
 
-private enum class CenterScreenState {
+enum class CenterScreenState {
     LEFT_ANCHORED, CENTER, RIGHT_ANCHORED
 }
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun HomeScreen(
-    serverList: List<ServerEntity>,
-    chatUserList: List<ChatUserEntity> = mutableListOf<ChatUserEntity>().apply {
-        repeat(20) {
-            add(
-                if (it % 2 == 0) {
-                    ChatUserEntity(
-                        username = "testusername$it",
-                        name = "Test User",
-                        currentStatus = "Studying",
-                        isOnline = false,
-                    )
-                } else {
-                    ChatUserEntity(
-                        username = "testusername$it",
-                        isOnline = true,
-                    )
-                }
-            )
-        }
-    },
-    onSelectServer: (String) -> Unit,
-    sheetState: ModalBottomSheetState,
+    serverList: List<ServerEntity> = getFakeServerList(),
+    chatUserList: List<ChatUserEntity> = getFakeChatUserList(),
+    viewModel: DashboardScreenViewModel = hiltViewModel(),
     shouldDisplayBottomBar: (Boolean) -> Unit,
-    composeNavigator: ComposeNavigator
+    composeNavigator: ComposeNavigator,
+    onSelectServer: (String) -> Unit,
+    sheetState: ModalBottomSheetState
 ) {
 
     val sysUiController = rememberSystemUiController()
@@ -196,7 +187,8 @@ fun HomeScreen(
                 onSelectServer(currentServerId)
             },
             onAddButtonClick = { composeNavigator.navigate(DiscordScreen.CreateServer.name) },
-            openServerInfoBottomSheet = { coroutineScope.launch { sheetState.show() } }
+            openServerInfoBottomSheet = { coroutineScope.launch { sheetState.show() } },
+            viewModel = viewModel
         )
         Box(
             modifier = rightDrawerModifier
@@ -228,7 +220,36 @@ fun HomeScreen(
                 }
             }
             val focusOpacity by animateFloatAsState(targetValue = if (shouldNotFocusCenterScreen) ContentAlpha.disabled else 0f)
-            ChatScreen(composeNavigator = composeNavigator, focusOpacity = focusOpacity)
+            ChatScreen(
+              composeNavigator = composeNavigator,
+              focusOpacity = focusOpacity,
+              userName = viewModel.currentSelectedChatUsername.collectAsState(),
+              swipeableState = swipeableState
+            )
+        }
+
+        HandleBackPress(
+          coroutineScope = coroutineScope,
+          swipeableState = swipeableState,
+          composeNavigator = composeNavigator
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun HandleBackPress(
+    coroutineScope: CoroutineScope,
+    swipeableState: SwipeableState<CenterScreenState>,
+    composeNavigator: ComposeNavigator
+) {
+    BackHandler(enabled = true) {
+        coroutineScope.launch {
+            when (swipeableState.currentValue) {
+                CenterScreenState.LEFT_ANCHORED -> swipeableState.animateTo(CenterScreenState.CENTER)
+                CenterScreenState.CENTER -> swipeableState.animateTo(CenterScreenState.RIGHT_ANCHORED)
+                CenterScreenState.RIGHT_ANCHORED -> composeNavigator.navigateUp()
+            }
         }
     }
 }

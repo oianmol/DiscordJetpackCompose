@@ -37,7 +37,7 @@ import dev.baseio.discordjetpackcompose.navigator.ComposeNavigator
 import dev.baseio.discordjetpackcompose.ui.components.DiscordAppBar
 import dev.baseio.discordjetpackcompose.ui.components.DiscordScaffold
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.components.OnlineIndicator
-import dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.dasboard.CenterScreenState
+import dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.CenterScreenState
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.viewmodels.ChatScreenViewModel
 import kotlinx.coroutines.launch
