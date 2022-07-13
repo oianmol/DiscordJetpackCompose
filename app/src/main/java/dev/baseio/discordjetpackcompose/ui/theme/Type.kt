@@ -97,6 +97,26 @@ val ServerInfoTypography = Typography(
     ),
 )
 
+val MessageTypography = Typography(
+  defaultFontFamily = UniSansFontFamily,
+  h1 = TextStyle(
+    fontWeight = FontWeight.Medium,
+    fontSize = 20.sp,
+  ),
+  body1 = TextStyle(
+    fontFamily = UniSansFontFamily,
+    fontWeight = FontWeight.Normal,
+    fontSize = 16.sp
+  ),
+  subtitle1 = TextStyle(
+    fontWeight = FontWeight.Medium,
+    fontSize = 18.sp
+  ),
+  subtitle2 = TextStyle(
+    fontSize = 16.sp,
+  )
+)
+
 val DiscordDialogTypography = Typography(
     defaultFontFamily = UniSansFontFamily,
     h6 = TextStyle(

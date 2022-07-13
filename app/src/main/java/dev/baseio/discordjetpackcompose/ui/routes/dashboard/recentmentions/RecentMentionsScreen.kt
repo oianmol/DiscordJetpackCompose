@@ -18,6 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.baseio.discordjetpackcompose.R
 import dev.baseio.discordjetpackcompose.ui.components.DiscordScaffold
@@ -36,7 +37,10 @@ fun RecentMentionsScreen() {
         sysUiController.setSystemBarsColor(color = colors.appBarColor2)
         sysUiController.setNavigationBarColor(color = colors.background)
     }
-    DiscordScaffold(scaffoldState = scaffoldState, topAppBar = {
+    DiscordScaffold(
+      modifier = Modifier.statusBarsPadding(),
+      scaffoldState = scaffoldState,
+      topAppBar = {
         RecentTopAppBar()
     }) {
         Column(Modifier.padding(it), horizontalAlignment = Alignment.CenterHorizontally) {
