@@ -807,3 +807,24 @@ val discord_dialog_cancel_button_text
         Color(0xFF4F5761)
     }
 val discord_dialog_button_bg = Color(0xFF5864F1)
+
+val discord_icon_button
+    @Composable get() = if (isSystemInDarkTheme()) {
+        Color(0xFFFFFFFF)
+    } else {
+        Color(0xFF2f3238)
+    }
+
+val icon_button
+    @Composable get() = if (isSystemInDarkTheme()) {
+        Color(0xFFFFFFFF)
+    } else {
+        Color(0xFF2f3238)
+    }
+
+val discord_icon_button_bg
+    @Composable get() = if (isSystemInDarkTheme()) {
+        Color(0xFF2f3238)
+    } else {
+        Color(0xFFeaeaeb)
+    }

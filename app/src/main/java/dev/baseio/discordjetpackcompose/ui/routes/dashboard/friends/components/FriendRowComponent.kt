@@ -1,4 +1,4 @@
-package dev.baseio.discordjetpackcompose.ui.routes.dashboard.components
+package dev.baseio.discordjetpackcompose.ui.routes.dashboard.friends.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -26,11 +26,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.baseio.discordjetpackcompose.R
 import dev.baseio.discordjetpackcompose.entities.ChatUserEntity
-import dev.baseio.discordjetpackcompose.ui.theme.DirectMessageListTypography
-import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import dev.baseio.discordjetpackcompose.ui.theme.primarySurface
+import dev.baseio.discordjetpackcompose.ui.routes.dashboard.components.OnlineIndicator
+import dev.baseio.discordjetpackcompose.ui.theme.*
 
 @Composable
 fun FriendRowComponent(chatUserEntity: ChatUserEntity, isFriend: Boolean) {
@@ -81,11 +80,11 @@ fun FriendRowComponent(chatUserEntity: ChatUserEntity, isFriend: Boolean) {
 
 @Composable
 fun ActionButton(
-    background: Color = DiscordColorProvider.colors.primarySurface,
+    background: Color = discord_icon_button_bg,
     icon: ImageVector? = null,
     painterResource: Int? = null,
     contentDescription: String,
-    tintColor: Color = Color.White
+    tintColor: Color = icon_button
 ) {
     IconButton(
         onClick = { }, modifier = Modifier

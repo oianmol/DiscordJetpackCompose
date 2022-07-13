@@ -1,4 +1,4 @@
-package dev.baseio.discordjetpackcompose.ui.routes.dashboard.main
+package dev.baseio.discordjetpackcompose.ui.routes.dashboard.friends
 
 
 import androidx.compose.foundation.clickable
@@ -14,7 +14,6 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -26,12 +25,9 @@ import dev.baseio.discordjetpackcompose.R
 import dev.baseio.discordjetpackcompose.navigator.ComposeNavigator
 import dev.baseio.discordjetpackcompose.ui.components.DiscordAppBar
 import dev.baseio.discordjetpackcompose.ui.components.DiscordScaffold
-import dev.baseio.discordjetpackcompose.ui.routes.dashboard.components.FriendRowComponent
-import dev.baseio.discordjetpackcompose.ui.theme.DirectMessageListTypography
-import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
-import dev.baseio.discordjetpackcompose.ui.theme.Typography
+import dev.baseio.discordjetpackcompose.ui.routes.dashboard.friends.components.FriendRowComponent
+import dev.baseio.discordjetpackcompose.ui.theme.*
 import dev.baseio.discordjetpackcompose.viewmodels.FriendsViewModel
-import java.util.*
 
 @Composable
 fun FriendsScreen(
@@ -65,7 +61,7 @@ fun FriendsScreen(
     DiscordScaffold(
         scaffoldState = scaffoldState,
         navigator = composeNavigator,
-        backgroundColor = colors.discordBackgroundOne,
+
         topAppBar = {
             DiscordAppBar(title = {
                 Text(
@@ -73,17 +69,17 @@ fun FriendsScreen(
                     style = Typography.h3.copy(
                         fontWeight = FontWeight.Bold,
                         fontSize = 20.sp,
-                        color = Color.White
                     )
                 )
             },
+                backgroundColor = create_server_screen,
                 actions = {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_chat_bubble),
                         contentDescription = stringResource(
                             id = R.string.invite_friend
                         ),
-                        tint = Color.White,
+                        tint = discord_icon_button,
                         modifier = Modifier.clickable {
 
                         }
@@ -94,7 +90,7 @@ fun FriendsScreen(
                         contentDescription = stringResource(
                             id = R.string.add_friend
                         ),
-                        tint = Color.White,
+                        tint = discord_icon_button,
                         modifier = Modifier.clickable {
 
                         }

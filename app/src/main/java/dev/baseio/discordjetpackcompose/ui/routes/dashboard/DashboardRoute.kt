@@ -8,8 +8,8 @@ import dev.baseio.discordjetpackcompose.navigator.DiscordRoute
 import dev.baseio.discordjetpackcompose.navigator.DiscordScreen
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.createServer.CreateServer
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.DashboardScreen
-import dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.FriendsScreen
-import dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.InviteScreen
+import dev.baseio.discordjetpackcompose.ui.routes.dashboard.friends.FriendsScreen
+import dev.baseio.discordjetpackcompose.ui.routes.dashboard.invite.InviteScreen
 
 fun NavGraphBuilder.dashboardRoute(
     composeNavigator: ComposeNavigator,
