@@ -11,6 +11,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.baseio.discordjetpackcompose.R
 import dev.baseio.discordjetpackcompose.navigator.ComposeNavigator
@@ -37,6 +38,7 @@ fun InviteScreen(composeNavigator: ComposeNavigator) {
     }
 
     DiscordScaffold(
+        modifier = Modifier.statusBarsPadding(),
         scaffoldState = scaffoldState,
         topAppBar = {
 

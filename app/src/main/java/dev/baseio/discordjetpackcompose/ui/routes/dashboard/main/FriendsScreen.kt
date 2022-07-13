@@ -5,8 +5,10 @@ import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
+import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.baseio.discordjetpackcompose.R
 import dev.baseio.discordjetpackcompose.navigator.ComposeNavigator
@@ -27,7 +29,9 @@ fun FriendsScreen(composeNavigator: ComposeNavigator) {
     }
 
     DiscordScaffold(
-        scaffoldState = scaffoldState, topAppBar = {
+        modifier = Modifier.statusBarsPadding(),
+        scaffoldState = scaffoldState,
+        topAppBar = {
             DiscordAppBar(
                 title = {
                     Text(

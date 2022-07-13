@@ -3,10 +3,8 @@ package dev.baseio.discordjetpackcompose.ui.theme
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.Colors
 import androidx.compose.material.MaterialTheme
-import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 
 private val LightColorPalette = DiscordColorPalette(
@@ -14,7 +12,12 @@ private val LightColorPalette = DiscordColorPalette(
     primaryVariant = design_default_color_primary_variant,
     secondary = design_default_color_secondary,
     secondaryVariant = design_default_color_secondary_variant,
+    textPrimary = Color.Black,
+    textSecondary = Color.DarkGray,
     background = design_default_color_background,
+    chatTopBar = Color(0xFFFFFFFF),
+    chatBackground = Color(0xFFFFFFFF),
+    chatEditor = Color(0xFFecedef),
     secondaryBackground = design_default_color_secondary_background,
     onSecondaryBackground = design_default_color_on_secondary,
     surface = design_default_color_surface,
@@ -40,7 +43,12 @@ private val DarkColorPalette = DiscordColorPalette(
     primaryVariant = design_dark_default_color_primary_variant,
     secondary = design_dark_default_color_secondary,
     secondaryVariant = design_dark_default_color_secondary_variant,
+    textPrimary = Color.White,
+    textSecondary = Color.LightGray,
     background = design_dark_default_color_background,
+    chatTopBar = Color(0xFF303136),
+    chatBackground = Color(0xFF363940),
+    chatEditor = Color(0xFF2a2b2f),
     secondaryBackground = design_dark_default_color_secondary_background,
     onSecondaryBackground = design_dark_default_color_on_background,
     surface = design_dark_default_color_surface,
@@ -111,7 +119,12 @@ class DiscordColorPalette(
     primaryVariant: Color = Color(0xFF3700B3),
     secondary: Color = Color(0xFF03DAC6),
     secondaryVariant: Color = secondary,
+    textPrimary: Color = Color(0xFF5865f2),
+    textSecondary: Color,
     background: Color = Color(0xFF2f3238),
+    chatTopBar: Color,
+    chatBackground: Color,
+    chatEditor: Color,
     secondaryBackground: Color,
     onSecondaryBackground: Color,
     surface: Color = Color(0xFF121212),
@@ -139,7 +152,17 @@ class DiscordColorPalette(
         internal set
     var secondaryVariant by mutableStateOf(secondaryVariant, structuralEqualityPolicy())
         internal set
+    var textPrimary by mutableStateOf(textPrimary)
+        private set
+    var textSecondary by mutableStateOf(textSecondary)
+        private set
     var background by mutableStateOf(background, structuralEqualityPolicy())
+        internal set
+    var chatTopBar by mutableStateOf(chatTopBar, structuralEqualityPolicy())
+        internal set
+    var chatBackground by mutableStateOf(chatBackground, structuralEqualityPolicy())
+        internal set
+    var chatEditor by mutableStateOf(chatEditor, structuralEqualityPolicy())
         internal set
     var secondaryBackground by mutableStateOf(secondaryBackground, structuralEqualityPolicy())
         internal set
