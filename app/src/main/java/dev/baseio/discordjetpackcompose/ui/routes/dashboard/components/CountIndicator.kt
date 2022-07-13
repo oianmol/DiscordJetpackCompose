@@ -29,7 +29,7 @@ import dev.baseio.discordjetpackcompose.ui.theme.DiscordJetpackComposeTheme
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordSurface
 
 @Composable
-fun CountIndicator(
+private fun CountIndicator(
     modifier: Modifier = Modifier,
     count: Int?,
     showCardBackground: Boolean = true,
@@ -81,7 +81,7 @@ fun CountIndicator(
     textSize: TextUnit = 8.sp,
     indicatorAlignment: Alignment = Alignment.BottomEnd,
     forceCircleShape: Boolean = true,
-    content: @Composable BoxScope.() -> Unit
+    content: @Composable BoxScope.() -> Unit = {}
 ) {
     Box(contentAlignment = indicatorAlignment) {
         content()
@@ -112,7 +112,16 @@ private fun CountIndicatorPreview() {
                 count = 99970,
                 forceCircleShape = !true
             )
-            CountIndicator(count = 100) {
+            CountIndicator(
+                count = 100,
+                forceCircleShape = true
+            ) {
+                Surface(modifier = Modifier.size(48.dp), shape = CircleShape, color = Color.Green) {}
+            }
+            CountIndicator(
+                count = 100,
+                forceCircleShape = !true
+            ) {
                 Surface(modifier = Modifier.size(48.dp), shape = CircleShape, color = Color.Green) {}
             }
         }
