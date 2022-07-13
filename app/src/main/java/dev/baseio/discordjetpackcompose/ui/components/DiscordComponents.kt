@@ -8,6 +8,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.TextStyle
@@ -70,6 +71,21 @@ fun DiscordIcon(
 ) {
     Icon(
         imageVector = imageVector,
+        contentDescription = contentDescription,
+        modifier = modifier,
+        tint = tint,
+    )
+}
+
+@Composable
+fun DiscordIcon(
+    painter: Painter,
+    contentDescription: String?,
+    modifier: Modifier = Modifier,
+    tint: Color = DiscordColorProvider.colors.onSurface.copy(alpha = LocalContentAlpha.current)
+) {
+    Icon(
+        painter = painter,
         contentDescription = contentDescription,
         modifier = modifier,
         tint = tint,
