@@ -1,4 +1,4 @@
-package dev.baseio.discordjetpackcompose.ui.routes.dashboard.main
+package dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.dasboard
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
@@ -36,15 +36,17 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.baseio.discordjetpackcompose.entities.ChatUserEntity
 import dev.baseio.discordjetpackcompose.entities.server.ServerEntity
 import dev.baseio.discordjetpackcompose.navigator.ComposeNavigator
 import dev.baseio.discordjetpackcompose.navigator.DiscordScreen
+import dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.ServerDrawer
+import dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.chatscreen.ChatScreen
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.serverinfo.ServerInfoBottomSheet
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
-import dev.baseio.discordjetpackcompose.ui.utils.getSampleServer
 import kotlin.math.roundToInt
 import kotlinx.coroutines.launch
 
@@ -59,29 +61,8 @@ private enum class CenterScreenState {
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun DashboardScreen(
-    serverList: List<ServerEntity> = listOf(
-        getSampleServer(serverId = "1"),
-        getSampleServer(serverId = "2"),
-    ),
-    chatUserList: List<ChatUserEntity> = mutableListOf<ChatUserEntity>().apply {
-        repeat(20) {
-            add(
-                if (it % 2 == 0) {
-                    ChatUserEntity(
-                        username = "testusername$it",
-                        name = "Test User",
-                        currentStatus = "Studying",
-                        isOnline = false,
-                    )
-                } else {
-                    ChatUserEntity(
-                        username = "testusername$it",
-                        isOnline = true,
-                    )
-                }
-            )
-        }
-    },
+    serverList: List<ServerEntity> = getFakeServerList(),
+    chatUserList: List<ChatUserEntity> = getFakeChatUserList(),
     composeNavigator: ComposeNavigator
 ) {
 
@@ -180,7 +161,8 @@ fun DashboardScreen(
         val coroutineScope = rememberCoroutineScope()
         ServerInfoBottomSheet(
             modifier = leftDrawerModifier,
-            sheetState = sheetState, serverEntity = serverList.find { it.id == selectedServerId }) {
+            sheetState = sheetState, serverEntity = serverList.find { it.id == selectedServerId }
+        ) {
             ServerDrawer(
                 serverList = serverList,
                 chatUserList = chatUserList,
@@ -193,17 +175,22 @@ fun DashboardScreen(
                 openServerInfoBottomSheet = { coroutineScope.launch { sheetState.show() } }
             )
         }
+
         Box(
             modifier = rightDrawerModifier
                 .fillMaxHeight()
                 .fillMaxWidth(0.85f)
                 .background(Color.Cyan)
                 .align(Alignment.CenterEnd)
-        ) {}
+        )
 
         val centerScreenZIndex by remember {
             derivedStateOf {
-                if (swipeableState.isAnimationRunning || swipeableState.currentValue == CenterScreenState.CENTER || swipeableState.progress.fraction in 0.05f..0.95f) 1f
+                if (
+                  swipeableState.isAnimationRunning ||
+                  swipeableState.currentValue == CenterScreenState.CENTER ||
+                  swipeableState.progress.fraction in 0.05f..0.95f
+                ) 1f
                 else 0.5f
             }
         }
@@ -223,11 +210,9 @@ fun DashboardScreen(
                 }
             }
             val focusOpacity by animateFloatAsState(targetValue = if (shouldNotFocusCenterScreen) ContentAlpha.disabled else 0f)
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.Green)
-                    .background(Color.Black.copy(alpha = focusOpacity))
+            ChatScreen(
+                composeNavigator = composeNavigator,
+                focusOpacity = focusOpacity
             )
         }
     }

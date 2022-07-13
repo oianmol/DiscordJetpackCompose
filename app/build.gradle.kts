@@ -108,6 +108,8 @@ dependencies {
     implementation(Lib.Android.ACCOMPANIST_INSETS)
     implementation(ACCOMPANIST_SYSTEM_UI_CONTROLLER)
     implementation(Lib.Android.ACCOMPANIST_FLOW_LAYOUTS)
+    implementation(Lib.Paging.PAGING_3)
+    implementation(Lib.Paging.PAGING_COMPOSE)
 
     implementation(Lib.Android.APP_COMPAT)
 
