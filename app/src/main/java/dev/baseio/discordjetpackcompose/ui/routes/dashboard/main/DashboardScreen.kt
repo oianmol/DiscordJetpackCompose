@@ -159,9 +159,7 @@ fun DashboardScreen(
                 isAnyItemSelectedInServers = isSelected
                 coroutineScope.launch { swipeableState.animateTo(CenterScreenState.CENTER) }
             },
-            onAddButtonClick = {
-                composeNavigator.navigate(DiscordScreen.Friends.route)
-            })
+            onAddButtonClick = {})
         Box(
             modifier = rightDrawerModifier
                 .fillMaxHeight()

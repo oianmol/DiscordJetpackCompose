@@ -37,4 +37,12 @@
     <string name="pro_tip">PROTIP:</string>
     <string name="whenever_mentions">Whenever someone mentions you it will be saved here for 7 days.</string>
     <string name="friends">Friends</string>
+    <string name="add_friend">Add friend button</string>
+    <string name="remove_friend">Remove friend button</string>
+    <string name="invite_friend">Invite friend button</string>
+    <string name="call_friend">Call friend button</string>
+    <string name="message_friend">Message friend button</string>
+    <string name="friend_suggestions">FRIEND SUGGESTIONS - %d</string>
+    <string name="offline">OFFLINE - %d</string>
+    <string name="online">ONLINE - %d</string>
 </resources>

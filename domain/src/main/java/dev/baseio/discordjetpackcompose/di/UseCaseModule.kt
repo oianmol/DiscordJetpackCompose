@@ -5,8 +5,11 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dev.baseio.discordjetpackcompose.repositories.CountryRepo
+import dev.baseio.discordjetpackcompose.repositories.FriendsRepo
 import dev.baseio.discordjetpackcompose.repositories.ServerRepo
 import dev.baseio.discordjetpackcompose.usecases.FetchCountriesUseCase
+import dev.baseio.discordjetpackcompose.usecases.FetchFriendSuggestionsUseCase
+import dev.baseio.discordjetpackcompose.usecases.FetchFriendsUseCase
 import dev.baseio.discordjetpackcompose.usecases.GetServerUseCase
 import javax.inject.Singleton
 
@@ -21,4 +24,12 @@ object UseCaseModule {
     @Provides
     @Singleton
     fun provideGetServerUseCase(serverRepo: ServerRepo) = GetServerUseCase(serverRepo = serverRepo)
+
+    @Provides
+    @Singleton
+    fun provideFriendsSuggestionUseCase(friendsRepo: FriendsRepo) = FetchFriendSuggestionsUseCase(friendsRepo)
+
+    @Provides
+    @Singleton
+    fun provideFriendsUseCase(friendsRepo: FriendsRepo) = FetchFriendsUseCase(friendsRepo)
 }

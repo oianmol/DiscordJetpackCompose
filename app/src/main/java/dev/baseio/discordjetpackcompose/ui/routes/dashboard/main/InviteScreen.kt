@@ -29,7 +29,6 @@ fun InviteScreen(composeNavigator: ComposeNavigator) {
     val colors = DiscordColorProvider.colors
     SideEffect {
         sysUiController.setSystemBarsColor(color = colors.discordBackgroundOne)
-        sysUiController.setNavigationBarColor(color = colors.discordBackgroundOne)
     }
 
     var inviteLink by remember {

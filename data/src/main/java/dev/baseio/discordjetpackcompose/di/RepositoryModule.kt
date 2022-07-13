@@ -6,10 +6,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import dev.baseio.discordjetpackcompose.repositories.CountryRepo
-import dev.baseio.discordjetpackcompose.repositories.CountryRepoImpl
-import dev.baseio.discordjetpackcompose.repositories.ServerRepo
-import dev.baseio.discordjetpackcompose.repositories.ServerRepoImpl
+import dev.baseio.discordjetpackcompose.repositories.*
 import javax.inject.Singleton
 
 @Module
@@ -23,4 +20,8 @@ object RepositoryModule {
     @Provides
     @Singleton
     fun provideServerRepo(): ServerRepo = ServerRepoImpl()
+
+    @Provides
+    @Singleton
+    fun provideFriendsRepo():FriendsRepo = FriendsRepoImpl()
 }
