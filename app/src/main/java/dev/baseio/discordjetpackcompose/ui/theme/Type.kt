@@ -1,6 +1,7 @@
 package dev.baseio.discordjetpackcompose.ui.theme
 
 import androidx.compose.material.Typography
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
@@ -106,4 +107,24 @@ val DiscordDialogTypography = Typography(
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp
     )
+)
+
+val SearchSheetDialogTypography @Composable get() = Typography(
+    defaultFontFamily = UniSansFontFamily,
+    h1 = TextStyle(
+        fontWeight = FontWeight.Black,
+        fontSize = 24.sp,
+    ),
+    body1 = TextStyle(
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 16.sp
+    ),
+    body2 = TextStyle(
+        fontWeight = FontWeight.Bold,
+        fontSize = 14.sp
+    ),
+    subtitle1 = TextStyle(
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 12.sp
+    ),
 )

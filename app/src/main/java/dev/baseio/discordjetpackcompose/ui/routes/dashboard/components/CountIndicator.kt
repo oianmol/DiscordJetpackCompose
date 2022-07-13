@@ -3,8 +3,10 @@ package dev.baseio.discordjetpackcompose.ui.routes.dashboard.components
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Surface
@@ -24,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordJetpackComposeTheme
+import dev.baseio.discordjetpackcompose.ui.theme.DiscordSurface
 
 @Composable
 fun CountIndicator(
@@ -38,7 +41,7 @@ fun CountIndicator(
         visible = count != null && count > 0
     ) {
         val textSizeInDp = with(LocalDensity.current) { textSize.toDp() }
-        Surface(
+        DiscordSurface(
             shape = CircleShape,
             color = if (showCardBackground) DiscordColorProvider.colors.surface else Color.Transparent
         ) {
@@ -52,7 +55,8 @@ fun CountIndicator(
                         maxHeight = if (forceCircleShape) textSizeInDp * 2 else Dp.Unspecified,
                     )
                     .clip(CircleShape)
-                    .background(DiscordColorProvider.colors.error), contentAlignment = Alignment.Center
+                    .background(DiscordColorProvider.colors.error),
+                contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = count?.toString() ?: "0",
@@ -66,6 +70,28 @@ fun CountIndicator(
                 )
             }
         }
+    }
+}
+
+@Composable
+fun CountIndicator(
+    modifier: Modifier = Modifier,
+    count: Int?,
+    showCardBackground: Boolean = true,
+    textSize: TextUnit = 8.sp,
+    indicatorAlignment: Alignment = Alignment.BottomEnd,
+    forceCircleShape: Boolean = true,
+    content: @Composable BoxScope.() -> Unit
+) {
+    Box(contentAlignment = indicatorAlignment) {
+        content()
+        CountIndicator(
+            modifier = modifier,
+            count = count,
+            showCardBackground = showCardBackground,
+            textSize = textSize,
+            forceCircleShape = forceCircleShape,
+        )
     }
 }
 
@@ -86,6 +112,9 @@ private fun CountIndicatorPreview() {
                 count = 99970,
                 forceCircleShape = !true
             )
+            CountIndicator(count = 100) {
+                Surface(modifier = Modifier.size(48.dp), shape = CircleShape, color = Color.Green) {}
+            }
         }
     }
 }
