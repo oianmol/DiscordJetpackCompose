@@ -14,7 +14,6 @@ import androidx.compose.material.rememberBottomSheetScaffoldState
 import androidx.compose.material.rememberBottomSheetState
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,6 +28,7 @@ import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.google.accompanist.insets.ui.Scaffold
 import dev.baseio.discordjetpackcompose.R
+import dev.baseio.discordjetpackcompose.entities.server.ServerEntity
 import dev.baseio.discordjetpackcompose.navigator.ComposeNavigator
 import dev.baseio.discordjetpackcompose.navigator.DiscordRoute
 import dev.baseio.discordjetpackcompose.navigator.DiscordScreen
@@ -38,6 +38,7 @@ import dev.baseio.discordjetpackcompose.ui.routes.dashboard.bottombar.DashboardB
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.bottombar.DashboardBottomBarItemType
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.components.OnlineIndicator
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.search.SearchBottomSheet
+import dev.baseio.discordjetpackcompose.ui.routes.dashboard.search.components.models.SearchSheetListItem
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.serverinfo.ServerInfoBottomSheet
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.setupDashboardBottomNavScreens
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
@@ -48,86 +49,91 @@ import dev.baseio.discordjetpackcompose.ui.utils.rememberCoilImageRequest
 import dev.baseio.discordjetpackcompose.utils.Constants
 import kotlinx.coroutines.launch
 
+private object DashboardScreen {
+    val iconSize = 24.dp
+    val bottomBarIconModifier = Modifier.padding(16.dp)
+}
+
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun DashboardScreen(
-    composeNavigator: ComposeNavigator
+    composeNavigator: ComposeNavigator,
+    serverList: List<ServerEntity> = getSampleServerList(),
+    searchSheetItemList: List<SearchSheetListItem> = getSampleSheetListItems(),
+    userProfileImage: String = Constants.MMLogoUrl,
+    totalUnreadCount: Int = serverList.sumOf { it.allChannelsUnreadCount }
 ) {
     val surfaceColor = DiscordColorProvider.colors.surface
     val contentColor = DiscordColorProvider.colors.contentColorFor(surfaceColor)
-    var currentSelectedItem: DashboardBottomBarItemType by remember {
+
+    var selectedBottomBarItem: DashboardBottomBarItemType by remember {
         mutableStateOf(DashboardBottomBarItemType.Home)
     }
-    val userProfileImage = remember { Constants.MMLogoUrl }
-    val iconSize = remember { 24.dp }
-    val commonModifier = remember { Modifier.padding(16.dp) }
 
     val searchSheetState = rememberBottomSheetScaffoldState(
         bottomSheetState = rememberBottomSheetState(initialValue = BottomSheetValue.Collapsed)
     )
+    val serverInfoSheetState =
+        rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
+
     val coroutineScope = rememberCoroutineScope()
+
     var selectedServerId: String? by remember { mutableStateOf(null) }
     var selectedChannelId: String? by remember { mutableStateOf(null) }
 
     val navController = rememberNavController()
 
-    LaunchedEffect(Unit) {
-        composeNavigator.handleNavigationCommands(navController)
-    }
+    var isBottomBarDisplayed by remember { mutableStateOf(true) }
 
     SearchBottomSheet(
         sheetState = searchSheetState,
         content = {
-            val serverList = remember { getSampleServerList() }
-            val sheetState =
-                rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
-            var isBottomBarDisplayed by remember { mutableStateOf(true) }
             ServerInfoBottomSheet(
-                sheetState = sheetState,
+                sheetState = serverInfoSheetState,
                 serverEntity = serverList.find { it.id == selectedServerId }) {
                 Scaffold(
                     bottomBar = {
                         DashboardBottomBar(
                             bottomBarItems = listOf(
                                 DashboardBottomBarItem(
-                                    isSelected = currentSelectedItem == DashboardBottomBarItemType.Home,
+                                    isSelected = selectedBottomBarItem == DashboardBottomBarItemType.Home,
                                     icon = {
                                         DiscordIcon(
                                             painter = painterResource(id = R.drawable.ic_discord_icon),
                                             contentDescription = null,
-                                            modifier = commonModifier,
+                                            modifier = DashboardScreen.bottomBarIconModifier,
                                         )
                                     },
-                                    unreadCount = 242,
+                                    unreadCount = totalUnreadCount,
                                     onClick = {
-                                        currentSelectedItem = DashboardBottomBarItemType.Home
+                                        selectedBottomBarItem = DashboardBottomBarItemType.Home
                                         navController.navigate(DiscordScreen.Home.route)
                                     },
                                     type = DashboardBottomBarItemType.Home
                                 ),
                                 DashboardBottomBarItem(
-                                    isSelected = currentSelectedItem == DashboardBottomBarItemType.Friends,
+                                    isSelected = selectedBottomBarItem == DashboardBottomBarItemType.Friends,
                                     icon = {
                                         DiscordIcon(
                                             imageVector = Icons.Default.EmojiPeople,
                                             contentDescription = null,
-                                            modifier = commonModifier,
+                                            modifier = DashboardScreen.bottomBarIconModifier,
                                         )
                                     },
                                     unreadCount = null,
                                     onClick = {
-                                        currentSelectedItem = DashboardBottomBarItemType.Friends
+                                        selectedBottomBarItem = DashboardBottomBarItemType.Friends
                                         navController.navigate(DiscordScreen.Friends.route)
                                     },
                                     type = DashboardBottomBarItemType.Friends
                                 ),
                                 DashboardBottomBarItem(
-                                    isSelected = currentSelectedItem == DashboardBottomBarItemType.Search,
+                                    isSelected = selectedBottomBarItem == DashboardBottomBarItemType.Search,
                                     icon = {
                                         DiscordIcon(
                                             imageVector = Icons.Default.Search,
                                             contentDescription = null,
-                                            modifier = commonModifier,
+                                            modifier = DashboardScreen.bottomBarIconModifier,
                                         )
                                     },
                                     unreadCount = null,
@@ -137,22 +143,22 @@ fun DashboardScreen(
                                     type = DashboardBottomBarItemType.Search
                                 ),
                                 DashboardBottomBarItem(
-                                    isSelected = currentSelectedItem == DashboardBottomBarItemType.Mentions,
+                                    isSelected = selectedBottomBarItem == DashboardBottomBarItemType.Mentions,
                                     icon = {
                                         DiscordIcon(
                                             imageVector = Icons.Default.AlternateEmail,
                                             contentDescription = null,
-                                            modifier = commonModifier,
+                                            modifier = DashboardScreen.bottomBarIconModifier,
                                         )
                                     },
                                     unreadCount = 20,
                                     onClick = {
-                                        currentSelectedItem = DashboardBottomBarItemType.Mentions
+                                        selectedBottomBarItem = DashboardBottomBarItemType.Mentions
                                     },
                                     type = DashboardBottomBarItemType.Mentions
                                 ),
                                 DashboardBottomBarItem(
-                                    isSelected = currentSelectedItem == DashboardBottomBarItemType.Profile,
+                                    isSelected = selectedBottomBarItem == DashboardBottomBarItemType.Profile,
                                     icon = {
                                         OnlineIndicator(isOnline = true) {
                                             AsyncImage(
@@ -160,14 +166,14 @@ fun DashboardScreen(
                                                 contentDescription = null,
                                                 modifier = Modifier
                                                     .padding(2.dp)
-                                                    .size(iconSize)
+                                                    .size(DashboardScreen.iconSize)
                                                     .clip(CircleShape)
                                             )
                                         }
                                     },
                                     unreadCount = null,
                                     onClick = {
-                                        currentSelectedItem = DashboardBottomBarItemType.Profile
+                                        selectedBottomBarItem = DashboardBottomBarItemType.Profile
                                     },
                                     type = DashboardBottomBarItemType.Profile
                                 ),
@@ -184,7 +190,7 @@ fun DashboardScreen(
                     ) {
                         setupDashboardBottomNavScreens(
                             composeNavigator = composeNavigator,
-                            sheetState = sheetState,
+                            sheetState = serverInfoSheetState,
                             onSelectServer = { serverId ->
                                 selectedServerId = serverId
                             },
@@ -195,9 +201,9 @@ fun DashboardScreen(
                 }
             }
         },
-        serverIdList = listOf("1", "2", "3", "4", "5"),
+        serverIdList = serverList.map { it.id },
         onServerSelect = { serverId -> selectedServerId = serverId },
-        listItems = getSampleSheetListItems(),
+        listItems = searchSheetItemList,
         onChannelSelect = { channelId -> selectedChannelId = channelId }
     )
 }
