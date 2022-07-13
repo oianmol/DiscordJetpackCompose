@@ -108,6 +108,11 @@ val MessageTypography = Typography(
     fontWeight = FontWeight.Normal,
     fontSize = 16.sp
   ),
+  caption = TextStyle(
+    fontFamily = UniSansFontFamily,
+    fontWeight = FontWeight.Normal,
+    fontSize = 14.sp
+  ),
   subtitle1 = TextStyle(
     fontWeight = FontWeight.Medium,
     fontSize = 18.sp
