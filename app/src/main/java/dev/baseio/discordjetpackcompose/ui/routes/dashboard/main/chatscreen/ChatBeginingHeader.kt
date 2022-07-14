@@ -1,5 +1,9 @@
 package dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.chatscreen
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.TweenSpec
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,11 +25,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.airbnb.lottie.compose.LottieAnimation
-import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieCompositionSpec.RawRes
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
-import dev.baseio.discordjetpackcompose.R
 import dev.baseio.discordjetpackcompose.R.drawable
+import dev.baseio.discordjetpackcompose.R.raw
 import dev.baseio.discordjetpackcompose.R.string
 import dev.baseio.discordjetpackcompose.ui.routes.onboarding.commonui.OnboardingScreensButton
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
@@ -34,6 +38,7 @@ import dev.baseio.discordjetpackcompose.ui.theme.MessageTypography
 @Composable
 fun ChatBeginningHeader(
   modifier: Modifier = Modifier,
+  lastDrawnMessage: String?,
   userName: State<String>
 ) {
   Column(modifier = modifier.padding(start = 8.dp, top = 8.dp, end = 8.dp, bottom = 48.dp)) {
@@ -56,26 +61,35 @@ fun ChatBeginningHeader(
       text = "This is the beginning of your direct message history with @${userName.value}",
       color = DiscordColorProvider.colors.textSecondary
     )
-    val composition by rememberLottieComposition(
-      LottieCompositionSpec.RawRes(R.raw.discord_wave_sticker)
-    )
-    LottieAnimation(
-      modifier = Modifier
-        .padding(top = 32.dp)
-        .size(160.dp)
-        .align(Alignment.CenterHorizontally),
-      iterations = LottieConstants.IterateForever,
-      composition = composition
-    )
-    OnboardingScreensButton(
-      modifier = Modifier
-        .padding(start = 8.dp, top = 16.dp, end = 8.dp)
-        .fillMaxWidth()
-        .height(38.dp)
-        .align(Alignment.CenterHorizontally),
-      buttonTextProvider = { string.wave_to },
-      onClick = { }
-    )
+    AnimatedVisibility(
+      visible = lastDrawnMessage.isNullOrBlank(),
+      exit = fadeOut(
+        animationSpec = TweenSpec(800, 300, FastOutSlowInEasing)
+      )
+    ) {
+      val composition by rememberLottieComposition(
+        RawRes(raw.discord_wave_sticker)
+      )
+      Column(modifier = modifier.align(Alignment.CenterHorizontally)) {
+        LottieAnimation(
+          modifier = Modifier
+            .padding(top = 32.dp)
+            .size(160.dp)
+            .align(Alignment.CenterHorizontally),
+          iterations = LottieConstants.IterateForever,
+          composition = composition
+        )
+        OnboardingScreensButton(
+          modifier = Modifier
+            .padding(start = 8.dp, top = 16.dp, end = 8.dp)
+            .fillMaxWidth()
+            .height(38.dp)
+            .align(Alignment.CenterHorizontally),
+          buttonTextProvider = { string.wave_to },
+          onClick = { }
+        )
+      }
+    }
   }
 }
 

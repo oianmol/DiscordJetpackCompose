@@ -37,10 +37,10 @@ fun ChatMessageItem(message: DiscordMessageEntity) {
       )
     },
     text = {
-      ChatUserDateTime(message)
+      ChatTitle(message)
     },
     secondaryText = {
-      ChatMedia(message)
+      ChatBody(message)
     }
   )
 }
@@ -65,7 +65,7 @@ fun ImageBox(
 }
 
 @Composable
-fun ChatMedia(message: DiscordMessageEntity) {
+fun ChatBody(message: DiscordMessageEntity) {
   Column {
     Text(
       message.message,
@@ -77,7 +77,7 @@ fun ChatMedia(message: DiscordMessageEntity) {
 }
 
 @Composable
-fun ChatUserDateTime(message: DiscordMessageEntity) {
+fun ChatTitle(message: DiscordMessageEntity) {
   Row(verticalAlignment = Alignment.CenterVertically) {
     Text(
       message.createdBy,
@@ -87,7 +87,7 @@ fun ChatUserDateTime(message: DiscordMessageEntity) {
       modifier = Modifier.padding(end = 8.dp)
     )
     Text(
-      message.createdDate.calendar().formattedTime(),
+      message.createdDate.calendar().formattedFullDateTime(),
       style = MessageTypography.overline.copy(
         color = DiscordColorProvider.colors.textSecondary.copy(alpha = 0.8f)
       )
@@ -96,8 +96,13 @@ fun ChatUserDateTime(message: DiscordMessageEntity) {
 }
 
 @SuppressLint("SimpleDateFormat")
-fun Calendar.formattedTime(): String {
+fun Calendar.formattedFullDateTime(): String {
   return SimpleDateFormat("EEE, d MMM yyyy hh:mm a").format(this.time)
+}
+
+@SuppressLint("SimpleDateFormat")
+fun Calendar.formattedFullDate(): String {
+  return SimpleDateFormat("EEE, d MMM yyyy").format(this.time)
 }
 
 fun Long.calendar(): Calendar {

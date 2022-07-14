@@ -1,16 +1,15 @@
 package dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.chatscreen
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.SwipeableState
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons.Filled
@@ -36,6 +35,7 @@ import dev.baseio.discordjetpackcompose.R.string
 import dev.baseio.discordjetpackcompose.navigator.ComposeNavigator
 import dev.baseio.discordjetpackcompose.ui.components.DiscordAppBar
 import dev.baseio.discordjetpackcompose.ui.components.DiscordScaffold
+import dev.baseio.discordjetpackcompose.ui.routes.dashboard.components.CountIndicator
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.components.OnlineIndicator
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.CenterScreenState
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
@@ -98,15 +98,21 @@ fun ChatScreenAppBar(
   val coroutineScope = rememberCoroutineScope()
   DiscordAppBar(
     navigationIcon = {
-      IconButton(onClick = {
-        coroutineScope.launch {
-          swipeableState.animateTo(CenterScreenState.RIGHT_ANCHORED)
-        }
-      }) {
+      CountIndicator(
+        count = 142,
+        forceCircleShape = false,
+        modifier = Modifier.padding(8.dp)
+      ) {
         Icon(
           imageVector = Filled.Menu,
           contentDescription = stringResource(string.menu),
-          modifier = Modifier.padding(start = 8.dp),
+          modifier = Modifier
+            .padding(start = 8.dp)
+            .clickable {
+              coroutineScope.launch {
+                swipeableState.animateTo(CenterScreenState.RIGHT_ANCHORED)
+              }
+            },
         )
       }
     },
