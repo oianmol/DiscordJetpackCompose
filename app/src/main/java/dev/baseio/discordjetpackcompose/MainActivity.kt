@@ -5,7 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.LaunchedEffect
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
@@ -26,10 +25,12 @@ class MainActivity : ComponentActivity() {
     lateinit var composeNavigator: ComposeNavigator
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.Theme_DiscordJetpackCompose)
+
         super.onCreate(savedInstanceState)
-        installSplashScreen()
-        /**For Making the App FullScreen*/
+
         WindowCompat.setDecorFitsSystemWindows(window, false)
+        
         setContent {
             val navController = rememberNavController()
 

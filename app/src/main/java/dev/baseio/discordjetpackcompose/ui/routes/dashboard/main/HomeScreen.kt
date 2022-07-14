@@ -15,11 +15,11 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FractionalThreshold
-import androidx.compose.material.ModalBottomSheetValue
-import androidx.compose.material.rememberModalBottomSheetState
+import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.rememberSwipeableState
 import androidx.compose.material.swipeable
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -36,15 +36,13 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.baseio.discordjetpackcompose.entities.ChatUserEntity
 import dev.baseio.discordjetpackcompose.entities.server.ServerEntity
 import dev.baseio.discordjetpackcompose.navigator.ComposeNavigator
 import dev.baseio.discordjetpackcompose.navigator.DiscordScreen
-import dev.baseio.discordjetpackcompose.ui.routes.dashboard.serverinfo.ServerInfoBottomSheet
+import dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.chatscreen.ChatScreen
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
-import dev.baseio.discordjetpackcompose.ui.utils.getSampleServer
 import kotlin.math.roundToInt
 import kotlinx.coroutines.launch
 
@@ -58,11 +56,8 @@ private enum class CenterScreenState {
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun DashboardScreen(
-    serverList: List<ServerEntity> = listOf(
-        getSampleServer(serverId = "1"),
-        getSampleServer(serverId = "2"),
-    ),
+fun HomeScreen(
+    serverList: List<ServerEntity>,
     chatUserList: List<ChatUserEntity> = mutableListOf<ChatUserEntity>().apply {
         repeat(20) {
             add(
@@ -82,6 +77,9 @@ fun DashboardScreen(
             )
         }
     },
+    onSelectServer: (String) -> Unit,
+    sheetState: ModalBottomSheetState,
+    shouldDisplayBottomBar: (Boolean) -> Unit,
     composeNavigator: ComposeNavigator
 ) {
 
@@ -170,29 +168,36 @@ fun DashboardScreen(
         )
     }
 
+    val displayBottomBar by remember {
+        derivedStateOf {
+            swipeableState.direction >= 0 && swipeableState.currentValue == CenterScreenState.RIGHT_ANCHORED
+        }
+    }
+
+    LaunchedEffect(displayBottomBar) {
+        shouldDisplayBottomBar(displayBottomBar)
+    }
+
     Box(
         modifier = Modifier
-            .fillMaxSize()
-            .statusBarsPadding(),
+            .fillMaxSize(),
     ) {
-        var selectedServerId: String? by remember { mutableStateOf(null) }
-        val sheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
         val coroutineScope = rememberCoroutineScope()
-        ServerInfoBottomSheet(
+
+        ServerDrawer(
             modifier = leftDrawerModifier,
-            sheetState = sheetState, serverEntity = serverList.find { it.id == selectedServerId }) {
-            ServerDrawer(
-                serverList = serverList,
-                chatUserList = chatUserList,
-                onAnyItemSelected = { isSelected, currentServerId ->
-                    isAnyItemSelectedInServers = isSelected
+            serverList = serverList,
+            chatUserList = chatUserList,
+            onAnyItemSelected = { isSelected, currentServerId ->
+                isAnyItemSelectedInServers = isSelected
+                if (isSelected) {
                     coroutineScope.launch { swipeableState.animateTo(CenterScreenState.CENTER) }
-                    selectedServerId = currentServerId
-                },
-                onAddButtonClick = { composeNavigator.navigate(DiscordScreen.CreateServer.name) },
-                openServerInfoBottomSheet = { coroutineScope.launch { sheetState.show() } }
-            )
-        }
+                }
+                onSelectServer(currentServerId)
+            },
+            onAddButtonClick = { composeNavigator.navigate(DiscordScreen.CreateServer.name) },
+            openServerInfoBottomSheet = { coroutineScope.launch { sheetState.show() } }
+        )
         Box(
             modifier = rightDrawerModifier
                 .fillMaxHeight()
@@ -223,12 +228,7 @@ fun DashboardScreen(
                 }
             }
             val focusOpacity by animateFloatAsState(targetValue = if (shouldNotFocusCenterScreen) ContentAlpha.disabled else 0f)
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.Green)
-                    .background(Color.Black.copy(alpha = focusOpacity))
-            )
+            ChatScreen(composeNavigator = composeNavigator, focusOpacity = focusOpacity)
         }
     }
 }

@@ -41,6 +41,7 @@
     <string name="start_from_a_template">START FROM A TEMPLATE</string>
     <string name="have_an_invite_already">Have an Invite Already?</string>
     <string name="clear">Clear</string>
+    <string name="menu">Menu</string>
     <string name="invite_heading">Do you have an invite?</string>
     <string name="invite_subheading">Get the most out of Discord by joining a server.</string>
     <string name="invite_link">Invite link</string>
@@ -71,4 +72,11 @@
     <string name="connecting">Connecting…</string>
     <string name="no_internet_status">Network connectivity limited or unavailable.</string>
     <string name="airplane_mode_is_active">Airplane mode is active.</string>
+    <string name="search_sheet_filter_dialog_title">Filter Options</string>
+    <string name="search_sheet_filter_dialog_cancel_btn_txt">CANCEL</string>
+    <string name="search_sheet_topbar_placeholder">Where would you like to go?</string>
+    <string name="search_bottom_sheet_topbar_placeholder">Where would you like to go?</string>
+    <string name="last_channel_title">LAST CHANNEL</string>
+    <string name="search_sheet_filtered_list_suggestions_title">SUGGESTIONS</string>
+    <string name="unknown_bottom_bar_item_type">Unknown item type! Please add this type inside the DashboardBottomBarItemType enum class.</string>
 </resources>
