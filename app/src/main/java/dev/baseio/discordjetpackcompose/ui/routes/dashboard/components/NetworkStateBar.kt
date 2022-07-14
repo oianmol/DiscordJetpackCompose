@@ -5,6 +5,7 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
+import android.provider.Settings
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
@@ -16,6 +17,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -28,62 +30,58 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import dev.baseio.discordjetpackcompose.ui.theme.white
+import dev.baseio.discordjetpackcompose.R
+import dev.baseio.discordjetpackcompose.ui.theme.Typography
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.launch
-import timber.log.Timber
-import java.io.IOException
-import java.net.InetSocketAddress
-import java.net.Socket
 
 @Composable
 fun NetworkStateBar() {
+
     val connection by connectivityState()
+    val airplane by isAirplaneMode()
 
-    val isConnected = connection === ConnectionState.Connecting
-    val isAirplaneMode = connection === ConnectionState.AirplaneMode
+    val isConnected by remember(key1 = connection) {
+        mutableStateOf(connection == ConnectionState.Available)
+    }
 
-    if (isConnected) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxWidth().padding(top = 4.dp)
-        ) {
+    val isAirplaneModeOn by remember(key1 = airplane) {
+        mutableStateOf(airplane == ConnectionState.AirplaneModeOn)
+    }
+
+
+    Row(
+        verticalAlignment = Alignment.Bottom,
+        horizontalArrangement = Arrangement.Center,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 4.dp)
+    ) {
+        //Logic Needs to be fixed. Not updating always
+        if (isConnected) {
             ConnectingAnimation()
-            Text(
-                text = "Connecting...",
-                color = white,
-                modifier = Modifier.padding(start = 4.dp)
-            )
-        }
-    } else if (isAirplaneMode) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            ConnectingAnimation()
-            Text(text = "Airplane mode active.", color = white)
-        }
-    } else {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            NoNetwork()
-            Text(
-                text = "Network connectivity limited or unavailable.",
-                color = white,
-                modifier = Modifier.padding(start = 4.dp)
-            )
+        } else {
+            if (!isAirplaneModeOn) {
+                NoNetwork()
+                NetworkStateText { R.string.no_internet_status }
+            } else {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_airplanemode),
+                    contentDescription = null,
+                    modifier = Modifier.rotate(90f)
+                )
+                NetworkStateText { R.string.airplane_mode_is_active }
+            }
         }
     }
 }
@@ -91,8 +89,7 @@ fun NetworkStateBar() {
 
 @Composable
 fun ConnectingAnimation(
-    speed: Double = 0.5,
-    text: String = ""
+    speed: Double = 0.5
 ) {
     val maxCounter = 3
     var counter by remember {
@@ -110,14 +107,20 @@ fun ConnectingAnimation(
         }
     })
 
-    var isVisible = true
+    var isVisible by remember {
+        mutableStateOf(true)
+    }
 
-    LaunchedEffect(key1 = null, block = {
-        scope.launch {
-            delay(500)
-            isVisible = !isVisible
+    LaunchedEffect(
+        key1 = null,
+        block = {
+            scope.launch {
+                delay(3000)
+                isVisible = !isVisible
+            }
         }
-    })
+    )
+
     AnimatedVisibility(visible = isVisible) {
         Row(
             verticalAlignment = Alignment.Bottom
@@ -125,9 +128,18 @@ fun ConnectingAnimation(
             repeat(maxCounter) { index ->
                 Bars(counter = counter, index = index)
             }
-            Text(text = text, modifier = Modifier.padding(start = 4.dp))
+            NetworkStateText { R.string.connecting }
         }
     }
+}
+
+@Composable
+fun NetworkStateText(textProvider: () -> Int) {
+    Text(
+        text = stringResource(id = textProvider()),
+        style = Typography.caption,
+        modifier = Modifier.padding(start = 4.dp)
+    )
 }
 
 @Composable
@@ -154,8 +166,8 @@ fun Bars(
             .height(
                 when (index) {
                     0 -> 8.dp
-                    1 -> 14.dp
-                    2 -> 20.dp
+                    1 -> 12.dp
+                    2 -> 16.dp
                     else -> 0.dp
                 }
             )
@@ -167,14 +179,14 @@ fun Bars(
 @Composable
 fun NoNetwork() {
     Row(verticalAlignment = Alignment.Bottom) {
-        Bars(height = 8.dp, color = Color(0xFFEC4345))
-        Bars(height = 14.dp, color = Color(0xFF36393F))
-        Bars(height = 20.dp, color = Color(0xFF36393F))
+        NonAnimatedBar(height = 8.dp, color = Color(0xFFEC4345))
+        NonAnimatedBar(height = 12.dp, color = Color(0xFF36393F))
+        NonAnimatedBar(height = 16.dp, color = Color(0xFF36393F))
     }
 }
 
 @Composable
-fun Bars(
+fun NonAnimatedBar(
     height: Dp,
     color: Color
 ) {
@@ -189,9 +201,39 @@ fun Bars(
 
 
 sealed class ConnectionState {
+    object Available : ConnectionState()
     object Unavailable : ConnectionState()
-    object Connecting : ConnectionState()
-    object AirplaneMode : ConnectionState()
+    object AirplaneModeOn : ConnectionState()
+    object AirplaneModeOff : ConnectionState()
+}
+
+
+/**
+ * Network utility to get current state of internet connection
+ */
+val Context.currentConnectivityState: ConnectionState
+    get() {
+        val connectivityManager =
+            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        return getCurrentConnectivityState(connectivityManager)
+    }
+
+
+private fun getCurrentConnectivityState(
+    connectivityManager: ConnectivityManager
+): ConnectionState {
+    val connected = connectivityManager.allNetworks.any { network ->
+        connectivityManager.getNetworkCapabilities(network)
+            ?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+            ?: false
+    }
+
+
+    return if (connected) {
+        ConnectionState.Available
+    } else {
+        ConnectionState.Unavailable
+    }
 }
 
 /**
@@ -217,48 +259,11 @@ fun Context.observeConnectivityAsFlow() = callbackFlow {
     }
 }
 
-/**
- * Network utility to get current state of internet connection
- */
-val Context.currentConnectivityState: ConnectionState
-    get() {
-        val connectivityManager =
-            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        return getCurrentConnectivityState(connectivityManager)
-    }
-
-private fun getCurrentConnectivityState(
-    connectivityManager: ConnectivityManager
-): ConnectionState {
-    val connected = connectivityManager.allNetworks.any { network ->
-        connectivityManager.getNetworkCapabilities(network)
-            ?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
-            ?: false
-    }
-
-    return if (connected) {
-        ConnectionState.Connecting
-    } else {
-        ConnectionState.Unavailable
-    }
-}
-
-fun execute(): Boolean {
-    return try {
-        val socket = Socket()
-        socket.connect(InetSocketAddress("8.8.8.8", 53), 1500)
-        socket.close()
-        true
-    } catch (e: IOException) {
-        Timber.e("No Internet Connection: $e")
-        false
-    }
-}
 
 fun networkCallback(callback: (ConnectionState) -> Unit): ConnectivityManager.NetworkCallback {
     return object : ConnectivityManager.NetworkCallback() {
         override fun onAvailable(network: Network) {
-            callback(ConnectionState.Connecting)
+            callback(ConnectionState.Available)
         }
 
         override fun onLost(network: Network) {
@@ -274,6 +279,26 @@ fun connectivityState(): State<ConnectionState> {
 
     return produceState(initialValue = context.currentConnectivityState) {
         context.observeConnectivityAsFlow().collect { value = it }
+    }
+}
+
+
+@Composable
+fun isAirplaneMode(): State<ConnectionState> {
+    val context = LocalContext.current
+    val mode = Settings.System.getInt(
+        context.contentResolver,
+        Settings.Global.AIRPLANE_MODE_ON, 0
+    ) != 0
+
+    return remember {
+        mutableStateOf(
+            if (mode) {
+                ConnectionState.AirplaneModeOn
+            } else {
+                ConnectionState.AirplaneModeOff
+            }
+        )
     }
 }
 
