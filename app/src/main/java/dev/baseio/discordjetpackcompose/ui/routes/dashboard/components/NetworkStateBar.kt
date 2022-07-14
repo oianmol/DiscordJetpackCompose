@@ -5,6 +5,7 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -37,6 +38,10 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
+import java.io.IOException
+import java.net.InetSocketAddress
+import java.net.Socket
 
 @Composable
 fun NetworkStateBar() {
@@ -49,7 +54,7 @@ fun NetworkStateBar() {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth().padding(top = 4.dp)
         ) {
             ConnectingAnimation()
             Text(
@@ -105,13 +110,23 @@ fun ConnectingAnimation(
         }
     })
 
-    Row(
-        verticalAlignment = Alignment.Bottom
-    ) {
-        repeat(maxCounter) { index ->
-            Bars(counter = counter, index = index)
+    var isVisible = true
+
+    LaunchedEffect(key1 = null, block = {
+        scope.launch {
+            delay(500)
+            isVisible = !isVisible
         }
-        Text(text = text, modifier = Modifier.padding(start = 4.dp))
+    })
+    AnimatedVisibility(visible = isVisible) {
+        Row(
+            verticalAlignment = Alignment.Bottom
+        ) {
+            repeat(maxCounter) { index ->
+                Bars(counter = counter, index = index)
+            }
+            Text(text = text, modifier = Modifier.padding(start = 4.dp))
+        }
     }
 }
 
@@ -225,6 +240,18 @@ private fun getCurrentConnectivityState(
         ConnectionState.Connecting
     } else {
         ConnectionState.Unavailable
+    }
+}
+
+fun execute(): Boolean {
+    return try {
+        val socket = Socket()
+        socket.connect(InetSocketAddress("8.8.8.8", 53), 1500)
+        socket.close()
+        true
+    } catch (e: IOException) {
+        Timber.e("No Internet Connection: $e")
+        false
     }
 }
 

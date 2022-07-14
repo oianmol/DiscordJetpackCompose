@@ -1,6 +1,8 @@
 package dev.baseio.discordjetpackcompose.ui.components
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.AppBarDefaults
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.contentColorFor
@@ -9,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
+import dev.baseio.discordjetpackcompose.ui.routes.dashboard.components.NetworkStateBar
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordSurface
 import dev.baseio.discordjetpackcompose.ui.theme.primarySurface
@@ -28,8 +31,11 @@ fun DiscordAppBar(
     contentColor = contentColor,
     elevation = elevation
   ) {
-    TopAppBar(
-      title, modifier, navigationIcon, actions, backgroundColor, contentColor, elevation
-    )
+    Column{
+      NetworkStateBar()
+      TopAppBar(
+        title, modifier, navigationIcon, actions, backgroundColor, contentColor, elevation
+      )
+    }
   }
 }

@@ -26,6 +26,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.baseio.discordjetpackcompose.R
 import dev.baseio.discordjetpackcompose.navigator.ComposeNavigator
 import dev.baseio.discordjetpackcompose.navigator.DiscordScreen
+import dev.baseio.discordjetpackcompose.ui.routes.dashboard.components.NetworkStateBar
 import dev.baseio.discordjetpackcompose.ui.routes.onboarding.commonui.CenteredTitleSubtitle
 import dev.baseio.discordjetpackcompose.ui.routes.onboarding.commonui.OnboardingScreensButton
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
