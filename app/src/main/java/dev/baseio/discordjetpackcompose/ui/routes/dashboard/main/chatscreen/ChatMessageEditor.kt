@@ -7,20 +7,19 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Send
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import dev.baseio.discordjetpackcompose.custom.MentionsTextField
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.ui.theme.MessageTypography
 import dev.baseio.discordjetpackcompose.viewmodels.ChatScreenViewModel
@@ -30,7 +29,9 @@ fun ChatMessageEditor(
   modifier: Modifier = Modifier,
   viewModel: ChatScreenViewModel
 ) {
-  val search by viewModel.message.collectAsState()
+  var mentionText by remember {
+    mutableStateOf(TextFieldValue())
+  }
   Row(
     modifier
       .padding(start = 32.dp, end = 8.dp)
@@ -48,18 +49,20 @@ fun ChatMessageEditor(
         .padding(start = 8.dp, end = 8.dp),
       verticalAlignment = Alignment.CenterVertically
     ) {
-      BasicTextField(
-        value = search,
+      MentionsTextField(
+        onSpanUpdate = { update, spans, textRange ->
+
+        }, mentionText = mentionText,
         maxLines = 4,
         cursorBrush = SolidColor(DiscordColorProvider.colors.textPrimary),
         onValueChange = {
-          viewModel.message.value = it
+          mentionText = it
         },
         textStyle = MessageTypography.subtitle1.copy(
           color = DiscordColorProvider.colors.textPrimary,
         ),
         decorationBox = { innerTextField ->
-          ChatPlaceHolder(search, Modifier, innerTextField)
+          ChatPlaceHolder(mentionText.text, Modifier, innerTextField)
         },
         modifier = Modifier
           .weight(1f)
@@ -67,14 +70,17 @@ fun ChatMessageEditor(
           .padding(start = 16.dp, end = 16.dp)
       )
     }
-    SendMessageButton(viewModel, search)
+    SendMessageButton(viewModel, mentionText.text, {
+      mentionText = TextFieldValue()
+    })
   }
 }
 
 @Composable
 private fun SendMessageButton(
   viewModel: ChatScreenViewModel,
-  search: String,
+  message: String,
+  onSent: () -> Unit,
   modifier: Modifier = Modifier
 ) {
   IconButton(
@@ -85,9 +91,10 @@ private fun SendMessageButton(
         shape = CircleShape
       ),
     onClick = {
-      viewModel.sendMessage(search)
+      viewModel.sendMessage(message)
+      onSent()
     },
-    enabled = search.isNotEmpty()
+    enabled = message.isNotEmpty()
   ) {
     Icon(
       Icons.Default.Send,

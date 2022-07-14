@@ -20,7 +20,6 @@ class ChatScreenViewModel @Inject constructor(
 ) : ViewModel() {
 
   var chatMessagesFlow = MutableStateFlow<Flow<PagingData<DiscordMessageEntity>>?>(null)
-  var message = MutableStateFlow("")
 
   fun fetchMessages() {
     chatMessagesFlow.value = fetchMessagesUseCase.performStreaming("1")
@@ -40,7 +39,6 @@ class ChatScreenViewModel @Inject constructor(
         )
         sendMessageUseCase.perform(message)
       }
-      message.value = ""
     }
   }
 }
