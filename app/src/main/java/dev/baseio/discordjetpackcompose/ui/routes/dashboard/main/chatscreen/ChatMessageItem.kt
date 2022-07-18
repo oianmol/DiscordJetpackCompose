@@ -15,7 +15,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
@@ -30,18 +29,18 @@ import java.util.Calendar
 @Composable
 fun ChatMessageItem(message: DiscordMessageEntity) {
   ListItem(
+    modifier = Modifier.padding(0.dp),
     icon = {
       ImageBox(
         Modifier.size(48.dp),
         imageUrl = "https://images.unsplash.com/photo-1464863979621-258859e62245?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=686&q=80"
       )
     },
-    modifier = Modifier.padding(2.dp),
-    secondaryText = {
-      ChatMedia(message)
-    },
     text = {
-      ChatUserDateTime(message)
+      ChatTitle(message)
+    },
+    secondaryText = {
+      ChatBody(message)
     }
   )
 }
@@ -57,47 +56,53 @@ fun ImageBox(
     }.build()
   )
   Image(
+    modifier = Modifier
+      .size(40.dp)
+      .clip(CircleShape),
     painter = painter,
-    contentDescription = null,
-    modifier = modifier.clip(CircleShape)
+    contentDescription = null
   )
 }
 
 @Composable
-fun ChatMedia(message: DiscordMessageEntity) {
+fun ChatBody(message: DiscordMessageEntity) {
   Column {
     Text(
       message.message,
       style = MessageTypography.subtitle2.copy(
         color = DiscordColorProvider.colors.textSecondary
-      ),
-      modifier = Modifier.padding(4.dp)
+      )
     )
   }
 }
 
 @Composable
-fun ChatUserDateTime(message: DiscordMessageEntity) {
+fun ChatTitle(message: DiscordMessageEntity) {
   Row(verticalAlignment = Alignment.CenterVertically) {
     Text(
       message.createdBy,
       style = MessageTypography.h1.copy(
         color = DiscordColorProvider.colors.textPrimary
       ),
-      modifier = Modifier.padding(4.dp)
+      modifier = Modifier.padding(end = 8.dp)
     )
     Text(
-      message.createdDate.calendar().formattedTime(),
+      message.createdDate.calendar().formattedFullDateTime(),
       style = MessageTypography.overline.copy(
         color = DiscordColorProvider.colors.textSecondary.copy(alpha = 0.8f)
-      ), modifier = Modifier.padding(4.dp)
+      )
     )
   }
 }
 
 @SuppressLint("SimpleDateFormat")
-fun Calendar.formattedTime(): String {
-  return SimpleDateFormat("hh:mm a").format(this.time)
+fun Calendar.formattedFullDateTime(): String {
+  return SimpleDateFormat("EEE, d MMM yyyy hh:mm a").format(this.time)
+}
+
+@SuppressLint("SimpleDateFormat")
+fun Calendar.formattedFullDate(): String {
+  return SimpleDateFormat("EEE, d MMM yyyy").format(this.time)
 }
 
 fun Long.calendar(): Calendar {
