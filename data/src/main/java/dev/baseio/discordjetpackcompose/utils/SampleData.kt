@@ -3,7 +3,7 @@ package dev.baseio.discordjetpackcompose.utils
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Tag
 import dev.baseio.discordjetpackcompose.entities.search.SearchFilter
-import dev.baseio.discordjetpackcompose.entities.search.SearchSheetListItem
+import dev.baseio.discordjetpackcompose.entities.search.SearchSheetListItemEntity
 import dev.baseio.discordjetpackcompose.entities.server.ChannelEntity
 import dev.baseio.discordjetpackcompose.entities.server.ChannelType
 import dev.baseio.discordjetpackcompose.entities.server.ServerEntity
@@ -56,10 +56,10 @@ fun getSampleServer(serverId: String) = ServerEntity(
     boostCount = 7,
 )
 
-fun getSampleSheetListItems() = mutableListOf<SearchSheetListItem>().apply {
+fun getSampleSheetListItems() = mutableListOf<SearchSheetListItemEntity>().apply {
     repeat(10) { index ->
         add(
-            SearchSheetListItem(
+            SearchSheetListItemEntity(
                 id = "channel1$index",
                 itemType = SearchFilter.TextChannels,
                 iconUri = Icons.Default.Tag,
@@ -70,7 +70,7 @@ fun getSampleSheetListItems() = mutableListOf<SearchSheetListItem>().apply {
             )
         )
         add(
-            SearchSheetListItem(
+            SearchSheetListItemEntity(
                 id = "channel2$index",
                 itemType = SearchFilter.Users,
                 iconUri = Constants.MMLogoUrl,

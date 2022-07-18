@@ -2,6 +2,8 @@ package dev.baseio.discordjetpackcompose.ui.routes.dashboard
 
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetState
+import androidx.compose.runtime.LaunchedEffect
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
@@ -14,6 +16,7 @@ import dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.FriendsScreen
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.HomeScreen
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.InviteScreen
 import dev.baseio.discordjetpackcompose.utils.getSampleServerList
+import dev.baseio.discordjetpackcompose.viewmodels.DashboardScreenViewModel
 
 fun NavGraphBuilder.dashboardRoute(
     composeNavigator: ComposeNavigator,
@@ -23,7 +26,16 @@ fun NavGraphBuilder.dashboardRoute(
         route = DiscordRoute.Dashboard.name
     ) {
         composable(DiscordScreen.Dashboard.name) {
-            DashboardScreen(composeNavigator = composeNavigator)
+            val dashboardScreenVM = hiltViewModel<DashboardScreenViewModel>()
+
+            LaunchedEffect(Unit) {
+                dashboardScreenVM.getSearchSheetItemList()
+            }
+
+            DashboardScreen(
+                composeNavigator = composeNavigator,
+                searchSheetItemList = dashboardScreenVM.searchSheetItemList
+            )
         }
         composable(DiscordScreen.Invite.name) {
             InviteScreen(composeNavigator = composeNavigator)

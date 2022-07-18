@@ -28,7 +28,7 @@ import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.google.accompanist.insets.ui.Scaffold
 import dev.baseio.discordjetpackcompose.R
-import dev.baseio.discordjetpackcompose.entities.search.SearchSheetListItem
+import dev.baseio.discordjetpackcompose.entities.search.SearchSheetListItemEntity
 import dev.baseio.discordjetpackcompose.entities.server.ServerEntity
 import dev.baseio.discordjetpackcompose.navigator.ComposeNavigator
 import dev.baseio.discordjetpackcompose.navigator.DiscordRoute
@@ -46,7 +46,6 @@ import dev.baseio.discordjetpackcompose.ui.theme.contentColorFor
 import dev.baseio.discordjetpackcompose.ui.utils.rememberCoilImageRequest
 import dev.baseio.discordjetpackcompose.utils.Constants
 import dev.baseio.discordjetpackcompose.utils.getSampleServerList
-import dev.baseio.discordjetpackcompose.utils.getSampleSheetListItems
 import kotlinx.coroutines.launch
 
 private object DashboardScreen {
@@ -59,7 +58,7 @@ private object DashboardScreen {
 fun DashboardScreen(
     composeNavigator: ComposeNavigator,
     serverList: List<ServerEntity> = getSampleServerList(),
-    searchSheetItemList: List<SearchSheetListItem> = getSampleSheetListItems(),
+    searchSheetItemList: List<SearchSheetListItemEntity>,
     userProfileImage: String = Constants.MMLogoUrl,
     totalUnreadCount: Int = serverList.sumOf { it.allChannelsUnreadCount }
 ) {

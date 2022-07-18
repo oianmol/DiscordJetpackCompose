@@ -26,7 +26,7 @@ import dev.baseio.discordjetpackcompose.ui.theme.DiscordJetpackComposeTheme
 import dev.baseio.discordjetpackcompose.ui.utils.WindowInfo
 import dev.baseio.discordjetpackcompose.ui.utils.rememberWindowInfo
 import dev.baseio.discordjetpackcompose.utils.getSampleServer
-import dev.baseio.discordjetpackcompose.viewmodels.HomeScreenViewModel
+import dev.baseio.discordjetpackcompose.viewmodels.DashboardScreenViewModel
 
 @Composable
 fun ServerDrawer(
@@ -34,7 +34,7 @@ fun ServerDrawer(
     serverList: List<ServerEntity>,
     chatUserList: List<ChatUserEntity>,
     onAnyItemSelected: (Boolean, serverId: String) -> Unit,
-    homeScreenVM: HomeScreenViewModel = hiltViewModel(),
+    homeScreenVM: DashboardScreenViewModel = hiltViewModel(),
     onAddButtonClick: () -> Unit,
     openServerInfoBottomSheet: () -> Unit,
 ) {

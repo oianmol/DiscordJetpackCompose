@@ -7,7 +7,7 @@ enum class SearchFilter(val title: String, val sign: Char) {
     Servers(title = "Servers", sign = '*'),
 }
 
-data class SearchSheetListItem(
+data class SearchSheetListItemEntity(
     val id: String,
     val itemType: SearchFilter,
     val iconUri: Any?,

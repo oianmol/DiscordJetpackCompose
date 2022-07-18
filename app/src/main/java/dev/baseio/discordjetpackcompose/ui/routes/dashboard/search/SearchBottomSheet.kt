@@ -34,7 +34,7 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.statusBarsPadding
 import dev.baseio.discordjetpackcompose.R
 import dev.baseio.discordjetpackcompose.entities.search.SearchFilter
-import dev.baseio.discordjetpackcompose.entities.search.SearchSheetListItem
+import dev.baseio.discordjetpackcompose.entities.search.SearchSheetListItemEntity
 import dev.baseio.discordjetpackcompose.ui.components.DiscordText
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.search.components.SearchSheetFilteredItemList
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.search.components.SearchSheetServerSlider
@@ -50,7 +50,7 @@ import kotlinx.coroutines.launch
 fun SearchBottomSheet(
     sheetState: BottomSheetScaffoldState,
     serverIdList: List<String>,
-    listItems: List<SearchSheetListItem>,
+    listItems: List<SearchSheetListItemEntity>,
     onServerSelect: (serverId: String) -> Unit,
     onChannelSelect: (channelId: String) -> Unit,
     content: @Composable (PaddingValues) -> Unit,
@@ -60,7 +60,7 @@ fun SearchBottomSheet(
     val contentColor = DiscordColorProvider.colors.contentColorFor(surfaceColor)
 
     var searchQuery by remember { mutableStateOf(TextFieldValue()) }
-    var lastChannel: SearchSheetListItem? by remember { mutableStateOf(null) }
+    var lastChannel: SearchSheetListItemEntity? by remember { mutableStateOf(null) }
 
     LaunchedEffect(lastChannel) {
         lastChannel?.let { nnLastChannel -> onChannelSelect(nnLastChannel.id) }
