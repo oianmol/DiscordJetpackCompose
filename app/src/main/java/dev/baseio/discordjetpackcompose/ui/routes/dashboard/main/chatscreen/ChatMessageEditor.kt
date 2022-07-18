@@ -3,8 +3,10 @@ package dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.chatscreen
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
@@ -16,6 +18,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowForwardIos
 import androidx.compose.material.icons.filled.CardGiftcard
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.EmojiEmotions
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
@@ -52,8 +55,8 @@ fun ChatMessageEditor(
 
   Row(
     modifier = modifier
-      .height(48.dp)
-      .padding(start = 8.dp, end = 8.dp),
+      .height(56.dp)
+      .padding(start = 8.dp, top = 8.dp, end = 8.dp),
     verticalAlignment = Alignment.CenterVertically
   ) {
     AnimatedVisibility(visible = showExtraButtons.not()) {
@@ -298,5 +301,34 @@ fun ChatPlaceHolder(
     } else {
       innerTextField()
     }
+  }
+}
+
+@Composable
+fun ReplyBar(
+  modifier: Modifier = Modifier,
+  userName: State<String>
+) {
+  Row(
+    modifier = modifier
+      .fillMaxWidth()
+      .padding(0.dp)
+      .background(DiscordColorProvider.colors.chatEditor),
+    verticalAlignment = Alignment.CenterVertically,
+    horizontalArrangement = Arrangement.Start
+  ) {
+    Icon(
+      modifier = Modifier.padding(8.dp),
+      imageVector = Icons.Default.Clear,
+      contentDescription = null,
+      tint = Color(0xFFbabbbf)
+    )
+    Text(
+      modifier = Modifier.padding(8.dp),
+      text = "Replying to ${userName.value}",
+      style = MessageTypography.subtitle2.copy(
+        color = DiscordColorProvider.colors.textSecondary
+      )
+    )
   }
 }

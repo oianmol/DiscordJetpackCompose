@@ -1,7 +1,9 @@
 package dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.chatscreen
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -9,8 +11,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ListItem
+import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -22,14 +26,28 @@ import coil.transform.RoundedCornersTransformation
 import dev.baseio.discordjetpackcompose.entities.message.DiscordMessageEntity
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.ui.theme.MessageTypography
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class)
 @Composable
-fun ChatMessageItem(message: DiscordMessageEntity) {
+fun ChatMessageItem(
+  message: DiscordMessageEntity,
+  bottomSheetState: ModalBottomSheetState
+) {
+  val coroutineScope = rememberCoroutineScope()
   ListItem(
-    modifier = Modifier.padding(0.dp),
+    modifier = Modifier
+      .padding(0.dp)
+      .combinedClickable(
+        onClick = {},
+        onLongClick = {
+          coroutineScope.launch {
+            bottomSheetState.show()
+          }
+        }
+      ),
     icon = {
       ImageBox(
         Modifier.size(48.dp),

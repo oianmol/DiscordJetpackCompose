@@ -100,6 +100,7 @@ val ServerInfoTypography = Typography(
 val MessageTypography = Typography(
   defaultFontFamily = UniSansFontFamily,
   h1 = TextStyle(
+    fontFamily = UniSansFontFamily,
     fontWeight = FontWeight.Medium,
     fontSize = 18.sp,
   ),
@@ -119,10 +120,13 @@ val MessageTypography = Typography(
     fontSize = 14.sp
   ),
   subtitle1 = TextStyle(
+    fontFamily = UniSansFontFamily,
     fontWeight = FontWeight.Medium,
     fontSize = 18.sp
   ),
   subtitle2 = TextStyle(
+    fontFamily = UniSansFontFamily,
+    fontWeight = FontWeight.Normal,
     fontSize = 14.sp,
   )
 )

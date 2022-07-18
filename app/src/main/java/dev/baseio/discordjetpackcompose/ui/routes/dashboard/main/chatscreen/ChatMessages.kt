@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Divider
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
@@ -23,11 +25,12 @@ import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.ui.theme.MessageTypography
 import dev.baseio.discordjetpackcompose.viewmodels.ChatScreenViewModel
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterialApi::class)
 @Composable
 fun ChatMessages(
   modifier: Modifier = Modifier,
   userName: State<String>,
+  bottomSheetState: ModalBottomSheetState,
   viewModel: ChatScreenViewModel
 ) {
   val flowState by viewModel.chatMessagesFlow.collectAsState()
@@ -40,7 +43,8 @@ fun ChatMessages(
         val message = safeMessages.peek(messageIndex)!!
         item {
           ChatMessageItem(
-            message = message
+            message = message,
+            bottomSheetState = bottomSheetState
           )
         }
 
