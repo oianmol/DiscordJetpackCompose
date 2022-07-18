@@ -17,6 +17,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import dev.baseio.discordjetpackcompose.entities.ChatUserEntity
 import dev.baseio.discordjetpackcompose.entities.server.ServerEntity
 import dev.baseio.discordjetpackcompose.repositories.ServerRepoImpl
@@ -27,6 +28,7 @@ import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.ui.utils.getSampleServerUIState
 import dev.baseio.discordjetpackcompose.usecases.GetServerUseCase
 import dev.baseio.discordjetpackcompose.utils.UIState
+import dev.baseio.discordjetpackcompose.viewmodels.DashboardScreenViewModel
 import dev.baseio.discordjetpackcompose.viewmodels.LandingScreenViewModel
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -35,8 +37,9 @@ fun ServerChannelList(
     modifier: Modifier = Modifier,
     serverId: String,
     chatUserList: List<ChatUserEntity>,
+    viewModel: DashboardScreenViewModel,
     openServerInfoBottomSheet: () -> Unit,
-    onItemSelection: () -> Unit,
+    onItemSelection: () -> Unit
 ) {
     var serverState: UIState<ServerEntity> by remember { mutableStateOf(UIState.Empty) }
 
@@ -59,14 +62,16 @@ fun ServerChannelList(
                     openNewDMScreen = {} , // todo: Not implemented
                     openSearchScreen = {},
                     onItemSelection = onItemSelection,
-                    chats = chatUserList
+                    chats = chatUserList,
+                    viewModel = viewModel
                 )
                 else -> ChannelList(
                     modifier = Modifier.fillMaxSize(),
                     serverState = serverState,
                     onItemSelection = onItemSelection,
                     onInviteButtonClick = { serverId -> }, // TODO: Not implemented
-                    openServerInfoBottomSheet = openServerInfoBottomSheet
+                    openServerInfoBottomSheet = openServerInfoBottomSheet,
+                    viewModel = viewModel
                 )
             }
         }
@@ -83,6 +88,7 @@ private fun ServerChannelListPreview() {
     ServerChannelList(
         serverId = ServerIconSelector.DMScreenId,
         chatUserList = emptyList(),
+        viewModel = hiltViewModel(),
         openServerInfoBottomSheet = {}
     ) {}
 }
