@@ -31,6 +31,9 @@ kapt {
 dependencies {
 
   implementation(project(":domain"))
+
+  api(Lib.Android.MATERIAL_EXTENDED_ICONS)
+
   /*Kotlin*/
   api(Lib.Kotlin.KT_STD)
   api(Lib.Async.COROUTINES)

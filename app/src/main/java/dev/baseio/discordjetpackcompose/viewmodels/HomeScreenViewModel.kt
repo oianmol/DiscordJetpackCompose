@@ -6,14 +6,14 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.baseio.discordjetpackcompose.entities.NetworkState
+import dev.baseio.discordjetpackcompose.entities.UIState
 import dev.baseio.discordjetpackcompose.entities.server.ServerEntity
 import dev.baseio.discordjetpackcompose.usecases.GetServerUseCase
-import dev.baseio.discordjetpackcompose.utils.UIState
 import dev.baseio.discordjetpackcompose.utils.ioScope
 import javax.inject.Inject
 
 @HiltViewModel
-class LandingScreenViewModel @Inject constructor(
+class HomeScreenViewModel @Inject constructor(
     private val getServerUseCase: GetServerUseCase
 ): ViewModel() {
     var currentServerEntity: UIState<ServerEntity> by mutableStateOf(UIState.Empty)

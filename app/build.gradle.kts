@@ -103,7 +103,6 @@ dependencies {
     implementation(Lib.Android.COMPOSE_NAVIGATION)
     implementation(Lib.Kotlin.KT_STD)
     implementation(Lib.Android.MATERIAL_DESIGN)
-    implementation(Lib.Android.MATERIAL_EXTENDED_ICONS)
     implementation(Lib.Android.CONSTRAINT_LAYOUT_COMPOSE)
     implementation(Lib.Android.ACCOMPANIST_INSETS)
     implementation(Lib.Android.ACCOMPANIST_INSETS_UI)

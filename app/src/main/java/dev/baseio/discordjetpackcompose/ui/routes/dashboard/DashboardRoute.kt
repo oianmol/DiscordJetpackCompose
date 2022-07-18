@@ -13,7 +13,7 @@ import dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.DashboardScreen
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.FriendsScreen
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.HomeScreen
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.InviteScreen
-import dev.baseio.discordjetpackcompose.ui.utils.getSampleServerList
+import dev.baseio.discordjetpackcompose.utils.getSampleServerList
 
 fun NavGraphBuilder.dashboardRoute(
     composeNavigator: ComposeNavigator,

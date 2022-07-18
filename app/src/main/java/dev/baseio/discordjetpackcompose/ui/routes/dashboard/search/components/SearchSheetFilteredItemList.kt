@@ -22,17 +22,17 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.google.accompanist.insets.navigationBarsPadding
 import dev.baseio.discordjetpackcompose.R
+import dev.baseio.discordjetpackcompose.entities.search.SearchFilter
+import dev.baseio.discordjetpackcompose.entities.search.SearchSheetListItem
 import dev.baseio.discordjetpackcompose.ui.components.DiscordText
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.components.CountIndicator
-import dev.baseio.discordjetpackcompose.ui.routes.dashboard.search.SearchFilter
-import dev.baseio.discordjetpackcompose.ui.routes.dashboard.search.components.models.SearchSheetListItem
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordJetpackComposeTheme
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordSurface
 import dev.baseio.discordjetpackcompose.ui.theme.SearchSheetDialogTypography
 import dev.baseio.discordjetpackcompose.ui.theme.contentColorFor
 import dev.baseio.discordjetpackcompose.ui.utils.clickableWithRipple
-import dev.baseio.discordjetpackcompose.ui.utils.getSampleSheetListItems
+import dev.baseio.discordjetpackcompose.utils.getSampleSheetListItems
 import dev.baseio.discordjetpackcompose.ui.utils.rememberCoilImageRequest
 import dev.baseio.discordjetpackcompose.utils.Constants
 
@@ -121,7 +121,7 @@ private fun SearchSheetFilteredItem(
             ) {
                 if (searchSheetListItem.iconUri is ImageVector) {
                     Image(
-                        imageVector = searchSheetListItem.iconUri,
+                        imageVector = searchSheetListItem.iconUri as ImageVector,
                         contentDescription = null,
                         modifier = Modifier.size(24.dp),
                     )

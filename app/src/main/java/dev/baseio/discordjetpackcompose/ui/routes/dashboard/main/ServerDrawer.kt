@@ -17,14 +17,16 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import dev.baseio.discordjetpackcompose.entities.ChatUserEntity
 import dev.baseio.discordjetpackcompose.entities.server.ServerEntity
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.components.ServerIconSelector
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.serverchannels.ServerChannelList
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordJetpackComposeTheme
 import dev.baseio.discordjetpackcompose.ui.utils.WindowInfo
-import dev.baseio.discordjetpackcompose.ui.utils.getSampleServer
 import dev.baseio.discordjetpackcompose.ui.utils.rememberWindowInfo
+import dev.baseio.discordjetpackcompose.utils.getSampleServer
+import dev.baseio.discordjetpackcompose.viewmodels.HomeScreenViewModel
 
 @Composable
 fun ServerDrawer(
@@ -32,6 +34,7 @@ fun ServerDrawer(
     serverList: List<ServerEntity>,
     chatUserList: List<ChatUserEntity>,
     onAnyItemSelected: (Boolean, serverId: String) -> Unit,
+    homeScreenVM: HomeScreenViewModel = hiltViewModel(),
     onAddButtonClick: () -> Unit,
     openServerInfoBottomSheet: () -> Unit,
 ) {
@@ -54,6 +57,7 @@ fun ServerDrawer(
             onSelectedItemChanged = { updatedItem ->
                 currentSelectedServer = updatedItem
                 onAnyItemSelected(false, currentSelectedServer)
+                homeScreenVM.getServer(currentSelectedServer)
             },
         )
         val widthFactor by animateFloatAsState(

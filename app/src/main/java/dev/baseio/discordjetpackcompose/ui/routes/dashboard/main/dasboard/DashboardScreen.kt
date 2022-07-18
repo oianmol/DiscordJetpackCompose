@@ -28,6 +28,7 @@ import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.google.accompanist.insets.ui.Scaffold
 import dev.baseio.discordjetpackcompose.R
+import dev.baseio.discordjetpackcompose.entities.search.SearchSheetListItem
 import dev.baseio.discordjetpackcompose.entities.server.ServerEntity
 import dev.baseio.discordjetpackcompose.navigator.ComposeNavigator
 import dev.baseio.discordjetpackcompose.navigator.DiscordRoute
@@ -38,15 +39,14 @@ import dev.baseio.discordjetpackcompose.ui.routes.dashboard.bottombar.DashboardB
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.bottombar.DashboardBottomBarItemType
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.components.OnlineIndicator
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.search.SearchBottomSheet
-import dev.baseio.discordjetpackcompose.ui.routes.dashboard.search.components.models.SearchSheetListItem
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.serverinfo.ServerInfoBottomSheet
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.setupDashboardBottomNavScreens
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.ui.theme.contentColorFor
-import dev.baseio.discordjetpackcompose.ui.utils.getSampleServerList
-import dev.baseio.discordjetpackcompose.ui.utils.getSampleSheetListItems
 import dev.baseio.discordjetpackcompose.ui.utils.rememberCoilImageRequest
 import dev.baseio.discordjetpackcompose.utils.Constants
+import dev.baseio.discordjetpackcompose.utils.getSampleServerList
+import dev.baseio.discordjetpackcompose.utils.getSampleSheetListItems
 import kotlinx.coroutines.launch
 
 private object DashboardScreen {

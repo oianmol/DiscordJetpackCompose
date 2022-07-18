@@ -59,7 +59,7 @@ import dev.baseio.discordjetpackcompose.ui.theme.ChannelListTypography
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordSurface
 import dev.baseio.discordjetpackcompose.ui.utils.clickableWithRipple
-import dev.baseio.discordjetpackcompose.utils.UIState
+import dev.baseio.discordjetpackcompose.entities.UIState
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable

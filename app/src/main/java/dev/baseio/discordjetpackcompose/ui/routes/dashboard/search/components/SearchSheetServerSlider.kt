@@ -18,7 +18,7 @@ import coil.compose.AsyncImage
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.components.CountIndicator
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordJetpackComposeTheme
 import dev.baseio.discordjetpackcompose.ui.utils.clickableWithRipple
-import dev.baseio.discordjetpackcompose.ui.utils.getSampleServer
+import dev.baseio.discordjetpackcompose.utils.getSampleServer
 import dev.baseio.discordjetpackcompose.ui.utils.rememberCoilImageRequest
 
 @Composable
