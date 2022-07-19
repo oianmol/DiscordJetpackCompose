@@ -174,6 +174,7 @@ fun DashboardScreen(
                                     unreadCount = null,
                                     onClick = {
                                         selectedBottomBarItem = DashboardBottomBarItemType.Profile
+                                        navController.navigate(DiscordScreen.UserSettings.route)
                                     },
                                     type = DashboardBottomBarItemType.Profile
                                 ),

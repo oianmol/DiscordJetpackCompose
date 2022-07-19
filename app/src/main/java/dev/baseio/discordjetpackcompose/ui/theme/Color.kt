@@ -828,3 +828,24 @@ val discord_icon_button_bg
     } else {
         Color(0xFFeaeaeb)
     }
+
+val user_settings_text
+  @Composable get() = if (isSystemInDarkTheme()) {
+    Color(0xFFBABBBF)
+  } else {
+    Color(0xFF515963)
+  }
+
+val user_settings_bg
+  @Composable get() = if (isSystemInDarkTheme()) {
+    Color(0xFF303136)
+  } else {
+    Color(0xFFFFFFFF)
+  }
+
+val discord_settings_icon
+  @Composable get() = if (isSystemInDarkTheme()) {
+    Color(0xFFBABBBF)
+  } else {
+    Color(0xFF303136)
+  }
