@@ -20,7 +20,6 @@ import dev.baseio.discordjetpackcompose.ui.routes.dashboard.components.ServerIco
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.directmessages.DirectMessageList
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.viewmodels.DashboardScreenViewModel
-import dev.baseio.discordjetpackcompose.viewmodels.DashboardScreenViewModel
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
@@ -28,11 +27,11 @@ fun ServerChannelList(
     modifier: Modifier = Modifier,
     serverId: String,
     chatUserList: List<ChatUserEntity>,
-    homeScreenVM: DashboardScreenViewModel = hiltViewModel(),
+    dashboardScreenVM: DashboardScreenViewModel = hiltViewModel(),
     openServerInfoBottomSheet: () -> Unit,
     onItemSelection: () -> Unit
 ) {
-    val serverState = homeScreenVM.currentServerEntity
+    val serverState = dashboardScreenVM.currentServerEntity
 
     Surface(
         modifier = modifier.fillMaxHeight(),
@@ -50,7 +49,7 @@ fun ServerChannelList(
                     openSearchScreen = {},
                     onItemSelection = onItemSelection,
                     chats = chatUserList,
-                    viewModel = viewModel
+                    viewModel = dashboardScreenVM
                 )
                 else -> ChannelList(
                     modifier = Modifier.fillMaxSize(),
@@ -58,7 +57,7 @@ fun ServerChannelList(
                     onItemSelection = onItemSelection,
                     onInviteButtonClick = { serverId -> }, // TODO: Not implemented
                     openServerInfoBottomSheet = openServerInfoBottomSheet,
-                    viewModel = viewModel
+                    viewModel = dashboardScreenVM
                 )
             }
         }
@@ -75,7 +74,7 @@ private fun ServerChannelListPreview() {
     ServerChannelList(
         serverId = ServerIconSelector.DMScreenId,
         chatUserList = emptyList(),
-        viewModel = hiltViewModel(),
+        dashboardScreenVM = hiltViewModel(),
         openServerInfoBottomSheet = {}
     ) {}
 }

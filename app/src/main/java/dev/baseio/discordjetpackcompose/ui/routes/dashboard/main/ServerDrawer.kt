@@ -71,7 +71,7 @@ fun ServerDrawer(
             serverId = currentSelectedServer,
             chatUserList = chatUserList,
             openServerInfoBottomSheet = openServerInfoBottomSheet,
-            viewModel = viewModel
+            dashboardScreenVM = viewModel
         ) {
             isAnyItemSelectedInCurrentServer = true
             onAnyItemSelected(true, currentSelectedServer)
