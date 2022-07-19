@@ -6,6 +6,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import dev.baseio.discordjetpackcompose.repositories.*
 import dev.baseio.discordjetpackcompose.di.dispatcher.CoroutineDispatcherProvider
 import dev.baseio.discordjetpackcompose.entities.message.DiscordMessageEntity
 import dev.baseio.discordjetpackcompose.local.dao.DiscordMessageDao
@@ -22,24 +23,29 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object RepositoryModule {
-  @Provides
-  @Singleton
-  fun provideCountryRepo(@ApplicationContext context: Context): CountryRepo =
-    CountryRepoImpl(context = context)
+    @Provides
+    @Singleton
+    fun provideCountryRepo(@ApplicationContext context: Context): CountryRepo =
+        CountryRepoImpl(context = context)
 
-  @Provides
-  @Singleton
-  fun provideServerRepo(): ServerRepo = ServerRepoImpl()
+    @Provides
+    @Singleton
+    fun provideServerRepo(): ServerRepo = ServerRepoImpl()
 
-  @Provides
-  @Singleton
-  fun provideMessagesRepo(
-    discordMessageDao: DiscordMessageDao,
-    entityMapper: EntityMapper<DiscordMessageEntity, DBDiscordMessage>,
-    coroutineDispatcherProvider: CoroutineDispatcherProvider
-  ): MessagesRepo = MessagesRepoImpl(
-    discordMessageDao,
-    entityMapper,
-    coroutineDispatcherProvider
-  )
+    @Provides
+    @Singleton
+    fun provideFriendsRepo(): FriendsRepo = FriendsRepoImpl()
+
+
+    @Provides
+    @Singleton
+    fun provideMessagesRepo(
+        discordMessageDao: DiscordMessageDao,
+        entityMapper: EntityMapper<DiscordMessageEntity, DBDiscordMessage>,
+        coroutineDispatcherProvider: CoroutineDispatcherProvider
+    ): MessagesRepo = MessagesRepoImpl(
+        discordMessageDao,
+        entityMapper,
+        coroutineDispatcherProvider
+    )
 }

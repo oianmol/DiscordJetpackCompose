@@ -1,4 +1,4 @@
-package dev.baseio.discordjetpackcompose.ui.routes.dashboard.main
+package dev.baseio.discordjetpackcompose.ui.routes.dashboard.invite
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -30,7 +30,6 @@ fun InviteScreen(composeNavigator: ComposeNavigator) {
     val colors = DiscordColorProvider.colors
     SideEffect {
         sysUiController.setSystemBarsColor(color = colors.discordBackgroundOne)
-        sysUiController.setNavigationBarColor(color = colors.discordBackgroundOne)
     }
 
     var inviteLink by remember {

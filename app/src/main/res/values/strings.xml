@@ -6,6 +6,7 @@
     <string name="welcome_to_discord">Welcome to Discord</string>
     <string name="welcome_message">Join over 100 million people who use Discord to talk with communities and friends</string>
     <string name="register">Register</string>
+    <string name="wave_to">Wave to MEE6</string>
     <string name="login">Login</string>
     <string name="dm_list_screen_title">Direct Messages</string>
     <string name="dm_list_screen_search_hint">Find or start a conversation</string>
@@ -66,6 +67,14 @@
     <string name="startup_conversations">Start up some conversations, then keep track of them here!</string>
     <string name="pro_tip">PROTIP:</string>
     <string name="whenever_mentions">Whenever someone mentions you it will be saved here for 7 days.</string>
+    <string name="add_friend">Add friend button</string>
+    <string name="remove_friend">Remove friend button</string>
+    <string name="invite_friend">Invite friend button</string>
+    <string name="call_friend">Call friend button</string>
+    <string name="message_friend">Message friend button</string>
+    <string name="friend_suggestions">FRIEND SUGGESTIONS - %d</string>
+    <string name="offline">OFFLINE - %d</string>
+    <string name="online">ONLINE - %d</string>
     <string name="server_emoji_nitro_benefit_msg">Use anywhere with nitro</string>
     <string name="emoji_count">%s EMOJIS</string>
     <string name="server_no_emojis">NO EMOJI</string>

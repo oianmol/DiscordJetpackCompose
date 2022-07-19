@@ -20,6 +20,7 @@ import dev.baseio.discordjetpackcompose.ui.routes.dashboard.components.ServerIco
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.directmessages.DirectMessageList
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.viewmodels.DashboardScreenViewModel
+import dev.baseio.discordjetpackcompose.viewmodels.DashboardScreenViewModel
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
@@ -29,7 +30,7 @@ fun ServerChannelList(
     chatUserList: List<ChatUserEntity>,
     homeScreenVM: DashboardScreenViewModel = hiltViewModel(),
     openServerInfoBottomSheet: () -> Unit,
-    onItemSelection: () -> Unit,
+    onItemSelection: () -> Unit
 ) {
     val serverState = homeScreenVM.currentServerEntity
 
@@ -48,14 +49,16 @@ fun ServerChannelList(
                     openNewDMScreen = {} , // todo: Not implemented
                     openSearchScreen = {},
                     onItemSelection = onItemSelection,
-                    chats = chatUserList
+                    chats = chatUserList,
+                    viewModel = viewModel
                 )
                 else -> ChannelList(
                     modifier = Modifier.fillMaxSize(),
                     serverState = serverState,
                     onItemSelection = onItemSelection,
                     onInviteButtonClick = { serverId -> }, // TODO: Not implemented
-                    openServerInfoBottomSheet = openServerInfoBottomSheet
+                    openServerInfoBottomSheet = openServerInfoBottomSheet,
+                    viewModel = viewModel
                 )
             }
         }
@@ -72,6 +75,7 @@ private fun ServerChannelListPreview() {
     ServerChannelList(
         serverId = ServerIconSelector.DMScreenId,
         chatUserList = emptyList(),
+        viewModel = hiltViewModel(),
         openServerInfoBottomSheet = {}
     ) {}
 }

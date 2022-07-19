@@ -78,4 +78,19 @@ class DashboardScreenViewModel @Inject constructor(
             )
         }
     }
+
+    private val _currentSelectedChatUsername = MutableStateFlow("")
+    val currentSelectedChatUsername: StateFlow<String> = _currentSelectedChatUsername.asStateFlow()
+
+    private val _currentSelectedChatOnlineStatus = MutableStateFlow(false)
+    val currentSelectedChatOnlineStatus: StateFlow<Boolean> =
+        _currentSelectedChatOnlineStatus.asStateFlow()
+
+    fun setCurrentSelectedChatUserName(name: String) {
+        _currentSelectedChatUsername.value = name
+    }
+
+    fun setCurrentSelectedChatOnlineStatus(isOnline: Boolean) {
+        _currentSelectedChatOnlineStatus.value = isOnline
+    }
 }

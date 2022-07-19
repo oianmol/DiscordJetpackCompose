@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.statusBarsPadding
 import dev.baseio.discordjetpackcompose.R
 import dev.baseio.discordjetpackcompose.navigator.ComposeNavigator
+import dev.baseio.discordjetpackcompose.navigator.DiscordScreen
 import dev.baseio.discordjetpackcompose.ui.components.DiscordAppBar
 import dev.baseio.discordjetpackcompose.ui.components.DiscordScaffold
 import dev.baseio.discordjetpackcompose.ui.routes.onboarding.commonui.CenteredTitleSubtitle
@@ -103,7 +104,9 @@ fun CreateServer(
                     )
                 }
             }
-            HaveAnInviteBottomCard(onClick = {})
+            HaveAnInviteBottomCard(onClick = {
+                composeNavigator.navigate(DiscordScreen.Invite.route)
+            })
         }
     }
 }

@@ -1,4 +1,4 @@
-package dev.baseio.discordjetpackcompose.ui.routes.dashboard.main
+package dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.dasboard
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -6,6 +6,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.BottomSheetValue
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetValue
+import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AlternateEmail
 import androidx.compose.material.icons.filled.EmojiPeople
@@ -26,7 +27,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
-import com.google.accompanist.insets.ui.Scaffold
 import dev.baseio.discordjetpackcompose.R
 import dev.baseio.discordjetpackcompose.entities.search.SearchSheetListItemEntity
 import dev.baseio.discordjetpackcompose.entities.server.ServerEntity

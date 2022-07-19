@@ -126,6 +126,11 @@ object Lib {
     private const val TIMBER_VERSION = "4.7.1"
     const val TIMBER = "com.jakewharton.timber:timber:${TIMBER_VERSION}"
   }
+
+  object Lottie {
+    private const val LOTTIE_VERSION = "5.2.0"
+    const val lottieCompose = "com.airbnb.android:lottie-compose:${LOTTIE_VERSION}"
+  }
 }
 
 object TestLib {

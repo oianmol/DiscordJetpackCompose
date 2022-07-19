@@ -37,6 +37,7 @@ fun ServerDrawer(
     dashboardScreenVM: DashboardScreenViewModel = hiltViewModel(),
     onAddButtonClick: () -> Unit,
     openServerInfoBottomSheet: () -> Unit,
+    viewModel: DashboardScreenViewModel
 ) {
     Row(
         modifier = modifier
@@ -70,6 +71,7 @@ fun ServerDrawer(
             serverId = currentSelectedServer,
             chatUserList = chatUserList,
             openServerInfoBottomSheet = openServerInfoBottomSheet,
+            viewModel = viewModel
         ) {
             isAnyItemSelectedInCurrentServer = true
             onAnyItemSelected(true, currentSelectedServer)
@@ -114,7 +116,8 @@ private fun ServerDrawerPreview() {
                     getSampleServer(serverId = "2"),
                 ),
                 onAnyItemSelected = { _, _ -> },
-                openServerInfoBottomSheet = {}
+                openServerInfoBottomSheet = {},
+                viewModel = hiltViewModel()
             )
         }
     }
