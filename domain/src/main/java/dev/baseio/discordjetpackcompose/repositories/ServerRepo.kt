@@ -6,5 +6,6 @@ import dev.baseio.discordjetpackcompose.entities.server.ServerEntity
 
 interface ServerRepo {
     suspend fun getServer(serverId: String): NetworkState<ServerEntity>
+    suspend fun getServerList(): NetworkState<List<ServerEntity>>
     suspend fun getSearchSheetItemList(): NetworkState<List<SearchSheetListItemEntity>>
 }

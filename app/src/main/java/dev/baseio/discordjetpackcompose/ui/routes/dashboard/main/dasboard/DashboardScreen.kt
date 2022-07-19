@@ -45,7 +45,6 @@ import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.ui.theme.contentColorFor
 import dev.baseio.discordjetpackcompose.ui.utils.rememberCoilImageRequest
 import dev.baseio.discordjetpackcompose.utils.Constants
-import dev.baseio.discordjetpackcompose.utils.getSampleServerList
 import kotlinx.coroutines.launch
 
 private object DashboardScreen {
@@ -57,7 +56,7 @@ private object DashboardScreen {
 @Composable
 fun DashboardScreen(
     composeNavigator: ComposeNavigator,
-    serverList: List<ServerEntity> = getSampleServerList(),
+    serverList: List<ServerEntity>,
     searchSheetItemList: List<SearchSheetListItemEntity>,
     userProfileImage: String = Constants.MMLogoUrl,
     totalUnreadCount: Int = serverList.sumOf { it.allChannelsUnreadCount }
@@ -195,7 +194,7 @@ fun DashboardScreen(
                             },
                             shouldDisplayBottomBar = { isDisplayed ->
                                 isBottomBarDisplayed = isDisplayed
-                            })
+                            }, serverList = serverList)
                     }
                 }
             }

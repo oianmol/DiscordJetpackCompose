@@ -7,6 +7,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import dev.baseio.discordjetpackcompose.entities.server.ServerEntity
 import dev.baseio.discordjetpackcompose.navigator.ComposeNavigator
 import dev.baseio.discordjetpackcompose.navigator.DiscordRoute
 import dev.baseio.discordjetpackcompose.navigator.DiscordScreen
@@ -15,7 +16,6 @@ import dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.DashboardScreen
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.FriendsScreen
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.HomeScreen
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.InviteScreen
-import dev.baseio.discordjetpackcompose.utils.getSampleServerList
 import dev.baseio.discordjetpackcompose.viewmodels.DashboardScreenViewModel
 
 fun NavGraphBuilder.dashboardRoute(
@@ -29,12 +29,16 @@ fun NavGraphBuilder.dashboardRoute(
             val dashboardScreenVM = hiltViewModel<DashboardScreenViewModel>()
 
             LaunchedEffect(Unit) {
-                dashboardScreenVM.getSearchSheetItemList()
+                dashboardScreenVM.apply {
+                    getSearchSheetItemList()
+                    getServerList()
+                }
             }
 
             DashboardScreen(
                 composeNavigator = composeNavigator,
-                searchSheetItemList = dashboardScreenVM.searchSheetItemList
+                searchSheetItemList = dashboardScreenVM.searchSheetItemList,
+                serverList = dashboardScreenVM.serverList
             )
         }
         composable(DiscordScreen.Invite.name) {
@@ -52,6 +56,7 @@ fun NavGraphBuilder.setupDashboardBottomNavScreens(
     sheetState: ModalBottomSheetState,
     onSelectServer: (String) -> Unit,
     shouldDisplayBottomBar: (Boolean) -> Unit,
+    serverList: List<ServerEntity>
 ) {
     navigation(
         startDestination = DiscordScreen.Home.route,
@@ -60,7 +65,7 @@ fun NavGraphBuilder.setupDashboardBottomNavScreens(
         composable(DiscordScreen.Home.route) {
             HomeScreen(
                 composeNavigator = composeNavigator,
-                serverList = getSampleServerList(),
+                serverList = serverList,
                 onSelectServer = onSelectServer,
                 sheetState = sheetState,
                 shouldDisplayBottomBar = shouldDisplayBottomBar

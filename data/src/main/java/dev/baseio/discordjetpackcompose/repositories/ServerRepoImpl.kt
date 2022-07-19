@@ -6,6 +6,7 @@ import dev.baseio.discordjetpackcompose.entities.server.ChannelEntity
 import dev.baseio.discordjetpackcompose.entities.server.ChannelType
 import dev.baseio.discordjetpackcompose.entities.server.ServerEntity
 import dev.baseio.discordjetpackcompose.utils.NotImplementedException
+import dev.baseio.discordjetpackcompose.utils.getSampleServerList
 import dev.baseio.discordjetpackcompose.utils.getSampleSheetListItems
 import dev.baseio.discordjetpackcompose.utils.safeApiCall
 
@@ -51,6 +52,15 @@ class ServerRepoImpl : ServerRepo {
                 ),
                 hasNitroSubscription = true
             )
+        ) {
+            // todo: Not implemented
+            throw NotImplementedException
+        }
+    }
+
+    override suspend fun getServerList(): NetworkState<List<ServerEntity>> {
+        return safeApiCall(
+            debugResponse = getSampleServerList()
         ) {
             // todo: Not implemented
             throw NotImplementedException
