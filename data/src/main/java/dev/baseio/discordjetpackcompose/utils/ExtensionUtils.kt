@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -20,10 +21,10 @@ inline fun <reified T> Context.readAssetFile(filePath: String): T? {
     }
 }
 
-fun ViewModel.ioScope(block: suspend () -> Unit) {
-    viewModelScope.launch(context = Dispatchers.IO) { block() }
+fun ViewModel.ioScope(block: suspend () -> Unit): Job {
+    return viewModelScope.launch(context = Dispatchers.IO) { block() }
 }
 
-fun ViewModel.mainScope(block: suspend () -> Unit) {
-    viewModelScope.launch(context = Dispatchers.Main) { block() }
+fun ViewModel.mainScope(block: suspend () -> Unit): Job {
+    return viewModelScope.launch(context = Dispatchers.Main) { block() }
 }

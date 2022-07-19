@@ -31,12 +31,26 @@ class DashboardScreenViewModel @Inject constructor(
     var serverList = mutableStateListOf<ServerEntity>()
         private set
 
+    var searchSheetServerList = mutableStateListOf<ServerEntity>()
+        private set
+
     fun getServer(serverId: String) {
         ioScope {
             currentServerEntity = UIState.Loading
             currentServerEntity = when(val result = getServerUseCase(serverId = serverId)) {
                 is NetworkState.Failure -> { UIState.Failure(throwable = result.throwable) }
                 is NetworkState.Success -> { UIState.Success(data = result.data) }
+            }
+        }
+    }
+
+    fun getServers(serverIds: List<String>) {
+        serverIds.forEach { serverId ->
+            ioScope {
+                val result = getServerUseCase(serverId = serverId)
+                if (result is NetworkState.Success) {
+                    searchSheetServerList.add(result.data)
+                }
             }
         }
     }

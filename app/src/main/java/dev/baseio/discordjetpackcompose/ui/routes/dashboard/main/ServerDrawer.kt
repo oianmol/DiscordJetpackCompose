@@ -34,7 +34,7 @@ fun ServerDrawer(
     serverList: List<ServerEntity>,
     chatUserList: List<ChatUserEntity>,
     onAnyItemSelected: (Boolean, serverId: String) -> Unit,
-    homeScreenVM: DashboardScreenViewModel = hiltViewModel(),
+    dashboardScreenVM: DashboardScreenViewModel = hiltViewModel(),
     onAddButtonClick: () -> Unit,
     openServerInfoBottomSheet: () -> Unit,
 ) {
@@ -57,7 +57,7 @@ fun ServerDrawer(
             onSelectedItemChanged = { updatedItem ->
                 currentSelectedServer = updatedItem
                 onAnyItemSelected(false, currentSelectedServer)
-                homeScreenVM.getServer(currentSelectedServer)
+                dashboardScreenVM.getServer(currentSelectedServer)
             },
         )
         val widthFactor by animateFloatAsState(
