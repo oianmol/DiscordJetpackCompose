@@ -21,26 +21,37 @@ class ChatScreenViewModel @Inject constructor(
 
   var chatMessagesFlow = MutableStateFlow<Flow<PagingData<DiscordMessageEntity>>?>(null)
   var message = MutableStateFlow("")
+  var messageAction = MutableStateFlow("")
 
   fun fetchMessages() {
     chatMessagesFlow.value = fetchMessagesUseCase.performStreaming("1")
   }
 
-  fun sendMessage(search: String) {
-    if (search.isNotEmpty()) {
+  fun sendMessage(
+    messageToSend: String,
+    messageToReply: String,
+    isReply: Boolean = false
+  ) {
+    if (messageToSend.isNotEmpty()) {
       viewModelScope.launch {
         val message = DiscordMessageEntity(
           uuid = UUID.randomUUID().toString(),
           channelId = "1",
-          message = search,
+          message = messageToSend,
           userId = UUID.randomUUID().toString(),
           createdBy = "Person",
           createdDate = System.currentTimeMillis(),
           modifiedDate = System.currentTimeMillis(),
+          replyTo = if (isReply) "Person" else "",
+          replyToMessage = messageToReply
         )
         sendMessageUseCase.perform(message)
       }
       message.value = ""
     }
+  }
+
+  fun resetMessageAction() {
+    messageAction.value = ""
   }
 }

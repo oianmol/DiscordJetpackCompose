@@ -10,6 +10,8 @@ data class DBDiscordMessage(
   @ColumnInfo(name = "channelId") val channelId: String,
   @ColumnInfo(name = "message") val message: String,
   @ColumnInfo(name = "from") val userId: String,
+  @ColumnInfo(name = "replyTo") val replyTo: String,
+  @ColumnInfo(name = "replyToMessage") val replyToMessage: String,
   @ColumnInfo(name = "createdBy") val createdBy: String,
   @ColumnInfo(name = "createdDate") val createdDate: Long,
   @ColumnInfo(name = "modifiedDate") val modifiedDate: Long,

@@ -44,6 +44,10 @@ fun ChatMessages(
         item {
           ChatMessageItem(
             message = message,
+            position = messageIndex,
+            onItemLongPressed = {
+              viewModel.messageAction.value = message.message
+            },
             bottomSheetState = bottomSheetState
           )
         }

@@ -12,6 +12,8 @@ class DiscordMessageMapper @Inject constructor() : EntityMapper<DiscordMessageEn
       entity.channelId,
       entity.message,
       entity.userId,
+      entity.replyTo,
+      entity.replyToMessage,
       entity.createdBy,
       entity.createdDate,
       entity.modifiedDate
@@ -24,6 +26,8 @@ class DiscordMessageMapper @Inject constructor() : EntityMapper<DiscordMessageEn
       model.channelId,
       model.message,
       model.userId,
+      model.replyTo,
+      model.replyToMessage,
       model.createdBy,
       model.createdDate,
       model.modifiedDate,

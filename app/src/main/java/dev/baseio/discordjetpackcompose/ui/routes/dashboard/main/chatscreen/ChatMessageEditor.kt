@@ -21,6 +21,7 @@ import androidx.compose.material.icons.filled.CardGiftcard
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.EmojiEmotions
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -45,6 +46,7 @@ import dev.baseio.discordjetpackcompose.viewmodels.ChatScreenViewModel
 fun ChatMessageEditor(
   modifier: Modifier = Modifier,
   userName: State<String>,
+  isReplyMode: MutableState<Boolean>,
   viewModel: ChatScreenViewModel
 ) {
   var mentionText by remember {
@@ -94,9 +96,13 @@ fun ChatMessageEditor(
           .padding(start = 8.dp)
           .weight(1f),
         viewModel = viewModel,
-        message = mentionText.text,
+        messageToSend = mentionText.text,
+        isReply = isReplyMode.value,
+        messageToReply = viewModel.messageAction.collectAsState().value,
         onSent = {
           mentionText = TextFieldValue()
+          isReplyMode.value = false
+          viewModel.resetMessageAction()
         }
       )
     }
@@ -168,7 +174,9 @@ private fun MessageEditor(
 private fun SendMessageButton(
   modifier: Modifier = Modifier,
   viewModel: ChatScreenViewModel,
-  message: String,
+  messageToSend: String,
+  isReply: Boolean = false,
+  messageToReply: String = "",
   onSent: () -> Unit
 ) {
   IconButton(
@@ -179,10 +187,14 @@ private fun SendMessageButton(
         shape = CircleShape
       ),
     onClick = {
-      viewModel.sendMessage(message)
+      viewModel.sendMessage(
+        messageToSend = messageToSend,
+        messageToReply = messageToReply,
+        isReply = isReply
+      )
       onSent()
     },
-    enabled = message.isNotEmpty()
+    enabled = messageToSend.isNotEmpty()
   ) {
     Icon(
       painterResource(id = Drawables.ic_send_rounded),
@@ -305,9 +317,10 @@ fun ChatPlaceHolder(
 }
 
 @Composable
-fun ReplyBar(
+fun ReplyBanner(
   modifier: Modifier = Modifier,
-  userName: State<String>
+  userName: State<String>,
+  onCloseClicked: () -> Unit
 ) {
   Row(
     modifier = modifier
@@ -318,7 +331,9 @@ fun ReplyBar(
     horizontalArrangement = Arrangement.Start
   ) {
     Icon(
-      modifier = Modifier.padding(8.dp),
+      modifier = Modifier
+        .padding(8.dp)
+        .clickable { onCloseClicked() },
       imageVector = Icons.Default.Clear,
       contentDescription = null,
       tint = Color(0xFFbabbbf)

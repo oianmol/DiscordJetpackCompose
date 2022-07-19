@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.text.InlineTextContent
+import androidx.compose.foundation.text.appendInlineContent
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ListItem
 import androidx.compose.material.ModalBottomSheetState
@@ -19,7 +21,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.Placeholder
+import androidx.compose.ui.text.PlaceholderVerticalAlign
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.transform.RoundedCornersTransformation
@@ -34,31 +42,59 @@ import java.util.Calendar
 @Composable
 fun ChatMessageItem(
   message: DiscordMessageEntity,
+  position: Int,
+  onItemLongPressed: (Int) -> Unit,
   bottomSheetState: ModalBottomSheetState
 ) {
   val coroutineScope = rememberCoroutineScope()
+  Column {
+    if (message.replyToMessage.isNotEmpty()) {
+      MessageItemReplyHeader(
+        replyToMessage = message.replyToMessage
+      )
+    }
+    ListItem(
+      modifier = Modifier
+        .padding(0.dp)
+        .combinedClickable(
+          onClick = {},
+          onLongClick = {
+            coroutineScope.launch {
+              onItemLongPressed(position)
+              bottomSheetState.show()
+            }
+          }
+        ),
+      icon = {
+        ImageBox(
+          Modifier.size(40.dp),
+          imageUrl = "https://images.unsplash.com/photo-1464863979621-258859e62245?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=686&q=80"
+        )
+      },
+      text = {
+        ChatTitle(message)
+      },
+      secondaryText = {
+        ChatBody(message)
+      }
+    )
+  }
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun MessageItemReplyHeader(
+  replyToMessage: String
+) {
   ListItem(
     modifier = Modifier
-      .padding(0.dp)
-      .combinedClickable(
-        onClick = {},
-        onLongClick = {
-          coroutineScope.launch {
-            bottomSheetState.show()
-          }
-        }
-      ),
-    icon = {
-      ImageBox(
-        Modifier.size(48.dp),
-        imageUrl = "https://images.unsplash.com/photo-1464863979621-258859e62245?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=686&q=80"
-      )
-    },
+      .padding(0.dp),
+    icon = {},
     text = {
-      ChatTitle(message)
-    },
-    secondaryText = {
-      ChatBody(message)
+      ChatReplyTitle(
+        toUserName = "Person",
+        message = replyToMessage
+      )
     }
   )
 }
@@ -74,8 +110,7 @@ fun ImageBox(
     }.build()
   )
   Image(
-    modifier = Modifier
-      .size(40.dp)
+    modifier = modifier
       .clip(CircleShape),
     painter = painter,
     contentDescription = null
@@ -109,6 +144,51 @@ fun ChatTitle(message: DiscordMessageEntity) {
       style = MessageTypography.overline.copy(
         color = DiscordColorProvider.colors.textSecondary.copy(alpha = 0.8f)
       )
+    )
+  }
+}
+
+@Composable
+fun ChatReplyTitle(
+  toUserName: String,
+  message: String
+) {
+  val annotatedString = buildAnnotatedString {
+    appendInlineContent(id = "imageId")
+    pushStyle(
+      SpanStyle(
+        fontWeight = FontWeight.Bold,
+        color = DiscordColorProvider.colors.textPrimary
+      )
+    )
+    append("   $toUserName   ")
+    pushStyle(
+      SpanStyle(
+        fontWeight = FontWeight.Normal,
+        color = DiscordColorProvider.colors.textSecondary.copy(alpha = 0.8f)
+      )
+    )
+    append(message)
+  }
+  val inlineContentMap = mapOf(
+    "imageId" to InlineTextContent(
+      Placeholder(20.sp, 20.sp, PlaceholderVerticalAlign.TextCenter)
+    ) {
+      ImageBox(
+        modifier = Modifier.size(32.dp),
+        imageUrl = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
+      )
+    }
+  )
+  Row(verticalAlignment = Alignment.CenterVertically) {
+    Text(
+      text = annotatedString,
+      inlineContent = inlineContentMap,
+      style = MessageTypography.h1.copy(
+        color = DiscordColorProvider.colors.textPrimary,
+        fontSize = 14.sp
+      ),
+      modifier = Modifier.padding(end = 8.dp)
     )
   }
 }

@@ -5,6 +5,8 @@ data class DiscordMessageEntity(
   val channelId: String,
   val message: String,
   val userId: String,
+  val replyTo: String,
+  val replyToMessage: String,
   val createdBy: String,
   val createdDate: Long,
   val modifiedDate: Long,

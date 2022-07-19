@@ -41,14 +41,18 @@ fun ChatScreenContent(
         bottomSheetState = sheetState
       )
       if (isReplyMode.value) {
-        ReplyBar(
+        ReplyBanner(
           modifier = Modifier.layoutId("chatReplyBar"),
-          userName = userName
+          userName = userName,
+          onCloseClicked = {
+            isReplyMode.value = false
+          }
         )
       }
       ChatMessageEditor(
         modifier = Modifier.layoutId("chatMessageEditor"),
         userName = userName,
+        isReplyMode = isReplyMode,
         viewModel = viewModel
       )
     }
