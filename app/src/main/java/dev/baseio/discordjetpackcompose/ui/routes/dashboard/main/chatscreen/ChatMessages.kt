@@ -86,7 +86,10 @@ private fun isLastMessage(
 
 @Composable
 private fun ChatHeader(createdDate: Long) {
-  Row(Modifier.padding(start = 8.dp, end = 8.dp), verticalAlignment = Alignment.CenterVertically) {
+  Row(
+    Modifier.padding(start = 8.dp, end = 8.dp, top = 16.dp, bottom = 16.dp),
+    verticalAlignment = Alignment.CenterVertically
+  ) {
     Divider(
       modifier = Modifier.weight(2f),
       color = DiscordColorProvider.colors.textSecondary.copy(alpha = 0.8f),
