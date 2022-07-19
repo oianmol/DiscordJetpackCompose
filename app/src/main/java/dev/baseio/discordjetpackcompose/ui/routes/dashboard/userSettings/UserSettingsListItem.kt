@@ -1,5 +1,6 @@
 package dev.baseio.discordjetpackcompose.ui.routes.dashboard.userSettings
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import dev.baseio.discordjetpackcompose.R
 import dev.baseio.discordjetpackcompose.entities.SettingsEntity
 import dev.baseio.discordjetpackcompose.ui.theme.DirectMessageListTypography
+import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider.colors
 import dev.baseio.discordjetpackcompose.ui.theme.discord_settings_icon
 import dev.baseio.discordjetpackcompose.ui.theme.user_settings_text
 import dev.baseio.discordjetpackcompose.ui.utils.clickableWithRipple
@@ -30,7 +32,7 @@ fun UserSettingsListItem(
 ) {
   Row(
     modifier = Modifier
-      .fillMaxWidth()
+      .fillMaxWidth().background(colors.settingsBackground)
       .clickableWithRipple(onClick = onItemClick),
     verticalAlignment = Alignment.CenterVertically
   ) {
