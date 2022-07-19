@@ -83,6 +83,11 @@ object Lib {
     const val PAGING_COMPOSE = "androidx.paging:paging-compose:1.0.0-alpha14"
   }
 
+  object Jsoup {
+    private const val JSOUP_VERSION = "1.13.1"
+    const val JSOUP = "org.jsoup:jsoup:${JSOUP_VERSION}"
+  }
+
   object Room {
     private const val roomVersion = "2.4.1"
     const val roomRuntime = "androidx.room:room-runtime:$roomVersion"

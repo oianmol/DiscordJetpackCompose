@@ -6,6 +6,7 @@ import androidx.paging.PagingData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.baseio.discordjetpackcompose.entities.message.DiscordMessageEntity
 import dev.baseio.discordjetpackcompose.usecases.chat.FetchMessagesUseCase
+import dev.baseio.discordjetpackcompose.usecases.chat.FetchUrlMetadataUseCase
 import dev.baseio.discordjetpackcompose.usecases.chat.SendMessageUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +17,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ChatScreenViewModel @Inject constructor(
   private val fetchMessagesUseCase: FetchMessagesUseCase,
-  private val sendMessageUseCase: SendMessageUseCase
+  private val sendMessageUseCase: SendMessageUseCase,
+  private val fetchUrlMetadataUseCase: FetchUrlMetadataUseCase
 ) : ViewModel() {
 
   var chatMessagesFlow = MutableStateFlow<Flow<PagingData<DiscordMessageEntity>>?>(null)
@@ -53,5 +55,11 @@ class ChatScreenViewModel @Inject constructor(
 
   fun resetMessageAction() {
     messageAction.value = ""
+  }
+
+  fun fetchUrlMetadata(url: String) {
+    viewModelScope.launch {
+      val discordMessageEntity = fetchUrlMetadataUseCase.perform(url)
+    }
   }
 }

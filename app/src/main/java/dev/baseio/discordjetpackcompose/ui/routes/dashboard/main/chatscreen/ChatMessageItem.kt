@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -16,16 +17,30 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextLayoutResult
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.transform.RoundedCornersTransformation
+import dev.baseio.discordjetpackcompose.custom.MentionsPatterns.URL_TAG
+import dev.baseio.discordjetpackcompose.custom.MentionsPatterns.hashTagPattern
+import dev.baseio.discordjetpackcompose.custom.MentionsPatterns.mentionTagPattern
+import dev.baseio.discordjetpackcompose.custom.MentionsPatterns.urlPattern
+import dev.baseio.discordjetpackcompose.custom.extractSpans
 import dev.baseio.discordjetpackcompose.entities.message.DiscordMessageEntity
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.ui.theme.MessageTypography
@@ -61,7 +76,10 @@ fun ChatMessageItem(
           }
         ),
       imageSize = 55.dp,
-      message = message
+      message = message,
+      urlRecognizer = { url ->
+
+      }
     )
   }
 }
@@ -70,6 +88,7 @@ fun ChatMessageItem(
 fun ChatListItem(
   modifier: Modifier,
   imageSize: Dp,
+  urlRecognizer: (url: String) -> Unit = {},
   message: DiscordMessageEntity
 ) {
   Row(
@@ -88,7 +107,10 @@ fun ChatListItem(
     ) {
       ChatTitle(message)
       Spacer(modifier = Modifier.height(4.dp))
-      ChatBody(message)
+      ChatBody(
+        message = message,
+        urlRecognizer = urlRecognizer
+      )
     }
   }
 }
@@ -112,13 +134,58 @@ fun ImageBox(
 }
 
 @Composable
-fun ChatBody(message: DiscordMessageEntity) {
+fun ChatBody(
+  message: DiscordMessageEntity,
+  urlRecognizer: (url: String) -> Unit = {}
+) {
   Column {
+    val linksList = extractSpans(message.message, listOf(urlPattern, hashTagPattern, mentionTagPattern))
+    val uriHandler = LocalUriHandler.current
+    val layoutResult = remember {
+      mutableStateOf<TextLayoutResult?>(null)
+    }
+    val annotatedString = buildAnnotatedString {
+      append(message.message)
+      if (linksList.isNotEmpty() && linksList.first().tag == URL_TAG) {
+        urlRecognizer.invoke(linksList.first().spanText)
+      }
+      linksList.forEach {
+        addStyle(
+          style = SpanStyle(
+            color = DiscordColorProvider.colors.linkColor,
+            textDecoration = TextDecoration.Underline
+          ),
+          start = it.start,
+          end = it.end
+        )
+        addStringAnnotation(
+          tag = it.tag,
+          annotation = it.spanText,
+          start = it.start,
+          end = it.end
+        )
+      }
+    }
     Text(
-      message.message,
+      text = annotatedString,
       style = MessageTypography.subtitle2.copy(
         color = DiscordColorProvider.colors.textSecondary
-      )
+      ),
+      modifier = Modifier.pointerInput(Unit) {
+        detectTapGestures { offsetPosition ->
+          layoutResult.value?.let {
+            val position = it.getOffsetForPosition(offsetPosition)
+            annotatedString.getStringAnnotations(position, position).firstOrNull()
+              ?.let { result ->
+                when (result.tag) {
+                  URL_TAG -> {
+                    uriHandler.openUri(result.item)
+                  }
+                }
+              }
+          }
+        }
+      },
     )
   }
 }
