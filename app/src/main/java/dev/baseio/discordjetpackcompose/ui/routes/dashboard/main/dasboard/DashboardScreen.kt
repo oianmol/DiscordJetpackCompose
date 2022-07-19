@@ -90,6 +90,9 @@ fun DashboardScreen(
         content = {
             ServerInfoBottomSheet(
                 sheetState = serverInfoSheetState,
+                onNotificationsIconClick = {
+                    composeNavigator.navigate(DiscordScreen.NotificationSettings.name)
+                },
                 serverEntity = serverList.find { it.id == selectedServerId }) {
                 Scaffold(
                     bottomBar = {
@@ -201,6 +204,7 @@ fun DashboardScreen(
                 }
             }
         },
+
         serverIdList = serverList.map { it.id },
         onServerSelect = { serverId -> selectedServerId = serverId },
         listItems = searchSheetItemList,
