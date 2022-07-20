@@ -92,6 +92,12 @@ Discord Compose follows the principles of Clean Architecture with Android Archit
     <td><img src = "art/discord_create_server_dark.png" width=240/></td>
     <td><img src = "art/discord_friends_dark.png" width=240/></td>
   </tr>
+  <tr>
+    <th>Chat</th>
+  </tr>
+  <tr>
+    <td><img src = "art/discord_chat_dark.png" width=240/></td>
+  </tr>
 </table>
 
 ## 📷 Screenshots (Light theme)
@@ -113,13 +119,19 @@ Discord Compose follows the principles of Clean Architecture with Android Archit
     <th>Invite</th>
     <th>Password Manager Dialog</th>
     <th>Create Server</th>
-<th>Friends</th>
+    <th>Friends</th>
   </tr>
   <tr>
     <td><img src = "art/discord_invite_light.png" width=240/></td>
     <td><img src = "art/discord_password_manager_dialog_light.png" width=240/></td>
     <td><img src = "art/discord_create_server_light.png" width=240/></td>
     <td><img src = "art/discord_friends_light.png" width=240/></td>
+  </tr>
+  <tr>
+    <th>Chat</th>
+  </tr>
+  <tr>
+    <td><img src = "art/discord_chat_light.png" width=240/></td>
   </tr>
 </table>
 
