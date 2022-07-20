@@ -849,3 +849,31 @@ val discord_settings_icon
   } else {
     Color(0xFF303136)
   }
+
+val channel_member_action_icon
+    @Composable get() = if (isSystemInDarkTheme()) {
+       Color(0xFFbbbabf)
+    } else {
+        Color(0xFF4e555f)
+    }
+
+val channel_member_action_label
+    @Composable get() = if (isSystemInDarkTheme()) {
+        Color(0xFFc5c4c9)
+    } else {
+        Color(0xFF4e555f)
+    }
+
+val channel_member_bg
+@Composable get() = if(isSystemInDarkTheme()){
+    Color(0xFF302f34)
+}else{
+    Color(0xFFf4f4f4)
+}
+
+val channel_member_secondary_bg
+    @Composable get() = if(isSystemInDarkTheme()){
+        Color(0xFF35383f)
+    }else{
+        Color(0xFFFFFFFF)
+    }

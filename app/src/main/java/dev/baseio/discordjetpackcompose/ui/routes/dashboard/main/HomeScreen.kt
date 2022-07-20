@@ -13,13 +13,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
-import androidx.compose.material.ContentAlpha
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.FractionalThreshold
-import androidx.compose.material.ModalBottomSheetState
-import androidx.compose.material.SwipeableState
-import androidx.compose.material.rememberSwipeableState
-import androidx.compose.material.swipeable
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
@@ -45,10 +39,12 @@ import dev.baseio.discordjetpackcompose.entities.ChatUserEntity
 import dev.baseio.discordjetpackcompose.entities.server.ServerEntity
 import dev.baseio.discordjetpackcompose.navigator.ComposeNavigator
 import dev.baseio.discordjetpackcompose.navigator.DiscordScreen
+import dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.chatscreen.ChannelMemberScreen
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.chatscreen.ChatScreen
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.dasboard.getFakeChatUserList
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.dasboard.getFakeServerList
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
+import dev.baseio.discordjetpackcompose.ui.theme.channel_member_bg
 import dev.baseio.discordjetpackcompose.viewmodels.DashboardScreenViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlin.math.roundToInt
@@ -131,9 +127,9 @@ fun HomeScreen(
 
     val leftDrawerModifier by remember(drawerOnTop, isAnyItemSelectedInServers) {
         mutableStateOf(
-          swipeableModifier
-            .zIndex(if (drawerOnTop == DrawerTypes.LEFT) 1f else 0f)
-            .alpha(if (drawerOnTop == DrawerTypes.LEFT) 1f else 0f)
+            swipeableModifier
+                .zIndex(if (drawerOnTop == DrawerTypes.LEFT) 1f else 0f)
+                .alpha(if (drawerOnTop == DrawerTypes.LEFT) 1f else 0f)
         )
     }
 
@@ -190,13 +186,16 @@ fun HomeScreen(
             openServerInfoBottomSheet = { coroutineScope.launch { sheetState.show() } },
             viewModel = viewModel
         )
-        Box(
+        ChannelMemberScreen(
             modifier = rightDrawerModifier
                 .fillMaxHeight()
                 .fillMaxWidth(0.85f)
-                .background(Color.Cyan)
-                .align(Alignment.CenterEnd)
-        ) {}
+                .background(channel_member_bg)
+                .align(Alignment.CenterEnd),
+            onInviteButtonClicked = {
+                composeNavigator.navigate(DiscordScreen.Invite.route)
+            }
+        )
 
         val centerScreenZIndex by remember {
             derivedStateOf {

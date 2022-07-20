@@ -16,6 +16,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -139,10 +140,10 @@ fun FriendsScreen(
 }
 
 @Composable
-fun Header(title: Int, size: Int) {
+fun Header(title: Int, size: Int, style: TextStyle = DirectMessageListTypography.h5) {
     Text(
         text = stringResource(title, size),
-        style = DirectMessageListTypography.h5,
+        style = style,
         color = DiscordColorProvider.colors.onSurface.copy(alpha = ContentAlpha.medium)
     )
 }
