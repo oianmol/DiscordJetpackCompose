@@ -65,7 +65,7 @@ fun ReplyLine() {
     }
     drawPath(
       path = path,
-      color = Color.White.copy(alpha = .20f),
+      color = Color(0xFF838383),
       style = Stroke(
         width = 6f,
         cap = StrokeCap.Round,

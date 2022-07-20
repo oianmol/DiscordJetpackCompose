@@ -212,7 +212,7 @@ private fun SendMessageButton(
     Icon(
       painterResource(id = Drawables.ic_send_rounded),
       contentDescription = null,
-      tint = DiscordColorProvider.colors.brand
+      tint = Color.White
     )
   }
 }
