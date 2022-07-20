@@ -1,7 +1,7 @@
 package dev.baseio.discordjetpackcompose.ui.routes.dashboard.userSettings.components
 
 import android.content.Context
-import dev.baseio.discordjetpackcompose.entities.SettingsEntity
+import dev.baseio.discordjetpackcompose.ui.routes.dashboard.userSettings.components.models.SettingsEntity
 import dev.baseio.discordjetpackcompose.ui.utils.Drawables
 import dev.baseio.discordjetpackcompose.ui.utils.Strings
 

@@ -1,4 +1,4 @@
-package dev.baseio.discordjetpackcompose.entities
+package dev.baseio.discordjetpackcompose.ui.routes.dashboard.userSettings.components.models
 
 data class SettingsEntity(
   val title: String,
