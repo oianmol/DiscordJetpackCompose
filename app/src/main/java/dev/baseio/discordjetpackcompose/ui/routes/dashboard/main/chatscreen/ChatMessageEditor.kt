@@ -36,7 +36,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import dev.baseio.discordjetpackcompose.custom.MentionsPatterns
 import dev.baseio.discordjetpackcompose.custom.MentionsTextField
+import dev.baseio.discordjetpackcompose.custom.extractSpans
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.ui.theme.MessageTypography
 import dev.baseio.discordjetpackcompose.ui.utils.Drawables
@@ -98,11 +100,27 @@ fun ChatMessageEditor(
         modifier = Modifier
           .padding(start = 8.dp)
           .weight(1f),
-        viewModel = viewModel,
         messageToSend = mentionText.text,
-        isReply = isReplyMode.value,
-        messageToReply = uiState.messageAction,
         onSent = {
+          var url: String? = null
+          val linksList =
+            extractSpans(
+              text = mentionText.text,
+              patterns = listOf(
+                MentionsPatterns.urlPattern,
+                MentionsPatterns.hashTagPattern,
+                MentionsPatterns.mentionTagPattern
+              )
+            )
+          if (linksList.isNotEmpty() && linksList.first().tag == MentionsPatterns.URL_TAG) {
+            url = linksList.first().spanText
+          }
+          viewModel.sendMessage(
+            messageToSend = mentionText.text,
+            messageToReply = uiState.messageAction,
+            isReply = isReplyMode.value,
+            url = url
+          )
           mentionText = TextFieldValue()
           isReplyMode.value = false
           viewModel.resetMessageAction()
@@ -176,10 +194,7 @@ private fun MessageEditor(
 @Composable
 private fun SendMessageButton(
   modifier: Modifier = Modifier,
-  viewModel: ChatScreenViewModel,
   messageToSend: String,
-  isReply: Boolean = false,
-  messageToReply: String = "",
   onSent: () -> Unit
 ) {
   IconButton(
@@ -190,11 +205,6 @@ private fun SendMessageButton(
         shape = CircleShape
       ),
     onClick = {
-      viewModel.sendMessage(
-        messageToSend = messageToSend,
-        messageToReply = messageToReply,
-        isReply = isReply
-      )
       onSent()
     },
     enabled = messageToSend.isNotEmpty()

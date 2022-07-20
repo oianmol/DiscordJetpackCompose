@@ -22,9 +22,8 @@ import javax.inject.Inject
  * UI state for the Chat screen
  */
 data class ChatUiState(
-  val message: String = " ",
+  val message: String = "",
   val messageAction: String = "",
-  val discordUrlMetaEntity: DiscordUrlMetaEntity? = null,
   val loading: Boolean = false,
 )
 
@@ -48,10 +47,16 @@ class ChatScreenViewModel @Inject constructor(
   fun sendMessage(
     messageToSend: String,
     messageToReply: String,
-    isReply: Boolean = false
+    isReply: Boolean = false,
+    url: String? = null
   ) {
     if (messageToSend.isNotEmpty()) {
       viewModelScope.launch {
+        var discordUrlMetaEntity: DiscordUrlMetaEntity? = null
+        url?.let { safeUrl ->
+          discordUrlMetaEntity = fetchUrlMetadataUseCase.perform(safeUrl)
+        }
+
         val message = DiscordMessageEntity(
           uuid = UUID.randomUUID().toString(),
           channelId = "1",
@@ -61,50 +66,33 @@ class ChatScreenViewModel @Inject constructor(
           createdDate = System.currentTimeMillis(),
           modifiedDate = System.currentTimeMillis(),
           replyTo = if (isReply) "Person" else "",
-          replyToMessage = messageToReply
+          replyToMessage = messageToReply,
+          metaTitle = discordUrlMetaEntity?.title ?: "",
+          metaDesc = discordUrlMetaEntity?.desc ?: "",
+          metaImageUrl = discordUrlMetaEntity?.image ?: "",
+          metaUrl = discordUrlMetaEntity?.url ?: ""
         )
         sendMessageUseCase.perform(message)
       }
-      _uiState.update {
-        it.copy(
-          message = ""
-        )
-      }
+      updateMessage("")
     }
   }
 
   fun updateMessage(message: String) {
-    _uiState.update {
-      it.copy(
-        message = message
-      )
+    _uiState.update { chatUiState ->
+      chatUiState.copy(message = message)
     }
   }
 
   fun updateMessageAction(action: String) {
-    _uiState.update {
-      it.copy(
-        messageAction = action
-      )
+    _uiState.update { chatUiState ->
+      chatUiState.copy(messageAction = action)
     }
   }
 
   fun resetMessageAction() {
-    _uiState.update {
-      it.copy(
-        messageAction = ""
-      )
-    }
-  }
-
-  fun fetchUrlMetadata(url: String) {
-    viewModelScope.launch {
-      val discordUrlMetaEntity = fetchUrlMetadataUseCase.perform(url)
-      _uiState.update {
-        it.copy(
-          discordUrlMetaEntity = discordUrlMetaEntity
-        )
-      }
+    _uiState.update { chatUiState ->
+      chatUiState.copy(messageAction = "")
     }
   }
 }

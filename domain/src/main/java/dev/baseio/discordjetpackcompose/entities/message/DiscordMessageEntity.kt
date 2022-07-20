@@ -10,4 +10,8 @@ data class DiscordMessageEntity(
   val createdBy: String,
   val createdDate: Long,
   val modifiedDate: Long,
+  val metaTitle: String,
+  val metaDesc: String,
+  val metaImageUrl: String,
+  val metaUrl: String
 )

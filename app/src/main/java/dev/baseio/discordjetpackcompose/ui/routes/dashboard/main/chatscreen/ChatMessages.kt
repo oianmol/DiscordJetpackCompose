@@ -59,8 +59,7 @@ fun ChatMessages(
               onItemLongPressed = {
                 viewModel.updateMessageAction(safeMessage.message)
               },
-              bottomSheetState = bottomSheetState,
-              viewModel = viewModel
+              bottomSheetState = bottomSheetState
             )
           }
 

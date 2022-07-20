@@ -22,8 +22,6 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -52,7 +50,6 @@ import dev.baseio.discordjetpackcompose.custom.extractSpans
 import dev.baseio.discordjetpackcompose.entities.message.DiscordMessageEntity
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.ui.theme.MessageTypography
-import dev.baseio.discordjetpackcompose.viewmodels.ChatScreenViewModel
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -63,11 +60,8 @@ fun ChatMessageItem(
   message: DiscordMessageEntity,
   position: Int,
   onItemLongPressed: (Int) -> Unit,
-  viewModel: ChatScreenViewModel,
   bottomSheetState: ModalBottomSheetState
 ) {
-  // UiState of the ChatScreen
-  val uiState by viewModel.uiState.collectAsState()
 
   val coroutineScope = rememberCoroutineScope()
   Column(
@@ -90,17 +84,17 @@ fun ChatMessageItem(
       modifier = Modifier
         .padding(0.dp),
       imageSize = 55.dp,
-      message = message,
-      urlRecognizer = { url ->
-        viewModel.fetchUrlMetadata(url)
-      }
+      message = message
     )
-    uiState.discordUrlMetaEntity?.let { safeDiscordUrlMetaEntity ->
+    if (message.metaImageUrl.isEmpty().not()
+      && message.metaTitle.isEmpty().not()
+      && message.metaTitle.isEmpty().not()
+    ) {
       UrlPreviewItem(
-        url = safeDiscordUrlMetaEntity.url,
-        imageUrl = safeDiscordUrlMetaEntity.image,
-        title = safeDiscordUrlMetaEntity.title,
-        desc = safeDiscordUrlMetaEntity.desc
+        url = message.metaUrl,
+        imageUrl = message.metaImageUrl,
+        title = message.metaTitle,
+        desc = message.metaDesc
       )
     }
   }
@@ -110,7 +104,6 @@ fun ChatMessageItem(
 fun ChatListItem(
   modifier: Modifier,
   imageSize: Dp,
-  urlRecognizer: (url: String) -> Unit = {},
   message: DiscordMessageEntity
 ) {
   Row(
@@ -131,10 +124,7 @@ fun ChatListItem(
     ) {
       ChatTitle(message)
       Spacer(modifier = Modifier.height(4.dp))
-      ChatBody(
-        message = message,
-        urlRecognizer = urlRecognizer
-      )
+      ChatBody(message = message)
     }
   }
 }
@@ -150,7 +140,7 @@ fun UrlPreviewItem(
   Box(
     modifier = Modifier
       .padding(top = 2.dp, start = 64.dp, end = 16.dp)
-      .clickable { uriHandler.openUri(url ?: "www.google.com") }
+      .clickable { uriHandler.openUri(url ?: "https://www.google.com") }
       .clip(
         RoundedCornerShape(4.dp)
       )
@@ -165,8 +155,8 @@ fun UrlPreviewItem(
       verticalAlignment = Alignment.Top
     ) {
       MetadataTitleAndDesc(
-        title = title ?: "Some Title",
-        desc = desc ?: "Some Description",
+        title = title ?: "",
+        desc = desc ?: "",
         modifier = Modifier.weight(4f)
       )
       imageUrl?.let { safeImageUrl ->
@@ -233,21 +223,17 @@ fun ImageBox(
 
 @Composable
 fun ChatBody(
-  message: DiscordMessageEntity,
-  urlRecognizer: (url: String) -> Unit = {}
+  message: DiscordMessageEntity
 ) {
   Column {
-    val linksList =
-      extractSpans(message.message, listOf(urlPattern, hashTagPattern, mentionTagPattern))
+    val linksList = extractSpans(
+      message.message, listOf(urlPattern, hashTagPattern, mentionTagPattern)
+    )
     val uriHandler = LocalUriHandler.current
-    val layoutResult = remember {
-      mutableStateOf<TextLayoutResult?>(null)
-    }
+    val layoutResult = remember { mutableStateOf<TextLayoutResult?>(null) }
+
     val annotatedString = buildAnnotatedString {
       append(message.message)
-      if (linksList.isNotEmpty() && linksList.first().tag == URL_TAG) {
-        urlRecognizer.invoke(linksList.first().spanText)
-      }
       linksList.forEach {
         addStyle(
           style = SpanStyle(

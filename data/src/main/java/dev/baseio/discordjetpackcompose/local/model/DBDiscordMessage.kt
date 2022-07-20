@@ -15,4 +15,8 @@ data class DBDiscordMessage(
   @ColumnInfo(name = "createdBy") val createdBy: String,
   @ColumnInfo(name = "createdDate") val createdDate: Long,
   @ColumnInfo(name = "modifiedDate") val modifiedDate: Long,
+  @ColumnInfo(name = "metaTitle") val metaTitle: String,
+  @ColumnInfo(name = "metaDesc") val metaDesc: String,
+  @ColumnInfo(name = "metaImageUrl") val metaImageUrl: String,
+  @ColumnInfo(name = "metaUrl") val metaUrl: String
 )
