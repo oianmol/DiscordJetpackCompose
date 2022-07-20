@@ -38,6 +38,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.baseio.discordjetpackcompose.R
+import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.ui.theme.Typography
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
@@ -46,7 +47,9 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.launch
 
 @Composable
-fun NetworkStateBar() {
+fun NetworkStateBar(
+    modifier: Modifier = Modifier
+) {
 
     val connection by connectivityState()
     val airplane by isAirplaneMode()
@@ -63,24 +66,25 @@ fun NetworkStateBar() {
     Row(
         verticalAlignment = Alignment.Bottom,
         horizontalArrangement = Arrangement.Center,
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(top = 4.dp)
     ) {
         //Logic Needs to be fixed. Not updating always
-        if (isConnected) {
-            ConnectingAnimation()
+        if (isAirplaneModeOn) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_airplanemode),
+                contentDescription = null,
+                modifier = Modifier.rotate(90f),
+                tint = DiscordColorProvider.colors.textPrimary
+            )
+            NetworkStateText { R.string.airplane_mode_is_active }
         } else {
-            if (!isAirplaneModeOn) {
+            if (isConnected) {
+                ConnectingAnimation()
+            } else {
                 NoNetwork()
                 NetworkStateText { R.string.no_internet_status }
-            } else {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_airplanemode),
-                    contentDescription = null,
-                    modifier = Modifier.rotate(90f)
-                )
-                NetworkStateText { R.string.airplane_mode_is_active }
             }
         }
     }
@@ -137,7 +141,7 @@ fun ConnectingAnimation(
 fun NetworkStateText(textProvider: () -> Int) {
     Text(
         text = stringResource(id = textProvider()),
-        style = Typography.caption,
+        style = Typography.caption.copy(color = DiscordColorProvider.colors.textPrimary),
         modifier = Modifier.padding(start = 4.dp)
     )
 }
