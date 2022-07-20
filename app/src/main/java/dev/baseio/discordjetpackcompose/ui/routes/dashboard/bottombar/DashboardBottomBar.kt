@@ -52,6 +52,8 @@ data class DashboardBottomBarItem(
     val type: DashboardBottomBarItemType
 )
 
+val BottomNavigationHeight = 56.dp
+
 @Composable
 fun DashboardBottomBar(
     isDisplayed: Boolean,

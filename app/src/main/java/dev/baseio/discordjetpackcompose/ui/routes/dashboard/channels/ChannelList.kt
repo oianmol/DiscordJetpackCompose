@@ -50,25 +50,24 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.google.accompanist.insets.navigationBarsPadding
 import dev.baseio.discordjetpackcompose.R
+import dev.baseio.discordjetpackcompose.entities.UIState
 import dev.baseio.discordjetpackcompose.entities.server.ServerEntity
+import dev.baseio.discordjetpackcompose.ui.routes.dashboard.bottombar.BottomNavigationHeight
 import dev.baseio.discordjetpackcompose.ui.theme.ChannelListTypography
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordSurface
+import dev.baseio.discordjetpackcompose.ui.theme.contentColorFor
 import dev.baseio.discordjetpackcompose.ui.utils.clickableWithRipple
-import dev.baseio.discordjetpackcompose.entities.UIState
-import dev.baseio.discordjetpackcompose.viewmodels.DashboardScreenViewModel
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun ChannelList(
     modifier: Modifier = Modifier,
     serverState: UIState<ServerEntity>,
-    viewModel: DashboardScreenViewModel,
     onItemSelection: () -> Unit,
     onInviteButtonClick: (String) -> Unit,
     openServerInfoBottomSheet: () -> Unit
@@ -81,8 +80,8 @@ fun ChannelList(
             is UIState.Empty -> Unit
             is UIState.Loading -> CircularProgressIndicator(
                 modifier = Modifier
-                  .fillMaxSize()
-                  .wrapContentSize(),
+                    .fillMaxSize()
+                    .wrapContentSize(),
             )
             is UIState.Failure -> Text(text = "Failure")
             is UIState.Success -> Column(modifier = modifier) {
@@ -104,7 +103,10 @@ fun ChannelList(
 
                 val cardElevation by animateDpAsState(targetValue = if (shouldLiftCard) 4.dp else 0.dp)
 
-                DiscordSurface(elevation = cardElevation) {
+                DiscordSurface(
+                    elevation = cardElevation,
+                    contentColor = DiscordColorProvider.colors.contentColorFor(DiscordColorProvider.colors.surface)
+                ) {
                     Column {
                         BoxWithConstraints(
                             modifier = headerModifier
@@ -160,7 +162,9 @@ fun ChannelList(
                                         modifier = Modifier.padding(start = 8.dp),
                                     )
                                 }
-                                IconButton(onClick = {}) {
+                                IconButton(
+                                    onClick = openServerInfoBottomSheet,
+                                ) {
                                     Icon(
                                         imageVector = Icons.Default.MoreVert,
                                         contentDescription = null,
@@ -197,7 +201,7 @@ fun ChannelList(
                         Spacer(
                             modifier = Modifier
                                 .navigationBarsPadding()
-                                .padding(bottom = 8.dp)
+                                .padding(bottom = BottomNavigationHeight + 8.dp)
                         )
                     }
                 }
@@ -230,9 +234,8 @@ private fun ServerInviteButton(onInviteButtonClick: () -> Unit) {
 @Composable
 private fun ChannelScreenPreview() {
     ChannelList(
-        onItemSelection = {},
         serverState = UIState.Loading,
-        viewModel = hiltViewModel(),
-        onInviteButtonClick = {},
-        openServerInfoBottomSheet = {})
+        onItemSelection = {},
+        onInviteButtonClick = {}
+    ) {}
 }

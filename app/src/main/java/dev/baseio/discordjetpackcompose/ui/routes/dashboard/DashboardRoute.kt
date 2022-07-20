@@ -44,7 +44,7 @@ fun NavGraphBuilder.setupDashboardBottomNavScreens(
     sheetState: ModalBottomSheetState,
     onSelectServer: (String) -> Unit,
     shouldDisplayBottomBar: (Boolean) -> Unit,
-    serverList: List<ServerEntity>
+    serverList: List<ServerEntity> // todo: refer a single source of truth for this serverlist without passing it around
 ) {
     navigation(
         startDestination = DiscordScreen.Home.route,

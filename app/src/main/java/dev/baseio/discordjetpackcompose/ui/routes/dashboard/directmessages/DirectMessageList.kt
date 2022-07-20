@@ -37,6 +37,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.insets.navigationBarsPadding
 import dev.baseio.discordjetpackcompose.R
 import dev.baseio.discordjetpackcompose.entities.ChatUserEntity
+import dev.baseio.discordjetpackcompose.ui.routes.dashboard.bottombar.BottomNavigationHeight
 import dev.baseio.discordjetpackcompose.ui.theme.DirectMessageListTypography
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.ui.theme.contentColorFor
@@ -138,7 +139,7 @@ fun DirectMessageList(
                 Spacer(
                     modifier = Modifier
                         .navigationBarsPadding()
-                        .padding(bottom = 8.dp)
+                        .padding(bottom = BottomNavigationHeight + 8.dp)
                 )
             }
         }

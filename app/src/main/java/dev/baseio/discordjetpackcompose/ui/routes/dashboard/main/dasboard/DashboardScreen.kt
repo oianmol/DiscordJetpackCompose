@@ -116,7 +116,7 @@ fun DashboardScreen(
                                     unreadCount = totalUnreadCount,
                                     onClick = {
                                         selectedBottomBarItem = DashboardBottomBarItemType.Home
-                                        navController.navigate(DiscordScreen.Home.route)
+                                        navController.navigateTab(DiscordScreen.Home)
                                     },
                                     type = DashboardBottomBarItemType.Home
                                 ),
@@ -132,7 +132,7 @@ fun DashboardScreen(
                                     unreadCount = null,
                                     onClick = {
                                         selectedBottomBarItem = DashboardBottomBarItemType.Friends
-                                        navController.navigate(DiscordScreen.Friends.route)
+                                        navController.navigateTab(DiscordScreen.Friends)
                                     },
                                     type = DashboardBottomBarItemType.Friends
                                 ),

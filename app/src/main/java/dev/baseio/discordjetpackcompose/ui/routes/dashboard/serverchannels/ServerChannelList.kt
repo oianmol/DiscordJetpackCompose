@@ -54,10 +54,9 @@ fun ServerChannelList(
                 else -> ChannelList(
                     modifier = Modifier.fillMaxSize(),
                     serverState = serverState,
-                    onItemSelection = onItemSelection,
                     onInviteButtonClick = { serverId -> }, // TODO: Not implemented
                     openServerInfoBottomSheet = openServerInfoBottomSheet,
-                    viewModel = dashboardScreenVM
+                    onItemSelection = onItemSelection
                 )
             }
         }
