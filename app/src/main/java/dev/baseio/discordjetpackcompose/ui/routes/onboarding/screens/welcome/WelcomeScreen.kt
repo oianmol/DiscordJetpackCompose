@@ -46,7 +46,8 @@ fun WelcomeScreen(composeNavigator: ComposeNavigator) {
         Modifier
             .fillMaxSize()
             .background(DiscordColorProvider.colors.background),
-        verticalArrangement = Arrangement.SpaceAround
+        verticalArrangement = Arrangement.SpaceAround,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
         Header()
