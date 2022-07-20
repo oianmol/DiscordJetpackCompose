@@ -37,6 +37,8 @@ dependencies {
 
   /* Paging */
   implementation(Lib.Paging.PAGING_3)
+  implementation(Lib.Jsoup.JSOUP)
+
   /* Room */
   api(Lib.Room.roomRuntime)
   kapt(Lib.Room.roomCompiler)

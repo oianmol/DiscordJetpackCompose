@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
+import androidx.compose.material.ModalBottomSheetValue.Hidden
 import androidx.compose.material.SwipeableState
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons.Filled
@@ -18,10 +19,13 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.filled.PhoneInTalk
 import androidx.compose.material.icons.filled.Videocam
+import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -54,38 +58,52 @@ fun ChatScreen(
     isOnline: State<Boolean>,
     swipeableState: SwipeableState<CenterScreenState>
 ) {
-    val scaffoldState = rememberScaffoldState()
+  val scaffoldState = rememberScaffoldState()
+  val bottomSheetState = rememberModalBottomSheetState(initialValue = Hidden)
+  val isReplyMode = remember { mutableStateOf(false) }
+  val coroutineScope = rememberCoroutineScope()
 
     SideEffect {
         viewModel.fetchMessages()
     }
 
-    DiscordScaffold(
-        modifier = Modifier.clip(RoundedCornerShape(2)),
-        navigator = composeNavigator,
-        scaffoldState = scaffoldState,
-        backgroundColor = DiscordColorProvider.colors.chatBackground,
-        topAppBar = {
-            ChatScreenAppBar(
-                name = userName.value,
-                isOnline = isOnline.value,
-                swipeableState = swipeableState
-            )
-        }
-    ) { paddingValues ->
-        Box(
-            modifier = modifier
-                .padding(top = paddingValues.calculateTopPadding() + 4.dp)
-                .fillMaxSize()
-                .background(Color.Black.copy(alpha = focusOpacity))
-        ) {
-            ChatScreenContent(
-                modifier = Modifier,
-                viewModel = viewModel,
-                userName = userName
-            )
-        }
+  DiscordScaffold(
+    modifier = Modifier.clip(RoundedCornerShape(2)),
+    navigator = composeNavigator,
+    scaffoldState = scaffoldState,
+    backgroundColor = DiscordColorProvider.colors.chatBackground,
+    topAppBar = {
+      ChatScreenAppBar(
+        name = userName.value,
+        isOnline = isOnline.value,
+        swipeableState = swipeableState
+      )
     }
+  ) { paddingValues ->
+    Box(
+      modifier = modifier
+        .padding(top = paddingValues.calculateTopPadding() + 4.dp)
+        .fillMaxSize()
+        .background(Color.Black.copy(alpha = focusOpacity))
+    ) {
+      ChatScreenContent(
+        modifier = Modifier,
+        viewModel = viewModel,
+        sheetState = bottomSheetState,
+        isReplyMode = isReplyMode,
+        userName = userName
+      )
+    }
+  }
+  MessageActionsBottomSheet(
+    sheetState = bottomSheetState,
+    replyAction = {
+      isReplyMode.value = true
+      coroutineScope.launch {
+        bottomSheetState.hide()
+      }
+    }
+  )
 }
 
 @OptIn(ExperimentalMaterialApi::class)

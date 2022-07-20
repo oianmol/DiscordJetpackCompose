@@ -3,8 +3,10 @@ package dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.chatscreen
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
@@ -16,8 +18,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowForwardIos
 import androidx.compose.material.icons.filled.CardGiftcard
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.EmojiEmotions
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -32,7 +36,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import dev.baseio.discordjetpackcompose.custom.MentionsPatterns
 import dev.baseio.discordjetpackcompose.custom.MentionsTextField
+import dev.baseio.discordjetpackcompose.custom.extractSpans
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.ui.theme.MessageTypography
 import dev.baseio.discordjetpackcompose.ui.utils.Drawables
@@ -42,18 +48,22 @@ import dev.baseio.discordjetpackcompose.viewmodels.ChatScreenViewModel
 fun ChatMessageEditor(
   modifier: Modifier = Modifier,
   userName: State<String>,
+  isReplyMode: MutableState<Boolean>,
   viewModel: ChatScreenViewModel
 ) {
+  // UiState of the ChatScreen
+  val uiState by viewModel.uiState.collectAsState()
+
   var mentionText by remember {
     mutableStateOf(TextFieldValue())
   }
-  val messageText by viewModel.message.collectAsState()
-  var showExtraButtons by remember { mutableStateOf(value = messageText.isEmpty()) }
+
+  var showExtraButtons by remember { mutableStateOf(value = uiState.message.isEmpty()) }
 
   Row(
     modifier = modifier
-      .height(48.dp)
-      .padding(start = 8.dp, end = 8.dp),
+      .height(56.dp)
+      .padding(start = 8.dp, top = 8.dp, end = 8.dp),
     verticalAlignment = Alignment.CenterVertically
   ) {
     AnimatedVisibility(visible = showExtraButtons.not()) {
@@ -75,25 +85,45 @@ fun ChatMessageEditor(
     MessageEditorBar(
       modifier = Modifier
         .weight(2f),
-      search = messageText,
+      search = uiState.message,
       userName = userName,
       mentionText = mentionText,
       onValueChange = {
         mentionText = it
         showExtraButtons = false
-        viewModel.message.value = it.text
+        viewModel.updateMessage(it.text)
       }
     )
 
-    AnimatedVisibility(visible = messageText.isNotEmpty()) {
+    AnimatedVisibility(visible = uiState.message.isNotEmpty()) {
       SendMessageButton(
         modifier = Modifier
           .padding(start = 8.dp)
           .weight(1f),
-        viewModel = viewModel,
-        message = mentionText.text,
+        messageToSend = mentionText.text,
         onSent = {
+          var url: String? = null
+          val linksList =
+            extractSpans(
+              text = mentionText.text,
+              patterns = listOf(
+                MentionsPatterns.urlPattern,
+                MentionsPatterns.hashTagPattern,
+                MentionsPatterns.mentionTagPattern
+              )
+            )
+          if (linksList.isNotEmpty() && linksList.first().tag == MentionsPatterns.URL_TAG) {
+            url = linksList.first().spanText
+          }
+          viewModel.sendMessage(
+            messageToSend = mentionText.text,
+            messageToReply = uiState.messageAction,
+            isReply = isReplyMode.value,
+            url = url
+          )
           mentionText = TextFieldValue()
+          isReplyMode.value = false
+          viewModel.resetMessageAction()
         }
       )
     }
@@ -164,8 +194,7 @@ private fun MessageEditor(
 @Composable
 private fun SendMessageButton(
   modifier: Modifier = Modifier,
-  viewModel: ChatScreenViewModel,
-  message: String,
+  messageToSend: String,
   onSent: () -> Unit
 ) {
   IconButton(
@@ -176,15 +205,14 @@ private fun SendMessageButton(
         shape = CircleShape
       ),
     onClick = {
-      viewModel.sendMessage(message)
       onSent()
     },
-    enabled = message.isNotEmpty()
+    enabled = messageToSend.isNotEmpty()
   ) {
     Icon(
       painterResource(id = Drawables.ic_send_rounded),
       contentDescription = null,
-      tint = DiscordColorProvider.colors.brand
+      tint = Color.White
     )
   }
 }
@@ -298,5 +326,37 @@ fun ChatPlaceHolder(
     } else {
       innerTextField()
     }
+  }
+}
+
+@Composable
+fun ReplyBanner(
+  modifier: Modifier = Modifier,
+  userName: State<String>,
+  onCloseClicked: () -> Unit
+) {
+  Row(
+    modifier = modifier
+      .fillMaxWidth()
+      .padding(0.dp)
+      .background(DiscordColorProvider.colors.chatEditor),
+    verticalAlignment = Alignment.CenterVertically,
+    horizontalArrangement = Arrangement.Start
+  ) {
+    Icon(
+      modifier = Modifier
+        .padding(8.dp)
+        .clickable { onCloseClicked() },
+      imageVector = Icons.Default.Clear,
+      contentDescription = null,
+      tint = Color(0xFFbabbbf)
+    )
+    Text(
+      modifier = Modifier.padding(8.dp),
+      text = "Replying to ${userName.value}",
+      style = MessageTypography.subtitle2.copy(
+        color = DiscordColorProvider.colors.textSecondary
+      )
+    )
   }
 }
