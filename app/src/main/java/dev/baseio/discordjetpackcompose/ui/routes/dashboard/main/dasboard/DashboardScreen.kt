@@ -15,6 +15,7 @@ import androidx.compose.material.rememberBottomSheetScaffoldState
 import androidx.compose.material.rememberBottomSheetState
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
@@ -45,6 +47,7 @@ import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.ui.theme.contentColorFor
 import dev.baseio.discordjetpackcompose.ui.utils.rememberCoilImageRequest
 import dev.baseio.discordjetpackcompose.utils.Constants
+import dev.baseio.discordjetpackcompose.viewmodels.DashboardScreenViewModel
 import kotlinx.coroutines.launch
 
 private object DashboardScreen {
@@ -56,8 +59,9 @@ private object DashboardScreen {
 @Composable
 fun DashboardScreen(
     composeNavigator: ComposeNavigator,
-    serverList: List<ServerEntity>,
-    searchSheetItemList: List<SearchSheetListItemEntity>,
+    dashboardScreenVM: DashboardScreenViewModel = hiltViewModel(),
+    serverList: List<ServerEntity> = dashboardScreenVM.serverList,
+    searchSheetItemList: List<SearchSheetListItemEntity> = dashboardScreenVM.searchSheetItemList,
     userProfileImage: String = Constants.MMLogoUrl,
     totalUnreadCount: Int = serverList.sumOf { it.allChannelsUnreadCount }
 ) {
@@ -82,6 +86,13 @@ fun DashboardScreen(
     val navController = rememberNavController()
 
     var isBottomBarDisplayed by remember { mutableStateOf(true) }
+
+    LaunchedEffect(Unit) {
+        dashboardScreenVM.apply {
+            getSearchSheetItemList()
+            getServerList()
+        }
+    }
 
     SearchBottomSheet(
         sheetState = searchSheetState,
