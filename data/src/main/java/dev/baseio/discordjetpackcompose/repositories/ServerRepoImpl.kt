@@ -1,5 +1,6 @@
 package dev.baseio.discordjetpackcompose.repositories
 
+import dev.baseio.discordjetpackcompose.di.dispatcher.CoroutineDispatcherProvider
 import dev.baseio.discordjetpackcompose.entities.NetworkState
 import dev.baseio.discordjetpackcompose.entities.search.SearchSheetListItemEntity
 import dev.baseio.discordjetpackcompose.entities.server.ChannelEntity
@@ -10,9 +11,11 @@ import dev.baseio.discordjetpackcompose.utils.getSampleServerList
 import dev.baseio.discordjetpackcompose.utils.getSampleSheetListItems
 import dev.baseio.discordjetpackcompose.utils.safeApiCall
 
-class ServerRepoImpl : ServerRepo {
+class ServerRepoImpl(private val coroutineDispatcherProvider: CoroutineDispatcherProvider) :
+    ServerRepo {
     override suspend fun getServer(serverId: String): NetworkState<ServerEntity> {
         return safeApiCall(
+            coroutineDispatcherProvider = coroutineDispatcherProvider,
             debugResponse = ServerEntity(
                 id = serverId,
                 name = "Test Server",
@@ -60,6 +63,7 @@ class ServerRepoImpl : ServerRepo {
 
     override suspend fun getServerList(): NetworkState<List<ServerEntity>> {
         return safeApiCall(
+            coroutineDispatcherProvider = coroutineDispatcherProvider,
             debugResponse = getSampleServerList()
         ) {
             // todo: Not implemented
@@ -68,7 +72,10 @@ class ServerRepoImpl : ServerRepo {
     }
 
     override suspend fun getSearchSheetItemList(): NetworkState<List<SearchSheetListItemEntity>> {
-        return safeApiCall(debugResponse = getSampleSheetListItems()) {
+        return safeApiCall(
+            coroutineDispatcherProvider = coroutineDispatcherProvider,
+            debugResponse = getSampleSheetListItems()
+        ) {
             // todo: Not implemented
             throw NotImplementedException
         }

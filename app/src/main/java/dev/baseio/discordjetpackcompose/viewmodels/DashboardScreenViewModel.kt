@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.baseio.discordjetpackcompose.entities.NetworkState
 import dev.baseio.discordjetpackcompose.entities.UIState
@@ -13,11 +14,11 @@ import dev.baseio.discordjetpackcompose.entities.server.ServerEntity
 import dev.baseio.discordjetpackcompose.usecases.GetServerUseCase
 import dev.baseio.discordjetpackcompose.usecases.search.GetSearchSheetItemListUseCase
 import dev.baseio.discordjetpackcompose.usecases.server.GetServerListUseCase
-import dev.baseio.discordjetpackcompose.utils.ioScope
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
 @HiltViewModel
 class DashboardScreenViewModel @Inject constructor(
@@ -38,7 +39,7 @@ class DashboardScreenViewModel @Inject constructor(
         private set
 
     fun getServer(serverId: String) {
-        ioScope {
+        viewModelScope.launch {
             currentServerEntity = UIState.Loading
             currentServerEntity = when(val result = getServerUseCase(serverId = serverId)) {
                 is NetworkState.Failure -> { UIState.Failure(throwable = result.throwable) }
@@ -49,7 +50,7 @@ class DashboardScreenViewModel @Inject constructor(
 
     fun getServers(serverIds: List<String>) {
         serverIds.forEach { serverId ->
-            ioScope {
+            viewModelScope.launch {
                 val result = getServerUseCase(serverId = serverId)
                 if (result is NetworkState.Success) {
                     searchSheetServerList.add(result.data)
@@ -59,7 +60,7 @@ class DashboardScreenViewModel @Inject constructor(
     }
 
     fun getSearchSheetItemList() {
-        ioScope {
+        viewModelScope.launch {
             if (searchSheetItemList.isNotEmpty()) searchSheetItemList.clear()
             searchSheetItemList.addAll(
                 when (val result = getSearchSheetItemListUseCase()) {
@@ -71,7 +72,7 @@ class DashboardScreenViewModel @Inject constructor(
     }
 
     fun getServerList() {
-        ioScope {
+        viewModelScope.launch {
             if (serverList.isNotEmpty()) serverList.clear()
             serverList.addAll(
                 when(val result = getServerListUseCase()) {
