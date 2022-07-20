@@ -118,6 +118,7 @@ dependencies {
 
     /* Image Loading */
     implementation(Lib.Android.COIL_COMPOSE)
+    implementation(Lib.Android.ACCOMPANIST_COIL)
 
     /*DI*/
     implementation(Lib.Di.hiltAndroid)

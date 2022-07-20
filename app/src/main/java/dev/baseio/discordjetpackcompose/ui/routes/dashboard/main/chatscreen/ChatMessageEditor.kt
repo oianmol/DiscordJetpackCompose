@@ -49,11 +49,14 @@ fun ChatMessageEditor(
   isReplyMode: MutableState<Boolean>,
   viewModel: ChatScreenViewModel
 ) {
+  // UiState of the ChatScreen
+  val uiState by viewModel.uiState.collectAsState()
+
   var mentionText by remember {
     mutableStateOf(TextFieldValue())
   }
-  val messageText by viewModel.message.collectAsState()
-  var showExtraButtons by remember { mutableStateOf(value = messageText.isEmpty()) }
+
+  var showExtraButtons by remember { mutableStateOf(value = uiState.message.isEmpty()) }
 
   Row(
     modifier = modifier
@@ -80,17 +83,17 @@ fun ChatMessageEditor(
     MessageEditorBar(
       modifier = Modifier
         .weight(2f),
-      search = messageText,
+      search = uiState.message,
       userName = userName,
       mentionText = mentionText,
       onValueChange = {
         mentionText = it
         showExtraButtons = false
-        viewModel.message.value = it.text
+        viewModel.updateMessage(it.text)
       }
     )
 
-    AnimatedVisibility(visible = messageText.isNotEmpty()) {
+    AnimatedVisibility(visible = uiState.message.isNotEmpty()) {
       SendMessageButton(
         modifier = Modifier
           .padding(start = 8.dp)
@@ -98,7 +101,7 @@ fun ChatMessageEditor(
         viewModel = viewModel,
         messageToSend = mentionText.text,
         isReply = isReplyMode.value,
-        messageToReply = viewModel.messageAction.collectAsState().value,
+        messageToReply = uiState.messageAction,
         onSent = {
           mentionText = TextFieldValue()
           isReplyMode.value = false

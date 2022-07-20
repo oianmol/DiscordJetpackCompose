@@ -60,6 +60,7 @@ object Lib {
       "com.google.accompanist:accompanist-insets:${ACCOMPANIST_VERSION}"
     const val ACCOMPANIST_INSETS_UI =
       "com.google.accompanist:accompanist-insets-ui:${ACCOMPANIST_VERSION}"
+    const val ACCOMPANIST_COIL = "com.google.accompanist:accompanist-coil:0.14.0"
 
     const val MATERIAL_EXTENDED_ICONS = "androidx.compose.material:material-icons-extended:$COMPOSE_VERSION"
     const val COMPOSE_JUNIT = "androidx.compose.ui:ui-test-junit4:$COMPOSE_VERSION"

@@ -5,14 +5,28 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.baseio.discordjetpackcompose.entities.message.DiscordMessageEntity
+import dev.baseio.discordjetpackcompose.entities.message.DiscordUrlMetaEntity
 import dev.baseio.discordjetpackcompose.usecases.chat.FetchMessagesUseCase
 import dev.baseio.discordjetpackcompose.usecases.chat.FetchUrlMetadataUseCase
 import dev.baseio.discordjetpackcompose.usecases.chat.SendMessageUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.util.UUID
 import javax.inject.Inject
+
+/**
+ * UI state for the Chat screen
+ */
+data class ChatUiState(
+  val message: String = " ",
+  val messageAction: String = "",
+  val discordUrlMetaEntity: DiscordUrlMetaEntity? = null,
+  val loading: Boolean = false,
+)
 
 @HiltViewModel
 class ChatScreenViewModel @Inject constructor(
@@ -21,9 +35,11 @@ class ChatScreenViewModel @Inject constructor(
   private val fetchUrlMetadataUseCase: FetchUrlMetadataUseCase
 ) : ViewModel() {
 
+  // UI state exposed to the UI
+  private val _uiState = MutableStateFlow(ChatUiState(loading = true))
+  val uiState: StateFlow<ChatUiState> = _uiState.asStateFlow()
+
   var chatMessagesFlow = MutableStateFlow<Flow<PagingData<DiscordMessageEntity>>?>(null)
-  var message = MutableStateFlow("")
-  var messageAction = MutableStateFlow("")
 
   fun fetchMessages() {
     chatMessagesFlow.value = fetchMessagesUseCase.performStreaming("1")
@@ -49,17 +65,46 @@ class ChatScreenViewModel @Inject constructor(
         )
         sendMessageUseCase.perform(message)
       }
-      message.value = ""
+      _uiState.update {
+        it.copy(
+          message = ""
+        )
+      }
+    }
+  }
+
+  fun updateMessage(message: String) {
+    _uiState.update {
+      it.copy(
+        message = message
+      )
+    }
+  }
+
+  fun updateMessageAction(action: String) {
+    _uiState.update {
+      it.copy(
+        messageAction = action
+      )
     }
   }
 
   fun resetMessageAction() {
-    messageAction.value = ""
+    _uiState.update {
+      it.copy(
+        messageAction = ""
+      )
+    }
   }
 
   fun fetchUrlMetadata(url: String) {
     viewModelScope.launch {
-      val discordMessageEntity = fetchUrlMetadataUseCase.perform(url)
+      val discordUrlMetaEntity = fetchUrlMetadataUseCase.perform(url)
+      _uiState.update {
+        it.copy(
+          discordUrlMetaEntity = discordUrlMetaEntity
+        )
+      }
     }
   }
 }
