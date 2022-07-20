@@ -32,7 +32,7 @@ dependencies {
 
   implementation(project(":domain"))
 
-  api(Lib.Android.MATERIAL_EXTENDED_ICONS)
+  api(Lib.Android.MATERIAL_EXTENDED_ICONS) // todo: DATA shouldn't deal with presentation deps
 
   /*Kotlin*/
   api(Lib.Kotlin.KT_STD)

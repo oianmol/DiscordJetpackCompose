@@ -6,7 +6,6 @@ import dev.baseio.discordjetpackcompose.entities.search.SearchSheetListItemEntit
 import dev.baseio.discordjetpackcompose.entities.server.ChannelEntity
 import dev.baseio.discordjetpackcompose.entities.server.ChannelType
 import dev.baseio.discordjetpackcompose.entities.server.ServerEntity
-import dev.baseio.discordjetpackcompose.utils.NotImplementedException
 import dev.baseio.discordjetpackcompose.utils.getSampleServerList
 import dev.baseio.discordjetpackcompose.utils.getSampleSheetListItems
 import dev.baseio.discordjetpackcompose.utils.safeApiCall
@@ -56,8 +55,7 @@ class ServerRepoImpl(private val coroutineDispatcherProvider: CoroutineDispatche
                 hasNitroSubscription = true
             )
         ) {
-            // todo: Not implemented
-            throw NotImplementedException
+            TODO("Not Implemented")
         }
     }
 
@@ -66,8 +64,7 @@ class ServerRepoImpl(private val coroutineDispatcherProvider: CoroutineDispatche
             coroutineDispatcherProvider = coroutineDispatcherProvider,
             debugResponse = getSampleServerList()
         ) {
-            // todo: Not implemented
-            throw NotImplementedException
+            TODO("Not Implemented")
         }
     }
 
@@ -76,8 +73,7 @@ class ServerRepoImpl(private val coroutineDispatcherProvider: CoroutineDispatche
             coroutineDispatcherProvider = coroutineDispatcherProvider,
             debugResponse = getSampleSheetListItems()
         ) {
-            // todo: Not implemented
-            throw NotImplementedException
+            TODO("Not Implemented")
         }
     }
 }
