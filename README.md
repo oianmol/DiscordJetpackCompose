@@ -113,7 +113,7 @@ Discord Compose follows the principles of Clean Architecture with Android Archit
     <th>Invite</th>
     <th>Password Manager Dialog</th>
     <th>Create Server</th>
-<th>Friends</th>
+    <th>Friends</th>
   </tr>
   <tr>
     <td><img src = "art/discord_invite_light.png" width=240/></td>
