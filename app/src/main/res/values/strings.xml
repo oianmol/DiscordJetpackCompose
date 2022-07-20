@@ -85,4 +85,10 @@
     <string name="last_channel_title">LAST CHANNEL</string>
     <string name="search_sheet_filtered_list_suggestions_title">SUGGESTIONS</string>
     <string name="unknown_bottom_bar_item_type">Unknown item type! Please add this type inside the DashboardBottomBarItemType enum class.</string>
+    <string name="notifications">Notifications</string>
+    <string name="settings">Settings</string>
+    <string name="threads">Threads</string>
+    <string name="pins">Pins</string>
+    <string name="invite_members">Invite Members</string>
+    <string name="channel_header"># welcome</string>
 </resources>
