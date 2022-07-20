@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Divider
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
@@ -23,40 +25,58 @@ import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.ui.theme.MessageTypography
 import dev.baseio.discordjetpackcompose.viewmodels.ChatScreenViewModel
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(
+  ExperimentalFoundationApi::class,
+  ExperimentalMaterialApi::class
+)
 @Composable
 fun ChatMessages(
   modifier: Modifier = Modifier,
   userName: State<String>,
+  bottomSheetState: ModalBottomSheetState,
   viewModel: ChatScreenViewModel
 ) {
   val flowState by viewModel.chatMessagesFlow.collectAsState()
   val messages = flowState?.collectAsLazyPagingItems()
   val listState = rememberLazyListState()
-  LazyColumn(state = listState, reverseLayout = true, modifier = modifier.padding(top = 24.dp)) {
+
+  LazyColumn(
+    state = listState,
+    reverseLayout = true,
+    modifier = modifier.padding(top = 24.dp)
+  ) {
     var lastDrawnMessage: String? = null
+
     messages?.let { safeMessages ->
       for (messageIndex in 0 until safeMessages.itemCount) {
-        val message = safeMessages.peek(messageIndex)!!
-        item {
-          ChatMessageItem(
-            message = message
-          )
-        }
+        val message = safeMessages.peek(messageIndex)
 
-        // Add chat date header
-        lastDrawnMessage = message.createdDate.calendar().formattedFullDate()
-        if (!isLastMessage(messageIndex, messages)) {
-          val nextMessageMonth =
-            messages.peek(messageIndex + 1)?.createdDate?.calendar()?.formattedFullDate()
-          if (nextMessageMonth != lastDrawnMessage) {
-            stickyHeader {
-              ChatHeader(message.createdDate)
-            }
+        message?.let { safeMessage ->
+          item {
+            ChatMessageItem(
+              message = safeMessage,
+              position = messageIndex,
+              onItemLongPressed = {
+                viewModel.updateMessageAction(safeMessage.message)
+              },
+              bottomSheetState = bottomSheetState
+            )
           }
-        } else {
-          stickyHeader {
-            ChatHeader(message.createdDate)
+
+          // Add chat date header
+          lastDrawnMessage = safeMessage.createdDate.calendar().formattedFullDate()
+          if (!isLastMessage(messageIndex, safeMessages)) {
+            val nextMessageMonth =
+              safeMessages.peek(messageIndex + 1)?.createdDate?.calendar()?.formattedFullDate()
+            if (nextMessageMonth != lastDrawnMessage) {
+              stickyHeader {
+                ChatHeader(safeMessage.createdDate)
+              }
+            }
+          } else {
+            stickyHeader {
+              ChatHeader(safeMessage.createdDate)
+            }
           }
         }
       }
@@ -78,7 +98,10 @@ private fun isLastMessage(
 
 @Composable
 private fun ChatHeader(createdDate: Long) {
-  Row(Modifier.padding(start = 8.dp, end = 8.dp), verticalAlignment = Alignment.CenterVertically) {
+  Row(
+    Modifier.padding(start = 8.dp, end = 8.dp, top = 16.dp, bottom = 16.dp),
+    verticalAlignment = Alignment.CenterVertically
+  ) {
     Divider(
       modifier = Modifier.weight(2f),
       color = DiscordColorProvider.colors.textSecondary.copy(alpha = 0.8f),

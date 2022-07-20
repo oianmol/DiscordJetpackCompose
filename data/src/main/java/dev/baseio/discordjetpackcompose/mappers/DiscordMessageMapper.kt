@@ -12,9 +12,15 @@ class DiscordMessageMapper @Inject constructor() : EntityMapper<DiscordMessageEn
       entity.channelId,
       entity.message,
       entity.userId,
+      entity.replyTo,
+      entity.replyToMessage,
       entity.createdBy,
       entity.createdDate,
-      entity.modifiedDate
+      entity.modifiedDate,
+      entity.metaTitle,
+      entity.metaDesc,
+      entity.metaImageUrl,
+      entity.metaUrl
     )
   }
 
@@ -24,9 +30,15 @@ class DiscordMessageMapper @Inject constructor() : EntityMapper<DiscordMessageEn
       model.channelId,
       model.message,
       model.userId,
+      model.replyTo,
+      model.replyToMessage,
       model.createdBy,
       model.createdDate,
       model.modifiedDate,
+      model.metaTitle,
+      model.metaDesc,
+      model.metaImageUrl,
+      model.metaUrl
     )
   }
 }
