@@ -24,8 +24,8 @@ import dev.baseio.discordjetpackcompose.ui.routes.dashboard.components.ServerIco
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.serverchannels.ServerChannelList
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordJetpackComposeTheme
 import dev.baseio.discordjetpackcompose.ui.utils.WindowInfo
-import dev.baseio.discordjetpackcompose.ui.utils.getSampleServer
 import dev.baseio.discordjetpackcompose.ui.utils.rememberWindowInfo
+import dev.baseio.discordjetpackcompose.utils.getSampleServer
 import dev.baseio.discordjetpackcompose.viewmodels.DashboardScreenViewModel
 
 @Composable
@@ -34,6 +34,7 @@ fun ServerDrawer(
     serverList: List<ServerEntity>,
     chatUserList: List<ChatUserEntity>,
     onAnyItemSelected: (Boolean, serverId: String) -> Unit,
+    dashboardScreenVM: DashboardScreenViewModel = hiltViewModel(),
     onAddButtonClick: () -> Unit,
     openServerInfoBottomSheet: () -> Unit,
     viewModel: DashboardScreenViewModel
@@ -57,6 +58,7 @@ fun ServerDrawer(
             onSelectedItemChanged = { updatedItem ->
                 currentSelectedServer = updatedItem
                 onAnyItemSelected(false, currentSelectedServer)
+                dashboardScreenVM.getServer(currentSelectedServer)
             },
         )
         val widthFactor by animateFloatAsState(
@@ -69,7 +71,7 @@ fun ServerDrawer(
             serverId = currentSelectedServer,
             chatUserList = chatUserList,
             openServerInfoBottomSheet = openServerInfoBottomSheet,
-            viewModel = viewModel
+            dashboardScreenVM = viewModel
         ) {
             isAnyItemSelectedInCurrentServer = true
             onAnyItemSelected(true, currentSelectedServer)

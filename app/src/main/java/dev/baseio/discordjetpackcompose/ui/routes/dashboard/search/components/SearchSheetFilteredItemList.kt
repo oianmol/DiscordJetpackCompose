@@ -22,26 +22,26 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.google.accompanist.insets.navigationBarsPadding
 import dev.baseio.discordjetpackcompose.R
+import dev.baseio.discordjetpackcompose.entities.search.SearchFilter
+import dev.baseio.discordjetpackcompose.entities.search.SearchSheetListItemEntity
 import dev.baseio.discordjetpackcompose.ui.components.DiscordText
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.components.CountIndicator
-import dev.baseio.discordjetpackcompose.ui.routes.dashboard.search.SearchFilter
-import dev.baseio.discordjetpackcompose.ui.routes.dashboard.search.components.models.SearchSheetListItem
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordJetpackComposeTheme
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordSurface
 import dev.baseio.discordjetpackcompose.ui.theme.SearchSheetDialogTypography
 import dev.baseio.discordjetpackcompose.ui.theme.contentColorFor
 import dev.baseio.discordjetpackcompose.ui.utils.clickableWithRipple
-import dev.baseio.discordjetpackcompose.ui.utils.getSampleSheetListItems
 import dev.baseio.discordjetpackcompose.ui.utils.rememberCoilImageRequest
 import dev.baseio.discordjetpackcompose.utils.Constants
+import dev.baseio.discordjetpackcompose.utils.getSampleSheetListItems
 
 @Composable
 fun SearchSheetFilteredItemList(
     isSearchQueryBlank: Boolean,
-    lastChannel: SearchSheetListItem?,
-    listItems: List<SearchSheetListItem>,
-    onItemClick: (SearchSheetListItem) -> Unit
+    lastChannel: SearchSheetListItemEntity?,
+    listItems: List<SearchSheetListItemEntity>,
+    onItemClick: (SearchSheetListItemEntity) -> Unit
 ) {
     val surfaceColor = DiscordColorProvider.colors.surface
     val contentColor = DiscordColorProvider.colors.contentColorFor(surfaceColor)
@@ -61,7 +61,7 @@ fun SearchSheetFilteredItemList(
                             modifier = Modifier.padding(16.dp),
                         )
                         SearchSheetFilteredItem(
-                            searchSheetListItem = lastChannel,
+                            searchSheetListItemEntity = lastChannel,
                             onItemClick = onItemClick
                         )
                     }
@@ -78,7 +78,7 @@ fun SearchSheetFilteredItemList(
             }
             items(listItems.size) { index ->
                 SearchSheetFilteredItem(
-                    searchSheetListItem = listItems[index],
+                    searchSheetListItemEntity = listItems[index],
                     onItemClick = onItemClick
                 )
             }
@@ -96,17 +96,17 @@ fun SearchSheetFilteredItemList(
 @Composable
 private fun SearchSheetFilteredItem(
     modifier: Modifier = Modifier,
-    searchSheetListItem: SearchSheetListItem,
-    onItemClick: (SearchSheetListItem) -> Unit
+    searchSheetListItemEntity: SearchSheetListItemEntity,
+    onItemClick: (SearchSheetListItemEntity) -> Unit
 ) {
     DiscordIndicator(
         modifier = modifier
             .padding(bottom = 4.dp)
             .clickableWithRipple {
-                onItemClick(searchSheetListItem)
+                onItemClick(searchSheetListItemEntity)
             }
             .padding(vertical = 4.dp),
-        isEnabled = with(searchSheetListItem.unreadCount) { this != null && this > 0 },
+        isEnabled = with(searchSheetListItemEntity.unreadCount) { this != null && this > 0 },
         includeInvisibleIndicatorPadding = true
     ) {
         Row(
@@ -119,15 +119,15 @@ private fun SearchSheetFilteredItem(
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                if (searchSheetListItem.iconUri is ImageVector) {
+                if (searchSheetListItemEntity.iconUri is ImageVector) {
                     Image(
-                        imageVector = searchSheetListItem.iconUri,
+                        imageVector = searchSheetListItemEntity.iconUri as ImageVector,
                         contentDescription = null,
                         modifier = Modifier.size(24.dp),
                     )
                 } else {
                     AsyncImage(
-                        model = rememberCoilImageRequest(data = searchSheetListItem.iconUri),
+                        model = rememberCoilImageRequest(data = searchSheetListItemEntity.iconUri),
                         contentDescription = null,
                         modifier = Modifier.size(24.dp),
                     )
@@ -135,10 +135,10 @@ private fun SearchSheetFilteredItem(
                 Spacer(modifier = Modifier.padding(start = 16.dp))
                 Column {
                     DiscordText(
-                        text = searchSheetListItem.title,
+                        text = searchSheetListItemEntity.title,
                         style = SearchSheetDialogTypography.subtitle1
                     )
-                    searchSheetListItem.subtitle?.let { nnSubtitle ->
+                    searchSheetListItemEntity.subtitle?.let { nnSubtitle ->
                         DiscordText(
                             text = nnSubtitle.uppercase(),
                             style = SearchSheetDialogTypography.subtitle1,
@@ -148,7 +148,7 @@ private fun SearchSheetFilteredItem(
                 }
             }
             Row(verticalAlignment = Alignment.CenterVertically) {
-                searchSheetListItem.serverName?.let { nnServerName ->
+                searchSheetListItemEntity.serverName?.let { nnServerName ->
                     DiscordText(
                         text = nnServerName,
                         style = SearchSheetDialogTypography.subtitle1,
@@ -157,7 +157,7 @@ private fun SearchSheetFilteredItem(
                     )
                 }
                 CountIndicator(
-                    count = searchSheetListItem.unreadCount,
+                    count = searchSheetListItemEntity.unreadCount,
                     modifier = Modifier.padding(end = 8.dp),
                     showCardBackground = false,
                     textSize = 10.sp
@@ -174,7 +174,7 @@ private fun SearchSheetFilteredItemPreview() {
     DiscordJetpackComposeTheme {
         SearchSheetFilteredItem(
             modifier = Modifier.wrapContentSize(),
-            searchSheetListItem = SearchSheetListItem(
+            searchSheetListItemEntity = SearchSheetListItemEntity(
                 id = "Server01",
                 itemType = SearchFilter.Servers,
                 iconUri = Constants.MMLogoUrl,
@@ -195,7 +195,7 @@ private fun SearchSheetFilteredItemListPreview() {
     DiscordJetpackComposeTheme {
         SearchSheetFilteredItemList(
             isSearchQueryBlank = !false,
-            lastChannel = SearchSheetListItem(
+            lastChannel = SearchSheetListItemEntity(
                 id = "Server02",
                 itemType = SearchFilter.Servers,
                 iconUri = Constants.MMLogoUrl,

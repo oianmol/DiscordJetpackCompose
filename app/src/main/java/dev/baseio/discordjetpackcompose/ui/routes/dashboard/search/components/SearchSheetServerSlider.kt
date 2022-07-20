@@ -7,23 +7,31 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.components.CountIndicator
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordJetpackComposeTheme
 import dev.baseio.discordjetpackcompose.ui.utils.clickableWithRipple
-import dev.baseio.discordjetpackcompose.ui.utils.getSampleServer
 import dev.baseio.discordjetpackcompose.ui.utils.rememberCoilImageRequest
+import dev.baseio.discordjetpackcompose.viewmodels.DashboardScreenViewModel
 
 @Composable
-fun SearchSheetServerSlider(serverIdList: List<String>, onServerSelect: (String) -> Unit) {
-    val serverList by remember(serverIdList) { mutableStateOf(serverIdList.map { getSampleServer(it) }) } // TODO: Replace with Repository implementation
+fun SearchSheetServerSlider(
+    serverIdList: List<String>,
+    dashboardScreenVM: DashboardScreenViewModel = hiltViewModel(),
+    onServerSelect: (String) -> Unit
+) {
+    val serverList = dashboardScreenVM.searchSheetServerList
+
+    LaunchedEffect(serverIdList) {
+        dashboardScreenVM.getServers(serverIds = serverIdList)
+    }
+
     LazyRow(
         modifier = Modifier.padding(top = 16.dp),
     ) {

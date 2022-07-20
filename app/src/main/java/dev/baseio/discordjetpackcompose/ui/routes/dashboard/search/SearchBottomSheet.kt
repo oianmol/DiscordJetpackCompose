@@ -33,30 +33,24 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.statusBarsPadding
 import dev.baseio.discordjetpackcompose.R
+import dev.baseio.discordjetpackcompose.entities.search.SearchFilter
+import dev.baseio.discordjetpackcompose.entities.search.SearchSheetListItemEntity
 import dev.baseio.discordjetpackcompose.ui.components.DiscordText
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.search.components.SearchSheetFilteredItemList
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.search.components.SearchSheetServerSlider
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.search.components.SearchSheetTextField
-import dev.baseio.discordjetpackcompose.ui.routes.dashboard.search.components.models.SearchSheetListItem
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordJetpackComposeTheme
 import dev.baseio.discordjetpackcompose.ui.theme.contentColorFor
-import dev.baseio.discordjetpackcompose.ui.utils.getSampleSheetListItems
+import dev.baseio.discordjetpackcompose.utils.getSampleSheetListItems
 import kotlinx.coroutines.launch
-
-enum class SearchFilter(val title: String, val sign: Char) {
-    Users(title = "Users", sign = '@'),
-    TextChannels(title = "Text Channels", sign = '#'),
-    VoiceChannels(title = "Voice Channels", sign = '!'),
-    Servers(title = "Servers", sign = '*'),
-}
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun SearchBottomSheet(
     sheetState: BottomSheetScaffoldState,
     serverIdList: List<String>,
-    listItems: List<SearchSheetListItem>,
+    listItems: List<SearchSheetListItemEntity>,
     onServerSelect: (serverId: String) -> Unit,
     onChannelSelect: (channelId: String) -> Unit,
     content: @Composable (PaddingValues) -> Unit,
@@ -66,7 +60,7 @@ fun SearchBottomSheet(
     val contentColor = DiscordColorProvider.colors.contentColorFor(surfaceColor)
 
     var searchQuery by remember { mutableStateOf(TextFieldValue()) }
-    var lastChannel: SearchSheetListItem? by remember { mutableStateOf(null) }
+    var lastChannel: SearchSheetListItemEntity? by remember { mutableStateOf(null) }
 
     LaunchedEffect(lastChannel) {
         lastChannel?.let { nnLastChannel -> onChannelSelect(nnLastChannel.id) }

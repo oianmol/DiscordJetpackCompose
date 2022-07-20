@@ -15,6 +15,7 @@ import androidx.compose.material.rememberBottomSheetScaffoldState
 import androidx.compose.material.rememberBottomSheetState
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,10 +25,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import dev.baseio.discordjetpackcompose.R
+import dev.baseio.discordjetpackcompose.entities.search.SearchSheetListItemEntity
 import dev.baseio.discordjetpackcompose.entities.server.ServerEntity
 import dev.baseio.discordjetpackcompose.navigator.ComposeNavigator
 import dev.baseio.discordjetpackcompose.navigator.DiscordRoute
@@ -38,15 +41,13 @@ import dev.baseio.discordjetpackcompose.ui.routes.dashboard.bottombar.DashboardB
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.bottombar.DashboardBottomBarItemType
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.components.OnlineIndicator
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.search.SearchBottomSheet
-import dev.baseio.discordjetpackcompose.ui.routes.dashboard.search.components.models.SearchSheetListItem
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.serverinfo.ServerInfoBottomSheet
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.setupDashboardBottomNavScreens
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.ui.theme.contentColorFor
-import dev.baseio.discordjetpackcompose.ui.utils.getSampleServerList
-import dev.baseio.discordjetpackcompose.ui.utils.getSampleSheetListItems
 import dev.baseio.discordjetpackcompose.ui.utils.rememberCoilImageRequest
 import dev.baseio.discordjetpackcompose.utils.Constants
+import dev.baseio.discordjetpackcompose.viewmodels.DashboardScreenViewModel
 import kotlinx.coroutines.launch
 
 private object DashboardScreen {
@@ -58,8 +59,9 @@ private object DashboardScreen {
 @Composable
 fun DashboardScreen(
     composeNavigator: ComposeNavigator,
-    serverList: List<ServerEntity> = getSampleServerList(),
-    searchSheetItemList: List<SearchSheetListItem> = getSampleSheetListItems(),
+    dashboardScreenVM: DashboardScreenViewModel = hiltViewModel(),
+    serverList: List<ServerEntity> = dashboardScreenVM.serverList,
+    searchSheetItemList: List<SearchSheetListItemEntity> = dashboardScreenVM.searchSheetItemList,
     userProfileImage: String = Constants.MMLogoUrl,
     totalUnreadCount: Int = serverList.sumOf { it.allChannelsUnreadCount }
 ) {
@@ -85,6 +87,13 @@ fun DashboardScreen(
 
     var isBottomBarDisplayed by remember { mutableStateOf(true) }
 
+    LaunchedEffect(Unit) {
+        dashboardScreenVM.apply {
+            getSearchSheetItemList()
+            getServerList()
+        }
+    }
+
     SearchBottomSheet(
         sheetState = searchSheetState,
         content = {
@@ -107,7 +116,7 @@ fun DashboardScreen(
                                     unreadCount = totalUnreadCount,
                                     onClick = {
                                         selectedBottomBarItem = DashboardBottomBarItemType.Home
-                                        navController.navigate(DiscordScreen.Home.route)
+                                        navController.navigateTab(DiscordScreen.Home)
                                     },
                                     type = DashboardBottomBarItemType.Home
                                 ),
@@ -123,7 +132,7 @@ fun DashboardScreen(
                                     unreadCount = null,
                                     onClick = {
                                         selectedBottomBarItem = DashboardBottomBarItemType.Friends
-                                        navController.navigate(DiscordScreen.Friends.route)
+                                        navController.navigateTab(DiscordScreen.Friends)
                                     },
                                     type = DashboardBottomBarItemType.Friends
                                 ),
@@ -197,7 +206,7 @@ fun DashboardScreen(
                             },
                             shouldDisplayBottomBar = { isDisplayed ->
                                 isBottomBarDisplayed = isDisplayed
-                            })
+                            }, serverList = serverList)
                     }
                 }
             }

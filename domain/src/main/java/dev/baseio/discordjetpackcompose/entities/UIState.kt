@@ -1,4 +1,4 @@
-package dev.baseio.discordjetpackcompose.utils
+package dev.baseio.discordjetpackcompose.entities
 
 sealed class UIState<out T> {
     object Empty: UIState<Nothing>()
