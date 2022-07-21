@@ -43,6 +43,16 @@
     <string name="have_an_invite_already">Have an Invite Already?</string>
     <string name="clear">Clear</string>
     <string name="notification_settings">Notification Settings</string>
+    <string name="frequency">Frequency</string>
+    <string name="all_messages">All Messages</string>
+    <string name="only">Only</string>
+    <string name="at_mentions">\@mentions</string>
+    <string name="nothing">Nothing</string>
+    <string name="mute">Mute</string>
+    <string name="unmute">Unmute</string>
+    <string name="server_mute_msg">Muting a server prevents unread indicators and notifications from appearing unless you are mentioned</string>
+    <string name="category_mute_msg">You won\'t receive notifications from muted categories, and they will appear greyed out in your channel list. This setting applies across all devices.</string>
+    <string name="channel_mute_msg">You won\'t receive notifications from muted channels, and they will appear greyed out in your channel list. This setting applies across all devices.</string>
     <string name="notification_overrides">Notification Overrides</string>
     <string name="menu">Menu</string>
     <string name="invite_heading">Do you have an invite?</string>

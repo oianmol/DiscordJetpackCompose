@@ -6,35 +6,32 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.*
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.intl.Locale.Companion.current
-import androidx.compose.ui.text.intl.LocaleList.Companion.current
-import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.baseio.discordjetpackcompose.R
 import dev.baseio.discordjetpackcompose.navigator.ComposeNavigator
-import dev.baseio.discordjetpackcompose.ui.components.DiscordAppBar
 import dev.baseio.discordjetpackcompose.ui.components.DiscordScaffold
+import dev.baseio.discordjetpackcompose.ui.routes.dashboard.notifications.components.NotificationFrequencySection
+import dev.baseio.discordjetpackcompose.ui.routes.dashboard.notifications.components.SubtitledAppBar
+import dev.baseio.discordjetpackcompose.ui.routes.dashboard.notifications.models.NotificationSettingsType
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.serverinfo.DiscordSwitchColors
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.serverinfo.components.models.ServerInfoAction
 import dev.baseio.discordjetpackcompose.ui.theme.*
-import dev.baseio.discordjetpackcompose.ui.utils.clickableWithRipple
-import java.util.*
 
 @Composable
 fun NotificationScreen(
   composeNavigator: ComposeNavigator,
-  subtitle: String? = "channel"
+  screenType: NotificationSettingsType = NotificationSettingsType.SERVER,
+  nameEntity: String? = "server"
 ) {
   val sysUiController = rememberSystemUiController()
   val colors = DiscordColorProvider.colors
@@ -46,12 +43,17 @@ fun NotificationScreen(
 
   val scrollState = rememberScrollState()
   val scaffoldState = rememberScaffoldState()
+  var isMute by remember { mutableStateOf(false) }
 
   DiscordScaffold(
     modifier = Modifier.statusBarsPadding(),
     scaffoldState = scaffoldState,
     topAppBar = {
-      NotificationAppBar(composeNavigator, subtitle)
+      SubtitledAppBar(
+        composeNavigator,
+        stringResource(id = R.string.notification_settings),
+        nameEntity
+      )
     }
   ) { paddingValues ->
     Column(
@@ -61,37 +63,88 @@ fun NotificationScreen(
         .background(color = create_server_screen)
         .verticalScroll(scrollState)
     ) {
-      ServerChannelMuteSection()
-      NotificationSettingsSection()
-      MentionsSection()
-      NotificationOverridesSection()
+      ServerChannelMuteSection(
+        isMute = isMute,
+        name = nameEntity,
+        screenType = screenType
+      ) {
+        isMute = !isMute
+      }
+      SectionEndDivider()
+
+      if (screenType != NotificationSettingsType.SERVER || !isMute) {
+        SectionTitleHeader(
+          stringResource = if (screenType == NotificationSettingsType.SERVER)
+            R.string.notification_settings
+          else
+            R.string.frequency
+        )
+
+        NotificationFrequencySection(
+          isMute = isMute
+        )
+        SectionEndDivider()
+      }
+
+      if (screenType == NotificationSettingsType.SERVER) {
+        MentionsSection()
+        SectionEndDivider()
+        SectionTitleHeader(stringResource = R.string.notification_overrides)
+        NotificationOverridesSection()
+      }
     }
   }
 }
 
 @Composable
-fun ServerChannelMuteSection() {
-  SectionEndDivider()
-}
+fun ServerChannelMuteSection(
+  isMute: Boolean,
+  name: String?,
+  screenType: NotificationSettingsType,
+  onMuteChange: () -> Unit
+) {
 
-@Composable
-fun NotificationSettingsSection() {
-  SectionTitleHeader(stringResource = R.string.notification_settings)
-  MentionsItem(action = ServerInfoAction(
-    trailingComposable = {
-      //RadioButton(selected = , onClick = { /*TODO*/ }, colors =)
-    },
-    title = "All messages",
-    titleColor = Color.LightGray,
-    subtitle = null,
-    onClick = {}
-  ))
-  SectionEndDivider()
+  var isMute by remember { mutableStateOf(false) }
+
+  val spannedString = buildAnnotatedString {
+    withStyle(style = SpanStyle(fontSize = 14.sp)) {
+      append(
+        if (isMute) stringResource(id = R.string.unmute)
+        else stringResource(id = R.string.mute)
+      )
+    }
+    name?.let {
+      withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, fontSize = 16.sp)) {
+        append(" $name")
+      }
+    }
+  }
+
+  Text(
+    text = spannedString,
+    modifier = Modifier
+      .fillMaxWidth()
+      .padding(12.dp)
+  )
+
+  val messageRes = when (screenType) {
+    NotificationSettingsType.SERVER -> R.string.server_mute_msg
+    NotificationSettingsType.CATEGORY -> R.string.category_mute_msg
+    NotificationSettingsType.CHANNEL -> R.string.channel_mute_msg
+  }
+
+  Text(
+    text = stringResource(id = messageRes),
+    style = TextStyle(color = Color.LightGray, fontSize = 12.sp),
+    modifier = Modifier
+      .fillMaxWidth()
+      .padding(horizontal = 12.dp, vertical = 22.dp)
+  )
 }
 
 @Composable
 fun NotificationOverridesSection() {
-  SectionTitleHeader(stringResource = R.string.notification_overrides)
+
 }
 
 @Composable
@@ -102,7 +155,8 @@ fun MentionsSection() {
 
   MentionsItem(action = ServerInfoAction(
     trailingComposable = {
-      Switch(checked = suppressEveryoneMentions,
+      Switch(
+        checked = suppressEveryoneMentions,
         onCheckedChange = { isChecked -> suppressEveryoneMentions = isChecked },
         colors = DiscordSwitchColors
       )
@@ -116,7 +170,8 @@ fun MentionsSection() {
   ))
   MentionsItem(action = ServerInfoAction(
     trailingComposable = {
-      Switch(checked = suppressRoleMentions,
+      Switch(
+        checked = suppressRoleMentions,
         onCheckedChange = { isChecked -> suppressRoleMentions = isChecked },
         colors = DiscordSwitchColors
       )
@@ -130,7 +185,8 @@ fun MentionsSection() {
   ))
   MentionsItem(action = ServerInfoAction(
     trailingComposable = {
-      Switch(checked = suppressPush,
+      Switch(
+        checked = suppressPush,
         onCheckedChange = { isChecked -> suppressPush = isChecked },
         colors = DiscordSwitchColors
       )
@@ -139,10 +195,9 @@ fun MentionsSection() {
     titleColor = Color.LightGray,
     subtitle = null,
     onClick = {
-      suppressPush= !suppressPush
+      suppressPush = !suppressPush
     }
   ))
-  SectionEndDivider()
 }
 
 @Composable
@@ -171,7 +226,7 @@ fun SectionTitleHeader(
   stringResource: Int
 ) {
   Text(
-    modifier = Modifier.padding(top = 12.dp, start = 12.dp, end = 12.dp, bottom = 20.dp),
+    modifier = Modifier.padding(top = 12.dp, start = 12.dp, end = 12.dp, bottom = 16.dp),
     text = stringResource(id = stringResource).uppercase(),
     style = TextStyle(
       fontWeight = FontWeight.Bold,
@@ -182,44 +237,10 @@ fun SectionTitleHeader(
 
 @Composable
 fun SectionEndDivider() {
-  Spacer(modifier = Modifier
-    .fillMaxWidth()
-    .height(1.dp)
-    .background(Color.LightGray))
-}
-
-@Composable
-private fun NotificationAppBar(
-  composeNavigator: ComposeNavigator,
-  subtitle: String?
-) {
-  DiscordAppBar(
-    navigationIcon = {
-      IconButton(onClick = {
-        composeNavigator.navigateUp()
-      }) {
-        Icon(
-          imageVector = Icons.Filled.ArrowBack,
-          contentDescription = null,
-          modifier = Modifier.padding(start = 8.dp),
-        )
-      }
-    },
-    backgroundColor = Color.Transparent,
-    elevation = 0.dp,
-    title = {
-      Column {
-        Text(
-          text = stringResource(id = R.string.notification_settings),
-          style = TextStyle(fontWeight = FontWeight.Bold, fontSize = Typography.h6.fontSize)
-        )
-        if (!subtitle.isNullOrBlank()) {
-          Text(
-            text = subtitle,
-            style = TextStyle(fontSize = Typography.body2.fontSize)
-          )
-        }
-      }
-    }
+  Spacer(
+    modifier = Modifier
+      .fillMaxWidth()
+      .height(1.dp)
+      .background(Color.LightGray)
   )
 }
