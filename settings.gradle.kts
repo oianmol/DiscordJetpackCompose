@@ -6,3 +6,4 @@ include(":domain")
 include(":data")
 include(":navigator")
 
+include(":benchmark")
