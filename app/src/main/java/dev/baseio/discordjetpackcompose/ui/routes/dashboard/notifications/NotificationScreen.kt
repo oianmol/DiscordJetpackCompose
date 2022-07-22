@@ -20,6 +20,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.baseio.discordjetpackcompose.R
 import dev.baseio.discordjetpackcompose.navigator.ComposeNavigator
 import dev.baseio.discordjetpackcompose.ui.components.DiscordScaffold
+import dev.baseio.discordjetpackcompose.ui.routes.dashboard.notifications.components.MentionsSection
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.notifications.components.NotificationFrequencySection
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.notifications.components.SubtitledAppBar
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.notifications.models.NotificationSettingsType
@@ -87,7 +88,7 @@ fun NotificationScreen(
       }
 
       if (screenType == NotificationSettingsType.SERVER) {
-        MentionsSection()
+        MentionsSection(isMute)
         SectionEndDivider()
         SectionTitleHeader(stringResource = R.string.notification_overrides)
         NotificationOverridesSection()
@@ -145,80 +146,6 @@ fun ServerChannelMuteSection(
 @Composable
 fun NotificationOverridesSection() {
 
-}
-
-@Composable
-fun MentionsSection() {
-  var suppressEveryoneMentions by remember { mutableStateOf(false) }
-  var suppressRoleMentions by remember { mutableStateOf(false) }
-  var suppressPush by remember { mutableStateOf(false) }
-
-  MentionsItem(action = ServerInfoAction(
-    trailingComposable = {
-      Switch(
-        checked = suppressEveryoneMentions,
-        onCheckedChange = { isChecked -> suppressEveryoneMentions = isChecked },
-        colors = DiscordSwitchColors
-      )
-    },
-    title = "Suppress @Everyone and @here mentions",
-    titleColor = Color.LightGray,
-    subtitle = null,
-    onClick = {
-      suppressEveryoneMentions = !suppressEveryoneMentions
-    }
-  ))
-  MentionsItem(action = ServerInfoAction(
-    trailingComposable = {
-      Switch(
-        checked = suppressRoleMentions,
-        onCheckedChange = { isChecked -> suppressRoleMentions = isChecked },
-        colors = DiscordSwitchColors
-      )
-    },
-    title = "Suppress All Role @mentions",
-    titleColor = Color.LightGray,
-    subtitle = null,
-    onClick = {
-      suppressRoleMentions = !suppressRoleMentions
-    }
-  ))
-  MentionsItem(action = ServerInfoAction(
-    trailingComposable = {
-      Switch(
-        checked = suppressPush,
-        onCheckedChange = { isChecked -> suppressPush = isChecked },
-        colors = DiscordSwitchColors
-      )
-    },
-    title = "Mobile Push Notification",
-    titleColor = Color.LightGray,
-    subtitle = null,
-    onClick = {
-      suppressPush = !suppressPush
-    }
-  ))
-}
-
-@Composable
-fun MentionsItem(action: ServerInfoAction) {
-  Row(
-    modifier = Modifier
-      .fillMaxWidth()
-      .clickable(onClick = action.onClick)
-      .padding(horizontal = 16.dp),
-    horizontalArrangement = Arrangement.SpaceBetween,
-    verticalAlignment = Alignment.CenterVertically
-  ) {
-    Column(modifier = Modifier.padding(vertical = 16.dp)) {
-      Text(
-        text = action.title,
-        style = DirectMessageListTypography.h6,
-        color = action.titleColor
-      )
-    }
-    action.trailingComposable()
-  }
 }
 
 @Composable
