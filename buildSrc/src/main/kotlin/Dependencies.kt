@@ -60,6 +60,7 @@ object Lib {
       "com.google.accompanist:accompanist-insets:${ACCOMPANIST_VERSION}"
     const val ACCOMPANIST_INSETS_UI =
       "com.google.accompanist:accompanist-insets-ui:${ACCOMPANIST_VERSION}"
+    const val ACCOMPANIST_COIL = "com.google.accompanist:accompanist-coil:0.14.0"
 
     const val MATERIAL_EXTENDED_ICONS = "androidx.compose.material:material-icons-extended:$COMPOSE_VERSION"
     const val COMPOSE_JUNIT = "androidx.compose.ui:ui-test-junit4:$COMPOSE_VERSION"
@@ -81,6 +82,11 @@ object Lib {
     private const val PAGING_VERSION = "3.1.0"
     const val PAGING_3 = "androidx.paging:paging-runtime:${PAGING_VERSION}"
     const val PAGING_COMPOSE = "androidx.paging:paging-compose:1.0.0-alpha14"
+  }
+
+  object Jsoup {
+    private const val JSOUP_VERSION = "1.13.1"
+    const val JSOUP = "org.jsoup:jsoup:${JSOUP_VERSION}"
   }
 
   object Room {

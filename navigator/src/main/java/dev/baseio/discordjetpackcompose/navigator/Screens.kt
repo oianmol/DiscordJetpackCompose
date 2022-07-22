@@ -16,6 +16,7 @@ sealed class DiscordScreen(
     object CreateServer : DiscordScreen("createServer")
     object NotificationSettings : DiscordScreen("notificationSettings")
     object Invite : DiscordScreen("invite")
+    object UserSettings: DiscordScreen("userSettings")
     object Home : DiscordScreen("home")
     object Search : DiscordScreen("search")
 }
