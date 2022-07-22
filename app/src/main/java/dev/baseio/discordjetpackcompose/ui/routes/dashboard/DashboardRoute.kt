@@ -16,8 +16,6 @@ import dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.HomeScreen
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.dasboard.DashboardScreen
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.notifications.NotificationScreen
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.userSettings.UserSettings
-import dev.baseio.discordjetpackcompose.ui.utils.getSampleServerList
-
 
 fun NavGraphBuilder.dashboardRoute(
     composeNavigator: ComposeNavigator,
