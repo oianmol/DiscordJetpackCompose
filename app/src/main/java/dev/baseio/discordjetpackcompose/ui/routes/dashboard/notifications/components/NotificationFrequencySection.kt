@@ -69,7 +69,7 @@ fun RadioSelectionItem(
 ) {
   SectionItem(
     disabled = disabled,
-    paddingVertical = 6.dp,
+    paddingVertical = 4.dp,
     onClick = onClick,
     leadingComposable = {
       Text(

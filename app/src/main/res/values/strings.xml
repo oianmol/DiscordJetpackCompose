@@ -7,6 +7,9 @@
     <string name="welcome_message">Join over 100 million people who use Discord to talk with communities and friends</string>
     <string name="register">Register</string>
     <string name="wave_to">Wave to MEE6</string>
+    <string name="server">server</string>
+    <string name="category">category</string>
+    <string name="channel">channel</string>
     <string name="login">Login</string>
     <string name="dm_list_screen_title">Direct Messages</string>
     <string name="dm_list_screen_search_hint">Find or start a conversation</string>
@@ -53,6 +56,7 @@
     <string name="mentions">mentions</string>
     <string name="and">And</string>
     <string name="mobile_push">Mobile Push Notification</string>
+    <string name="muted_msg">You have muted this </string>
     <string name="role_mentions">Suppress All Role @mentions</string>
     <string name="nothing">Nothing</string>
     <string name="mute">Mute</string>

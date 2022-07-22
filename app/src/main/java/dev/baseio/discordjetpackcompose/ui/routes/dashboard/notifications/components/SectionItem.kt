@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 fun SectionItem(
   disabled: Boolean = false,
   paddingVertical: Dp = 0.dp,
+  paddingHorizontal: Dp = 16.dp,
   onClick: () -> Unit,
   leadingComposable: @Composable () -> Unit = {},
   trailingComposable: @Composable () -> Unit = {},
@@ -26,7 +27,7 @@ fun SectionItem(
       .fillMaxWidth()
       .alpha(if(disabled) ContentAlpha.disabled else 1.0f)
       .clickable(onClick = onClick)
-      .padding(horizontal = 16.dp, vertical = paddingVertical),
+      .padding(horizontal = paddingHorizontal, vertical = paddingVertical),
     horizontalArrangement = Arrangement.SpaceBetween,
     verticalAlignment = Alignment.CenterVertically
   ) {
