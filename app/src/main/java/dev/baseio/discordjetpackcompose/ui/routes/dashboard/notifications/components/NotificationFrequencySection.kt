@@ -11,6 +11,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import dev.baseio.discordjetpackcompose.R
+import dev.baseio.discordjetpackcompose.ui.routes.dashboard.notifications.models.FrequencyType
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 
 @Composable
@@ -92,8 +93,3 @@ val DiscordRadioButtonColors @Composable get() = RadioButtonDefaults.colors(
   unselectedColor = DiscordColorProvider.colors.surface
 )
 
-enum class FrequencyType {
-  ALL_MESSAGES,
-  MENTIONS,
-  NOTHING
-}

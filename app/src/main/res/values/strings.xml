@@ -58,6 +58,7 @@
     <string name="mobile_push">Mobile Push Notification</string>
     <string name="muted_msg">You have muted this </string>
     <string name="role_mentions">Suppress All Role @mentions</string>
+    <string name="add_msg">Add a Channel or Category</string>
     <string name="nothing">Nothing</string>
     <string name="mute">Mute</string>
     <string name="unmute">Unmute</string>

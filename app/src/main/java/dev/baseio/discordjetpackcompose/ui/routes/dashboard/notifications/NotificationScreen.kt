@@ -17,10 +17,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.baseio.discordjetpackcompose.R
 import dev.baseio.discordjetpackcompose.navigator.ComposeNavigator
 import dev.baseio.discordjetpackcompose.ui.components.DiscordScaffold
-import dev.baseio.discordjetpackcompose.ui.routes.dashboard.notifications.components.MentionsSection
-import dev.baseio.discordjetpackcompose.ui.routes.dashboard.notifications.components.NotificationFrequencySection
-import dev.baseio.discordjetpackcompose.ui.routes.dashboard.notifications.components.NotificationsMuteSection
-import dev.baseio.discordjetpackcompose.ui.routes.dashboard.notifications.components.SubtitledAppBar
+import dev.baseio.discordjetpackcompose.ui.routes.dashboard.notifications.components.*
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.notifications.models.NotificationSettingsType
 import dev.baseio.discordjetpackcompose.ui.theme.*
 
@@ -40,7 +37,7 @@ fun NotificationScreen(
 
   val scrollState = rememberScrollState()
   val scaffoldState = rememberScaffoldState()
-  var isMute by remember { mutableStateOf(true) }
+  var isMute by remember { mutableStateOf(false) }
 
   DiscordScaffold(
     modifier = Modifier.statusBarsPadding(),
@@ -57,7 +54,7 @@ fun NotificationScreen(
       modifier = Modifier
         .fillMaxSize()
         .padding(paddingValues)
-        .background(color = create_server_screen)
+        .background(color = colors.background)
         .verticalScroll(scrollState)
     ) {
 
@@ -91,15 +88,12 @@ fun NotificationScreen(
 
         // Notification override section
         SectionTitleHeader(stringResource = R.string.notification_overrides)
-        NotificationOverridesSection()
+        NotificationOverridesList()
+        
+        Spacer(modifier = Modifier.height(24.dp))
       }
     }
   }
-}
-
-@Composable
-fun NotificationOverridesSection() {
-
 }
 
 @Composable
