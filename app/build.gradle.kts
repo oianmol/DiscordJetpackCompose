@@ -127,9 +127,8 @@ dependencies {
     /*DI*/
     implementation(Lib.Di.hiltAndroid)
     implementation(Lib.Di.hiltNavigationCompose)
-    implementation(Lib.Di.hiltViewModel)
-    implementation("androidx.compose.ui:ui-tooling-preview:1.1.1")
-    debugImplementation("androidx.compose.ui:ui-tooling:1.1.1")
+    implementation(Lib.Android.COMPOSE_TOOLING_PREVIEW)
+    debugImplementation(Lib.Android.COMPOSE_TOOLING)
 
     implementation("androidx.profileinstaller:profileinstaller:1.2.0-rc01")
 
