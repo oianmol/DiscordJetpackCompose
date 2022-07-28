@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.baseio.discordjetpackcompose.R
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.notifications.models.NotificationSettingsType
+import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 
 @Composable
 fun NotificationsMuteSection(
@@ -34,7 +35,7 @@ fun NotificationsMuteSection(
         append(stringResource(id = R.string.muted_msg))
         append(" " + stringResource(id = typeMessageMuted(screenType = screenType)))
       },
-      style = TextStyle(color = Color.LightGray, fontSize = 12.sp),
+      style = TextStyle(color = DiscordColorProvider.colors.onSurface.copy(alpha = 0.8f), fontSize = 12.sp),
       modifier = Modifier
         .fillMaxWidth()
         .padding(vertical = 6.dp, horizontal = 12.dp)
@@ -45,7 +46,7 @@ fun NotificationsMuteSection(
 
   Text(
     text = stringResource(id = messageRes),
-    style = TextStyle(color = Color.LightGray, fontSize = 12.sp),
+    style = TextStyle(color = DiscordColorProvider.colors.onSurface.copy(alpha = 0.8f), fontSize = 12.sp),
     modifier = Modifier
       .fillMaxWidth()
       .padding(horizontal = 12.dp, vertical = 22.dp)

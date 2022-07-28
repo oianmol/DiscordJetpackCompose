@@ -94,9 +94,11 @@ Discord Compose follows the principles of Clean Architecture with Android Archit
   </tr>
   <tr>
     <th>Chat</th>
+    <th>Notification Settings</th>
   </tr>
   <tr>
     <td><img src = "art/discord_chat_dark.png" width=240/></td>
+    <td><img src = "art/discord_notification_dark.png" width=240/></td>
   </tr>
 </table>
 
@@ -129,9 +131,11 @@ Discord Compose follows the principles of Clean Architecture with Android Archit
   </tr>
   <tr>
     <th>Chat</th>
+    <th>Notification Settings</th>
   </tr>
   <tr>
     <td><img src = "art/discord_chat_light.png" width=240/></td>
+    <td><img src = "art/discord_notification_light.png" width=240/></td>
   </tr>
 </table>
 

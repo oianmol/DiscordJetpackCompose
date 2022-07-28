@@ -75,7 +75,7 @@ fun RadioSelectionItem(
     leadingComposable = {
       Text(
         text = title,
-        color = Color.LightGray
+        color = DiscordColorProvider.colors.onSurface.copy(alpha = 0.8f)
       )
     },
     trailingComposable = {
@@ -90,6 +90,6 @@ fun RadioSelectionItem(
 
 val DiscordRadioButtonColors @Composable get() = RadioButtonDefaults.colors(
   selectedColor = DiscordColorProvider.colors.primary,
-  unselectedColor = DiscordColorProvider.colors.surface
+  unselectedColor = DiscordColorProvider.colors.onSurface.copy(alpha = 0.5f)
 )
 

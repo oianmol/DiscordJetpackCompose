@@ -12,6 +12,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import dev.baseio.discordjetpackcompose.R
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.serverinfo.DiscordSwitchColors
+import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 
 @Composable
 fun MentionsSection(
@@ -70,7 +71,7 @@ fun SwitchItem(
     leadingComposable = {
       Text(
         text = title,
-        color = Color.LightGray
+        color = DiscordColorProvider.colors.onSurface.copy(alpha = 0.8f)
       )
     },
     trailingComposable = {
