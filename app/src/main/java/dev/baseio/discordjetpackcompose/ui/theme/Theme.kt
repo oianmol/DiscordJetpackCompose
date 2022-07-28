@@ -3,9 +3,16 @@ package dev.baseio.discordjetpackcompose.ui.theme
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.Colors
 import androidx.compose.material.MaterialTheme
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.Stable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.runtime.structuralEqualityPolicy
 import androidx.compose.ui.graphics.Color
-
 
 private val LightColorPalette = DiscordColorPalette(
     primary = design_default_color_primary,
@@ -35,6 +42,7 @@ private val LightColorPalette = DiscordColorPalette(
     tabsBackgroundColor = design_default_color_secondary_background,
     tabSelectedColor = design_default_tab_selected_color,
     textFieldContentColor = text_field_content_color_light,
+    settingsBackground = Color(0xFFFFFFFF),
     isLight = true
 )
 
@@ -66,6 +74,7 @@ private val DarkColorPalette = DiscordColorPalette(
     tabsBackgroundColor = Color(0xFF2a2b2f),
     tabSelectedColor = Color(0xFF4f535c),
     textFieldContentColor = text_field_content_color_Dark,
+    settingsBackground = Color(0xFF363940),
     isLight = false
 )
 
@@ -142,6 +151,7 @@ class DiscordColorPalette(
     tabsBackgroundColor: Color,
     tabSelectedColor: Color,
     textFieldContentColor: Color,
+    settingsBackground: Color,
     isLight: Boolean = false
 ) {
     var primary by mutableStateOf(primary, structuralEqualityPolicy())
@@ -199,6 +209,8 @@ class DiscordColorPalette(
     var textFieldContentColor by mutableStateOf(textFieldContentColor, structuralEqualityPolicy())
         internal set
     var tabSelectedColor by mutableStateOf(tabSelectedColor, structuralEqualityPolicy())
+        internal set
+    var settingsBackground by mutableStateOf(settingsBackground, structuralEqualityPolicy())
         internal set
 
     fun update(other: DiscordColorPalette) {

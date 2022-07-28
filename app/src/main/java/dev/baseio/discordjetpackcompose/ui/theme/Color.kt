@@ -807,3 +807,73 @@ val discord_dialog_cancel_button_text
         Color(0xFF4F5761)
     }
 val discord_dialog_button_bg = Color(0xFF5864F1)
+
+val discord_icon_button
+    @Composable get() = if (isSystemInDarkTheme()) {
+        Color(0xFFFFFFFF)
+    } else {
+        Color(0xFF2f3238)
+    }
+
+val icon_button
+    @Composable get() = if (isSystemInDarkTheme()) {
+        Color(0xFFFFFFFF)
+    } else {
+        Color(0xFF2f3238)
+    }
+
+val discord_icon_button_bg
+    @Composable get() = if (isSystemInDarkTheme()) {
+        Color(0xFF2f3238)
+    } else {
+        Color(0xFFeaeaeb)
+    }
+
+val user_settings_text
+  @Composable get() = if (isSystemInDarkTheme()) {
+    Color(0xFFBABBBF)
+  } else {
+    Color(0xFF515963)
+  }
+
+val user_settings_bg
+  @Composable get() = if (isSystemInDarkTheme()) {
+    Color(0xFF303136)
+  } else {
+    Color(0xFFFFFFFF)
+  }
+
+val discord_settings_icon
+  @Composable get() = if (isSystemInDarkTheme()) {
+    Color(0xFFBABBBF)
+  } else {
+    Color(0xFF303136)
+  }
+
+val channel_member_action_icon
+    @Composable get() = if (isSystemInDarkTheme()) {
+       Color(0xFFbbbabf)
+    } else {
+        Color(0xFF4e555f)
+    }
+
+val channel_member_action_label
+    @Composable get() = if (isSystemInDarkTheme()) {
+        Color(0xFFc5c4c9)
+    } else {
+        Color(0xFF4e555f)
+    }
+
+val channel_member_bg
+@Composable get() = if(isSystemInDarkTheme()){
+    Color(0xFF302f34)
+}else{
+    Color(0xFFf4f4f4)
+}
+
+val channel_member_secondary_bg
+    @Composable get() = if(isSystemInDarkTheme()){
+        Color(0xFF35383f)
+    }else{
+        Color(0xFFFFFFFF)
+    }

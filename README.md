@@ -10,10 +10,10 @@
 
 <p align="left">
     <a href = "https://developer.android.com/jetpack/androidx/versions/all-channel#february_23_2022">
-      <img src = "https://img.shields.io/badge/Jetpack%20Compose-1.1.1-blue.svg?color=blue&style=for-the-badge" />
+      <img src = "https://img.shields.io/badge/Jetpack%20Compose-1.2.0-blue.svg?color=blue&style=for-the-badge" />
     </a>
     <a href="https://kotlinlang.org/docs/releases.html">
-      <img src="https://img.shields.io/badge/Kotlin-1.6.10-blue.svg?color=blue&style=for-the-badge"/>
+      <img src="https://img.shields.io/badge/Kotlin-1.7.0-blue.svg?color=blue&style=for-the-badge"/>
     </a>
     <a href = "https://github.com/Anmol92verma/DiscordJetpackCompose/stargazers">
         <img src="https://img.shields.io/github/stars/Anmol92verma/DiscordJetpackCompose?color=green&style=for-the-badge" />
@@ -84,11 +84,21 @@ Discord Compose follows the principles of Clean Architecture with Android Archit
     <th>Invite</th>
     <th>Password Manager Dialog</th>
     <th>Create Server</th>
+    <th>Friends</th>
   </tr>
   <tr>
     <td><img src = "art/discord_invite_dark.png" width=240/></td>
     <td><img src = "art/discord_password_manager_dialog_dark.png" width=240/></td>
     <td><img src = "art/discord_create_server_dark.png" width=240/></td>
+    <td><img src = "art/discord_friends_dark.png" width=240/></td>
+  </tr>
+  <tr>
+    <th>Chat</th>
+    <th>Notification Settings</th>
+  </tr>
+  <tr>
+    <td><img src = "art/discord_chat_dark.png" width=240/></td>
+    <td><img src = "art/discord_notification_dark.png" width=240/></td>
   </tr>
 </table>
 
@@ -111,11 +121,21 @@ Discord Compose follows the principles of Clean Architecture with Android Archit
     <th>Invite</th>
     <th>Password Manager Dialog</th>
     <th>Create Server</th>
+    <th>Friends</th>
   </tr>
   <tr>
     <td><img src = "art/discord_invite_light.png" width=240/></td>
     <td><img src = "art/discord_password_manager_dialog_light.png" width=240/></td>
     <td><img src = "art/discord_create_server_light.png" width=240/></td>
+    <td><img src = "art/discord_friends_light.png" width=240/></td>
+  </tr>
+  <tr>
+    <th>Chat</th>
+    <th>Notification Settings</th>
+  </tr>
+  <tr>
+    <td><img src = "art/discord_chat_light.png" width=240/></td>
+    <td><img src = "art/discord_notification_light.png" width=240/></td>
   </tr>
 </table>
 

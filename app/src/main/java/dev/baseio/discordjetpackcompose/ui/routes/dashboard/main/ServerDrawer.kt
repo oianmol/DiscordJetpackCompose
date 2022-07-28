@@ -17,14 +17,16 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import dev.baseio.discordjetpackcompose.entities.ChatUserEntity
 import dev.baseio.discordjetpackcompose.entities.server.ServerEntity
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.components.ServerIconSelector
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.serverchannels.ServerChannelList
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordJetpackComposeTheme
 import dev.baseio.discordjetpackcompose.ui.utils.WindowInfo
-import dev.baseio.discordjetpackcompose.ui.utils.getSampleServer
 import dev.baseio.discordjetpackcompose.ui.utils.rememberWindowInfo
+import dev.baseio.discordjetpackcompose.utils.getSampleServer
+import dev.baseio.discordjetpackcompose.viewmodels.DashboardScreenViewModel
 
 @Composable
 fun ServerDrawer(
@@ -32,8 +34,10 @@ fun ServerDrawer(
     serverList: List<ServerEntity>,
     chatUserList: List<ChatUserEntity>,
     onAnyItemSelected: (Boolean, serverId: String) -> Unit,
+    dashboardScreenVM: DashboardScreenViewModel = hiltViewModel(),
     onAddButtonClick: () -> Unit,
     openServerInfoBottomSheet: () -> Unit,
+    viewModel: DashboardScreenViewModel
 ) {
     Row(
         modifier = modifier
@@ -54,6 +58,7 @@ fun ServerDrawer(
             onSelectedItemChanged = { updatedItem ->
                 currentSelectedServer = updatedItem
                 onAnyItemSelected(false, currentSelectedServer)
+                dashboardScreenVM.getServer(currentSelectedServer)
             },
         )
         val widthFactor by animateFloatAsState(
@@ -66,6 +71,7 @@ fun ServerDrawer(
             serverId = currentSelectedServer,
             chatUserList = chatUserList,
             openServerInfoBottomSheet = openServerInfoBottomSheet,
+            dashboardScreenVM = viewModel
         ) {
             isAnyItemSelectedInCurrentServer = true
             onAnyItemSelected(true, currentSelectedServer)
@@ -110,7 +116,8 @@ private fun ServerDrawerPreview() {
                     getSampleServer(serverId = "2"),
                 ),
                 onAnyItemSelected = { _, _ -> },
-                openServerInfoBottomSheet = {}
+                openServerInfoBottomSheet = {},
+                viewModel = hiltViewModel()
             )
         }
     }

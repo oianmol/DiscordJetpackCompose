@@ -32,10 +32,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import dev.baseio.discordjetpackcompose.R
+import dev.baseio.discordjetpackcompose.entities.search.SearchFilter
 import dev.baseio.discordjetpackcompose.ui.components.DiscordDivider
 import dev.baseio.discordjetpackcompose.ui.components.DiscordIcon
 import dev.baseio.discordjetpackcompose.ui.components.DiscordText
-import dev.baseio.discordjetpackcompose.ui.routes.dashboard.search.SearchFilter
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordJetpackComposeTheme
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordSurface

@@ -13,6 +13,8 @@ import dev.baseio.discordjetpackcompose.local.model.DBDiscordMessage
 import dev.baseio.discordjetpackcompose.mappers.EntityMapper
 import dev.baseio.discordjetpackcompose.repositories.CountryRepo
 import dev.baseio.discordjetpackcompose.repositories.CountryRepoImpl
+import dev.baseio.discordjetpackcompose.repositories.FriendsRepo
+import dev.baseio.discordjetpackcompose.repositories.FriendsRepoImpl
 import dev.baseio.discordjetpackcompose.repositories.MessagesRepo
 import dev.baseio.discordjetpackcompose.repositories.MessagesRepoImpl
 import dev.baseio.discordjetpackcompose.repositories.ServerRepo
@@ -22,24 +24,31 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object RepositoryModule {
-  @Provides
-  @Singleton
-  fun provideCountryRepo(@ApplicationContext context: Context): CountryRepo =
-    CountryRepoImpl(context = context)
+    @Provides
+    @Singleton
+    fun provideCountryRepo(@ApplicationContext context: Context): CountryRepo =
+        CountryRepoImpl(context = context)
 
-  @Provides
-  @Singleton
-  fun provideServerRepo(): ServerRepo = ServerRepoImpl()
+    @Provides
+    @Singleton
+    fun provideServerRepo(
+        coroutineDispatcherProvider: CoroutineDispatcherProvider
+    ): ServerRepo = ServerRepoImpl(coroutineDispatcherProvider = coroutineDispatcherProvider)
 
-  @Provides
-  @Singleton
-  fun provideMessagesRepo(
-    discordMessageDao: DiscordMessageDao,
-    entityMapper: EntityMapper<DiscordMessageEntity, DBDiscordMessage>,
-    coroutineDispatcherProvider: CoroutineDispatcherProvider
-  ): MessagesRepo = MessagesRepoImpl(
-    discordMessageDao,
-    entityMapper,
-    coroutineDispatcherProvider
-  )
+    @Provides
+    @Singleton
+    fun provideFriendsRepo(): FriendsRepo = FriendsRepoImpl()
+
+
+    @Provides
+    @Singleton
+    fun provideMessagesRepo(
+        discordMessageDao: DiscordMessageDao,
+        entityMapper: EntityMapper<DiscordMessageEntity, DBDiscordMessage>,
+        coroutineDispatcherProvider: CoroutineDispatcherProvider
+    ): MessagesRepo = MessagesRepoImpl(
+        discordMessageDao,
+        entityMapper,
+        coroutineDispatcherProvider
+    )
 }

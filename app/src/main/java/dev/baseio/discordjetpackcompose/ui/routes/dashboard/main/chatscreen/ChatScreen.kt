@@ -1,53 +1,71 @@
 package dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.chatscreen
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
+import androidx.compose.material.ModalBottomSheetValue.Hidden
+import androidx.compose.material.SwipeableState
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons.Filled
 import androidx.compose.material.icons.filled.AlternateEmail
-import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.People
-import androidx.compose.material.icons.filled.VideoCall
+import androidx.compose.material.icons.filled.PhoneInTalk
+import androidx.compose.material.icons.filled.Videocam
+import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.google.accompanist.insets.navigationBarsPadding
-import com.google.accompanist.insets.statusBarsPadding
 import dev.baseio.discordjetpackcompose.R.string
 import dev.baseio.discordjetpackcompose.navigator.ComposeNavigator
 import dev.baseio.discordjetpackcompose.ui.components.DiscordAppBar
 import dev.baseio.discordjetpackcompose.ui.components.DiscordScaffold
+import dev.baseio.discordjetpackcompose.ui.routes.dashboard.components.CountIndicator
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.components.OnlineIndicator
+import dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.CenterScreenState
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
-import dev.baseio.discordjetpackcompose.ui.theme.create_server_screen
+import dev.baseio.discordjetpackcompose.ui.theme.MessageTypography
 import dev.baseio.discordjetpackcompose.viewmodels.ChatScreenViewModel
+import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ChatScreen(
-  modifier: Modifier = Modifier,
-  composeNavigator: ComposeNavigator,
-  viewModel: ChatScreenViewModel = hiltViewModel(),
-  focusOpacity: Float
+    modifier: Modifier = Modifier,
+    composeNavigator: ComposeNavigator,
+    viewModel: ChatScreenViewModel = hiltViewModel(),
+    focusOpacity: Float,
+    userName: State<String>,
+    isOnline: State<Boolean>,
+    swipeableState: SwipeableState<CenterScreenState>
 ) {
   val scaffoldState = rememberScaffoldState()
+  val bottomSheetState = rememberModalBottomSheetState(initialValue = Hidden)
+  val isReplyMode = remember { mutableStateOf(false) }
+  val coroutineScope = rememberCoroutineScope()
 
-  SideEffect {
-    viewModel.fetchMessages()
-  }
+    SideEffect {
+        viewModel.fetchMessages()
+    }
 
   DiscordScaffold(
     modifier = Modifier.clip(RoundedCornerShape(2)),
@@ -56,74 +74,113 @@ fun ChatScreen(
     backgroundColor = DiscordColorProvider.colors.chatBackground,
     topAppBar = {
       ChatScreenAppBar(
-        name = "Thomas",
-        isOnline = true,
-        composeNavigator = composeNavigator
+        name = userName.value,
+        isOnline = isOnline.value,
+        swipeableState = swipeableState
       )
     }
-  ) {
+  ) { paddingValues ->
     Box(
       modifier = modifier
+        .padding(top = paddingValues.calculateTopPadding() + 4.dp)
         .fillMaxSize()
         .background(Color.Black.copy(alpha = focusOpacity))
     ) {
-      ChatScreenContent(viewModel = viewModel)
+      ChatScreenContent(
+        modifier = Modifier,
+        viewModel = viewModel,
+        sheetState = bottomSheetState,
+        isReplyMode = isReplyMode,
+        userName = userName
+      )
     }
   }
+  MessageActionsBottomSheet(
+    sheetState = bottomSheetState,
+    replyAction = {
+      isReplyMode.value = true
+      coroutineScope.launch {
+        bottomSheetState.hide()
+      }
+    }
+  )
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ChatScreenAppBar(
-  name: String,
-  isOnline: Boolean,
-  composeNavigator: ComposeNavigator
+    name: String,
+    isOnline: Boolean,
+    swipeableState: SwipeableState<CenterScreenState>
 ) {
-  DiscordAppBar(
-    navigationIcon = {
-      IconButton(onClick = { composeNavigator.navigateUp() }) {
-        Icon(
-          imageVector = Filled.Menu,
-          contentDescription = stringResource(string.menu),
-          modifier = Modifier.padding(start = 8.dp),
-        )
-      }
-    },
-    title = {
-      Row(verticalAlignment = Alignment.CenterVertically) {
-        Icon(
-          imageVector = Filled.AlternateEmail,
-          contentDescription = null,
-          modifier = Modifier.padding(start = 8.dp),
-        )
-        Text(
-          modifier = Modifier.padding(start = 8.dp, end = 8.dp),
-          text = name,
-          color = DiscordColorProvider.colors.onSurface
-        )
-        OnlineIndicator(
-          modifier = Modifier,
-          isOnline = isOnline
-        )
-      }
-    },
-    actions = {
-      Icon(
-        imageVector = Filled.Call,
-        contentDescription = null,
-        modifier = Modifier.padding(end = 16.dp),
-      )
-      Icon(
-        imageVector = Filled.VideoCall,
-        contentDescription = null,
-        modifier = Modifier.padding(end = 16.dp),
-      )
-      Icon(
-        imageVector = Filled.People,
-        contentDescription = null,
-        modifier = Modifier.padding(end = 16.dp),
-      )
-    },
-    backgroundColor = DiscordColorProvider.colors.chatTopBar,
-    elevation = 0.dp
-  )
+    val coroutineScope = rememberCoroutineScope()
+    DiscordAppBar(
+        navigationIcon = {
+            CountIndicator(
+                count = 142,
+                forceCircleShape = false,
+                modifier = Modifier.padding(8.dp)
+            ) {
+                Icon(
+                    imageVector = Filled.Menu,
+                    contentDescription = stringResource(string.menu),
+                    modifier = Modifier
+                        .padding(start = 8.dp)
+                        .clickable {
+                            coroutineScope.launch {
+                                swipeableState.animateTo(CenterScreenState.RIGHT_ANCHORED)
+                            }
+                        },
+                )
+            }
+        },
+        title = {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(
+                    imageVector = Filled.AlternateEmail,
+                    contentDescription = null,
+                    tint = Color.Gray
+                )
+                Text(
+                    modifier = Modifier
+                        .padding(start = 8.dp, end = 8.dp)
+                        .wrapContentWidth(),
+                    maxLines = 1,
+                    style = MessageTypography.h2,
+                    overflow = TextOverflow.Ellipsis,
+                    text = name,
+                    color = DiscordColorProvider.colors.onSurface
+                )
+                OnlineIndicator(
+                    modifier = Modifier,
+                    isOnline = isOnline
+                )
+            }
+        },
+        actions = {
+            Icon(
+                imageVector = Filled.PhoneInTalk,
+                contentDescription = null,
+                modifier = Modifier.padding(end = 16.dp),
+            )
+            Icon(
+                imageVector = Filled.Videocam,
+                contentDescription = null,
+                modifier = Modifier.padding(end = 16.dp),
+            )
+            Icon(
+                imageVector = Filled.People,
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(end = 16.dp)
+                    .clickable {
+                        coroutineScope.launch {
+                            swipeableState.animateTo(CenterScreenState.LEFT_ANCHORED)
+                        }
+                    },
+            )
+        },
+        backgroundColor = DiscordColorProvider.colors.chatTopBar,
+        elevation = 0.dp
+    )
 }

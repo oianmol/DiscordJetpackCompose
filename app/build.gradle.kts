@@ -57,6 +57,11 @@ android {
             applicationIdSuffix = ".debug"
             signingConfig = signingConfigs.getByName("debug")
         }
+      create("benchmark") {
+        signingConfig = signingConfigs.getByName("debug")
+        matchingFallbacks += listOf("release")
+        isDebuggable = false
+      }
     }
 
     buildFeatures {
@@ -103,7 +108,6 @@ dependencies {
     implementation(Lib.Android.COMPOSE_NAVIGATION)
     implementation(Lib.Kotlin.KT_STD)
     implementation(Lib.Android.MATERIAL_DESIGN)
-    implementation(Lib.Android.MATERIAL_EXTENDED_ICONS)
     implementation(Lib.Android.CONSTRAINT_LAYOUT_COMPOSE)
     implementation(Lib.Android.ACCOMPANIST_INSETS)
     implementation(Lib.Android.ACCOMPANIST_INSETS_UI)
@@ -118,13 +122,15 @@ dependencies {
 
     /* Image Loading */
     implementation(Lib.Android.COIL_COMPOSE)
+    implementation(Lib.Android.ACCOMPANIST_COIL)
 
     /*DI*/
     implementation(Lib.Di.hiltAndroid)
     implementation(Lib.Di.hiltNavigationCompose)
-    implementation(Lib.Di.hiltViewModel)
-    implementation("androidx.compose.ui:ui-tooling-preview:1.1.1")
-    debugImplementation("androidx.compose.ui:ui-tooling:1.1.1")
+    implementation(Lib.Android.COMPOSE_TOOLING_PREVIEW)
+    debugImplementation(Lib.Android.COMPOSE_TOOLING)
+
+    implementation("androidx.profileinstaller:profileinstaller:1.2.0-rc01")
 
     kapt(Lib.Di.hiltCompiler)
     kapt(Lib.Di.hiltAndroidCompiler)
@@ -140,6 +146,8 @@ dependencies {
     kapt(Lib.Room.roomCompiler)
     implementation(Lib.Room.roomKtx)
     implementation(Lib.Room.roomPaging)
+
+    implementation(Lib.Lottie.lottieCompose)
 
     /*Testing*/
     testImplementation(TestLib.JUNIT)
