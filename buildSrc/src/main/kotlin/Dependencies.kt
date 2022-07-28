@@ -23,7 +23,7 @@ object BuildPlugins {
 
 object Lib {
   object Kotlin {
-    const val KOTLIN_VERSION = "1.6.10"
+    const val KOTLIN_VERSION = "1.7.0"
     private const val KTX_CORE_VERSION = "1.7.0"
     const val KT_STD = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${KOTLIN_VERSION}"
     const val KTX_CORE = "androidx.core:core-ktx:${KTX_CORE_VERSION}"
@@ -31,14 +31,14 @@ object Lib {
   }
 
   object Android {
-    const val COMPOSE_VERSION = "1.1.1"
+    private const val COMPOSE_VERSION = "1.2.0"
     const val COMPOSE_COMPILER_VERSION = COMPOSE_VERSION
     private const val MATERIAL_DESIGN_VERSION = "1.1.1"
     private const val COMPOSE_ACTIVITY_VERSION = "1.4.0"
     private const val COMPOSE_CONSTRAINT_LAYOUT_VERSION = "1.0.0"
     private const val COMPOSE_NAVIGATION_VERSION = "2.5.0-alpha01"
     private const val COMPOSE_COIL_VERSION = "2.1.0"
-    private const val ACCOMPANIST_VERSION = "0.24.1-alpha"
+    private const val ACCOMPANIST_VERSION = "0.24.13-rc"
     private const val MATERIAL_EXTENDED_ICONS_VERSION = COMPOSE_VERSION
 
     const val APP_COMPAT = "androidx.appcompat:appcompat:1.3.0-beta01"
@@ -48,6 +48,8 @@ object Lib {
     const val CONSTRAINT_LAYOUT_COMPOSE =
       "androidx.constraintlayout:constraintlayout-compose:${COMPOSE_CONSTRAINT_LAYOUT_VERSION}"
     const val COMPOSE_UI = "androidx.compose.ui:ui:${COMPOSE_VERSION}"
+    const val COMPOSE_TOOLING = "androidx.compose.ui:ui-tooling:${COMPOSE_VERSION}"
+    const val COMPOSE_TOOLING_PREVIEW = "androidx.compose.ui:ui-tooling-preview:${COMPOSE_VERSION}"
     const val ACCOMPANIST_SYSTEM_UI_CONTROLLER =
       "com.google.accompanist:accompanist-systemuicontroller:${ACCOMPANIST_VERSION}"
     const val ACCOMPANIST_FLOW_LAYOUTS = "com.google.accompanist:accompanist-flowlayout:${ACCOMPANIST_VERSION}"
@@ -68,11 +70,10 @@ object Lib {
   }
 
   object Di {
-    const val DAGGER_VERSION = "2.40.5"
+    const val DAGGER_VERSION = "2.43"
     const val hiltAndroid = "com.google.dagger:hilt-android:${DAGGER_VERSION}"
     const val hiltAndroidCompiler = "com.google.dagger:hilt-android-compiler:${DAGGER_VERSION}"
 
-    const val hiltViewModel = "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03"
     const val hiltCompiler = "androidx.hilt:hilt-compiler:1.0.0"
     const val hiltNavigationCompose = "androidx.hilt:hilt-navigation-compose:1.0.0"
     const val hiltCore = "com.google.dagger:hilt-core:$DAGGER_VERSION"
