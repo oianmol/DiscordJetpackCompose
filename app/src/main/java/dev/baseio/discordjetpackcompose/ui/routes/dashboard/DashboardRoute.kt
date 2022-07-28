@@ -14,6 +14,7 @@ import dev.baseio.discordjetpackcompose.ui.routes.dashboard.friends.FriendsScree
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.invite.InviteScreen
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.HomeScreen
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.dasboard.DashboardScreen
+import dev.baseio.discordjetpackcompose.ui.routes.dashboard.notifications.NotificationScreen
 import dev.baseio.discordjetpackcompose.ui.routes.dashboard.userSettings.UserSettings
 
 fun NavGraphBuilder.dashboardRoute(
@@ -34,6 +35,9 @@ fun NavGraphBuilder.dashboardRoute(
         }
         composable(DiscordScreen.CreateServer.name) {
             CreateServer(composeNavigator)
+        }
+        composable(DiscordScreen.NotificationSettings.name) {
+            NotificationScreen(composeNavigator = composeNavigator)
         }
         composable(DiscordScreen.UserSettings.name) {
             UserSettings(composeNavigator = composeNavigator)
