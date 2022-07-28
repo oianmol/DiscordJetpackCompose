@@ -14,7 +14,7 @@ suspend fun <T> safeApiCall(
         try {
             NetworkState.Success(
                 data = if (BuildConfig.DEBUG) debugResponse
-                else releaseResponse()
+                else debugResponse // TODO: Use releaseResponse here
             )
         } catch (t: Throwable) {
             NetworkState.Failure(throwable = t)
