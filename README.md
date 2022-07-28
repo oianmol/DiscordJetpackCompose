@@ -10,10 +10,10 @@
 
 <p align="left">
     <a href = "https://developer.android.com/jetpack/androidx/versions/all-channel#february_23_2022">
-      <img src = "https://img.shields.io/badge/Jetpack%20Compose-1.1.1-blue.svg?color=blue&style=for-the-badge" />
+      <img src = "https://img.shields.io/badge/Jetpack%20Compose-1.2.0-blue.svg?color=blue&style=for-the-badge" />
     </a>
     <a href="https://kotlinlang.org/docs/releases.html">
-      <img src="https://img.shields.io/badge/Kotlin-1.6.10-blue.svg?color=blue&style=for-the-badge"/>
+      <img src="https://img.shields.io/badge/Kotlin-1.7.1-blue.svg?color=blue&style=for-the-badge"/>
     </a>
     <a href = "https://github.com/Anmol92verma/DiscordJetpackCompose/stargazers">
         <img src="https://img.shields.io/github/stars/Anmol92verma/DiscordJetpackCompose?color=green&style=for-the-badge" />
