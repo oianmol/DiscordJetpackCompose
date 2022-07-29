@@ -33,40 +33,34 @@ object Lib {
   object Android {
     private const val COMPOSE_VERSION = "1.2.0"
     const val COMPOSE_COMPILER_VERSION = COMPOSE_VERSION
-    private const val MATERIAL_DESIGN_VERSION = "1.1.1"
-    private const val COMPOSE_ACTIVITY_VERSION = "1.4.0"
+    private const val COMPOSE_ACTIVITY_VERSION = "1.5.1"
     private const val COMPOSE_CONSTRAINT_LAYOUT_VERSION = "1.0.0"
     private const val COMPOSE_NAVIGATION_VERSION = "2.5.0-alpha01"
     private const val COMPOSE_COIL_VERSION = "2.1.0"
     private const val ACCOMPANIST_VERSION = "0.24.13-rc"
     private const val MATERIAL_EXTENDED_ICONS_VERSION = COMPOSE_VERSION
 
-    const val APP_COMPAT = "androidx.appcompat:appcompat:1.3.0-beta01"
+    const val APP_COMPAT = "androidx.appcompat:appcompat:1.4.1"
 
     // Compose
     const val ACTIVITY_COMPOSE = "androidx.activity:activity-compose:${COMPOSE_ACTIVITY_VERSION}"
-    const val CONSTRAINT_LAYOUT_COMPOSE =
-      "androidx.constraintlayout:constraintlayout-compose:${COMPOSE_CONSTRAINT_LAYOUT_VERSION}"
-    const val COMPOSE_UI = "androidx.compose.ui:ui:${COMPOSE_VERSION}"
+    const val CONSTRAINT_LAYOUT_COMPOSE = "androidx.constraintlayout:constraintlayout-compose:${COMPOSE_CONSTRAINT_LAYOUT_VERSION}"
     const val COMPOSE_TOOLING = "androidx.compose.ui:ui-tooling:${COMPOSE_VERSION}"
     const val COMPOSE_TOOLING_PREVIEW = "androidx.compose.ui:ui-tooling-preview:${COMPOSE_VERSION}"
-    const val ACCOMPANIST_SYSTEM_UI_CONTROLLER =
-      "com.google.accompanist:accompanist-systemuicontroller:${ACCOMPANIST_VERSION}"
+    const val ACCOMPANIST_SYSTEM_UI_CONTROLLER = "com.google.accompanist:accompanist-systemuicontroller:${ACCOMPANIST_VERSION}"
     const val ACCOMPANIST_FLOW_LAYOUTS = "com.google.accompanist:accompanist-flowlayout:${ACCOMPANIST_VERSION}"
     const val COIL_COMPOSE = "io.coil-kt:coil-compose:${COMPOSE_COIL_VERSION}"
-    const val COMPOSE_LIVEDATA = "androidx.compose.runtime:runtime-livedata:1.2.0-rc03"
-    const val COMPOSE_NAVIGATION =
-      "androidx.navigation:navigation-compose:${COMPOSE_NAVIGATION_VERSION}"
-    const val MATERIAL_DESIGN = "androidx.compose.material:material:${MATERIAL_DESIGN_VERSION}"
-    const val ACCOMPANIST_INSETS =
-      "com.google.accompanist:accompanist-insets:${ACCOMPANIST_VERSION}"
-    const val ACCOMPANIST_INSETS_UI =
-      "com.google.accompanist:accompanist-insets-ui:${ACCOMPANIST_VERSION}"
+    const val COMPOSE_LIVEDATA = "androidx.compose.runtime:runtime-livedata:${COMPOSE_VERSION}"
+    const val COMPOSE_NAVIGATION = "androidx.navigation:navigation-compose:${COMPOSE_NAVIGATION_VERSION}"
+    const val MATERIAL_DESIGN = "androidx.compose.material:material:${COMPOSE_VERSION}"
+    const val ACCOMPANIST_INSETS = "com.google.accompanist:accompanist-insets:${ACCOMPANIST_VERSION}"
+    const val ACCOMPANIST_INSETS_UI = "com.google.accompanist:accompanist-insets-ui:${ACCOMPANIST_VERSION}"
     const val ACCOMPANIST_COIL = "com.google.accompanist:accompanist-coil:0.14.0"
-
     const val MATERIAL_EXTENDED_ICONS = "androidx.compose.material:material-icons-extended:$COMPOSE_VERSION"
     const val COMPOSE_JUNIT = "androidx.compose.ui:ui-test-junit4:$COMPOSE_VERSION"
     const val COMPOSE_TEST_MANIFEST = "androidx.compose.ui:ui-test-manifest:$COMPOSE_VERSION"
+
+    const val PROFILE_INSTALLER = "androidx.profileinstaller:profileinstaller:1.2.0"
   }
 
   object Di {
@@ -102,14 +96,8 @@ object Lib {
     const val roomPaging = "androidx.room:room-paging:2.4.1"
   }
 
-  object Glide {
-    private const val GLIDE_VERSION = "4.12.0"
-    const val GLIDE = "com.github.bumptech.glide:glide:${GLIDE_VERSION}"
-    const val GLIDE_COMPILER = "com.github.bumptech.glide:compiler:${GLIDE_VERSION}"
-  }
-
   object Async {
-    private const val COROUTINES_VERSION = "1.6.0"
+    private const val COROUTINES_VERSION = "1.6.4"
 
     const val COROUTINES = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${COROUTINES_VERSION}"
     const val COROUTINES_ANDROID =

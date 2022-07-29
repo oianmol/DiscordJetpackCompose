@@ -130,7 +130,7 @@ dependencies {
     implementation(Lib.Android.COMPOSE_TOOLING_PREVIEW)
     debugImplementation(Lib.Android.COMPOSE_TOOLING)
 
-    implementation("androidx.profileinstaller:profileinstaller:1.2.0-rc01")
+    implementation(Lib.Android.PROFILE_INSTALLER)
 
     kapt(Lib.Di.hiltCompiler)
     kapt(Lib.Di.hiltAndroidCompiler)
