@@ -764,49 +764,7 @@ val xbox = Color(0xFF107c10)
 val xbox_500 = Color(0xFF107c10)
 val youtube = Color(0xFFcb2120)
 val youtube_500 = Color(0xFFcb2120)
-
-val create_server_screen
-    @Composable get() = if (isSystemInDarkTheme()) {
-        Color(0xFF373840)
-    } else {
-        Color(0xFFFEFFFE)
-    }
-
-val create_server_card_bg
-    @Composable get() = if (isSystemInDarkTheme()) {
-        Color(0xFF2B2B2E)
-    } else {
-        Color(0xFFEBEDEF)
-    }
-
-val create_server_card_bottom_button_bg
-    @Composable get() = if (isSystemInDarkTheme()) {
-        Color(0xFF4E535D)
-    } else {
-        Color(0xFF747F8C)
-    }
-
-
-val discord_dialog_bg
-    @Composable get() = if (isSystemInDarkTheme()) {
-        Color(0xFF36393E)
-    } else {
-        Color(0xFFFEFFFE)
-    }
-
-val discord_dialog_button_row_bg
-    @Composable get() = if (isSystemInDarkTheme()) {
-        Color(0xFF303037)
-    } else {
-        Color(0xFFF9F8F9)
-    }
-val discord_dialog_cancel_button_text
-    @Composable get() = if (isSystemInDarkTheme()) {
-        Color(0xFFA7A8AA)
-    } else {
-        Color(0xFF4F5761)
-    }
-val discord_dialog_button_bg = Color(0xFF5864F1)
+val dialog_text_grey = Color(0xFFA7A8AA)
 
 val discord_icon_button
     @Composable get() = if (isSystemInDarkTheme()) {

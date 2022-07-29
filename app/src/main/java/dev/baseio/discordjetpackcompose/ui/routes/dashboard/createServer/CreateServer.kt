@@ -26,25 +26,28 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.insets.statusBarsPadding
 import dev.baseio.discordjetpackcompose.R
 import dev.baseio.discordjetpackcompose.navigator.ComposeNavigator
 import dev.baseio.discordjetpackcompose.navigator.DiscordScreen
 import dev.baseio.discordjetpackcompose.ui.components.DiscordAppBar
 import dev.baseio.discordjetpackcompose.ui.components.DiscordScaffold
 import dev.baseio.discordjetpackcompose.ui.routes.onboarding.commonui.CenteredTitleSubtitle
+import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.ui.theme.Typography
-import dev.baseio.discordjetpackcompose.ui.theme.create_server_card_bottom_button_bg
-import dev.baseio.discordjetpackcompose.ui.theme.create_server_screen
+import dev.baseio.discordjetpackcompose.ui.theme.contentColorFor
+import dev.baseio.discordjetpackcompose.ui.theme.onboarding_button_grey
 import dev.baseio.discordjetpackcompose.ui.theme.white
 
 @Composable
 fun CreateServer(
     composeNavigator: ComposeNavigator
 ) {
+    val backgroundColor = DiscordColorProvider.colors.background
+    val serverCardBackgroundColor = DiscordColorProvider.colors.surface
+    val contentColor = DiscordColorProvider.colors.contentColorFor(backgroundColor)
+
     val scaffoldState = rememberScaffoldState()
     DiscordScaffold(
-        modifier = Modifier.statusBarsPadding(),
         scaffoldState = scaffoldState,
         topAppBar = {
             DiscordAppBar(
@@ -57,7 +60,7 @@ fun CreateServer(
                         )
                     }
                 },
-                backgroundColor = create_server_screen,
+                backgroundColor = backgroundColor,
                 elevation = 0.dp
             )
         }
@@ -66,7 +69,7 @@ fun CreateServer(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .background(color = create_server_screen),
+                .background(color = backgroundColor),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             CenteredTitleSubtitle(
@@ -77,7 +80,7 @@ fun CreateServer(
             LazyColumn(
                 modifier = Modifier
                     .fillMaxHeight(0.8f)
-                    .background(color = create_server_screen)
+                    .background(color = backgroundColor)
             ) {
                 items(1) {
                     CreateServerCard(
@@ -130,7 +133,7 @@ fun HaveAnInviteBottomCard(
             .padding(horizontal = 16.dp)
             .padding(bottom = 16.dp),
         shape = RoundedCornerShape(6.dp),
-        colors = ButtonDefaults.buttonColors(backgroundColor = create_server_card_bottom_button_bg)
+        colors = ButtonDefaults.buttonColors(backgroundColor = onboarding_button_grey)
     ) {
         Text(
             text = stringResource(R.string.have_an_invite_already),

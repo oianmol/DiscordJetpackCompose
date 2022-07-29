@@ -68,7 +68,7 @@ fun ChannelMemberScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(1.dp)
-                .background(create_server_screen)
+                .background(DiscordColorProvider.colors.background)
         )
         ChannelMemberActions()
         InviteMembers(onInviteButtonClicked)

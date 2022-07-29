@@ -24,6 +24,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -50,16 +51,16 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.launch
 
 @Composable
-fun AirplaneModeBroadcastReceiver(
-    airplaneModeState: (isAirplaneModeOn: Boolean?) -> Unit
-) {
+fun rememberAirplaneModeState(): Boolean {
     val context = LocalContext.current
-
+    val airplaneMode = remember {
+        mutableStateOf(false)
+    }
     DisposableEffect(context) {
         val broadcast = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 val state: Boolean = intent?.getBooleanExtra("state", false) ?: return
-                airplaneModeState(state)
+                airplaneMode.value = state
             }
         }
         context.registerReceiver(broadcast, IntentFilter(Intent.ACTION_AIRPLANE_MODE_CHANGED))
@@ -67,6 +68,7 @@ fun AirplaneModeBroadcastReceiver(
             context.unregisterReceiver(broadcast)
         }
     }
+    return airplaneMode.value
 }
 
 
@@ -80,14 +82,6 @@ fun NetworkStateBar(
         mutableStateOf(connection == ConnectionState.Available)
     }
 
-    val isAirplaneModeOn = remember {
-        mutableStateOf(false)
-    }
-
-    AirplaneModeBroadcastReceiver{
-        isAirplaneModeOn.value = it ?: false
-    }
-
     Row(
         verticalAlignment = Alignment.Bottom,
         horizontalArrangement = Arrangement.Center,
@@ -95,7 +89,7 @@ fun NetworkStateBar(
             .fillMaxWidth()
             .padding(top = 4.dp)
     ) {
-        if (isAirplaneModeOn.value) {
+        if (rememberAirplaneModeState()) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_airplanemode),
                 contentDescription = null,

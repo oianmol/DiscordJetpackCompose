@@ -26,12 +26,11 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import dev.baseio.discordjetpackcompose.R
+import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordDialogTypography
 import dev.baseio.discordjetpackcompose.ui.theme.DiscordJetpackComposeTheme
-import dev.baseio.discordjetpackcompose.ui.theme.discord_dialog_bg
-import dev.baseio.discordjetpackcompose.ui.theme.discord_dialog_button_bg
-import dev.baseio.discordjetpackcompose.ui.theme.discord_dialog_button_row_bg
-import dev.baseio.discordjetpackcompose.ui.theme.discord_dialog_cancel_button_text
+import dev.baseio.discordjetpackcompose.ui.theme.dialog_text_grey
+import dev.baseio.discordjetpackcompose.ui.theme.onboarding_button_blue
 import dev.baseio.discordjetpackcompose.ui.theme.white
 
 @Composable
@@ -39,12 +38,12 @@ fun DiscordDialog(
     modifier: Modifier = Modifier,
     show: Boolean,
     shape: Shape = RectangleShape,
-    backgroundColor: Color = discord_dialog_bg,
+    backgroundColor: Color = DiscordColorProvider.colors.background,
     titleTextProvider: () -> Int,
     subTitleTextProvider: () -> Int,
     properties: DialogProperties = DialogProperties(),
     onDismissRequest: () -> Unit,
-    buttonRowBackgroundColor: Color = discord_dialog_button_row_bg,
+    buttonRowBackgroundColor: Color = DiscordColorProvider.colors.surface,
     confirmActionButtonTextProvider: () -> Int,
     onClickCancelButton: () -> Unit,
     onClickConfirmActionButton: () -> Unit
@@ -147,7 +146,7 @@ fun DialogNegativeAction(
             style = TextStyle(
                 fontWeight = FontWeight.Black,
                 fontSize = 14.sp,
-                color = discord_dialog_cancel_button_text
+                color = dialog_text_grey
             )
         )
     }
@@ -161,7 +160,7 @@ fun DialogPositiveAction(
     Button(
         onClick = { onClickConfirmActionButton() },
         elevation = ButtonDefaults.elevation(2.dp),
-        colors = ButtonDefaults.buttonColors(backgroundColor = discord_dialog_button_bg),
+        colors = ButtonDefaults.buttonColors(backgroundColor = onboarding_button_blue),
         modifier = Modifier
             .padding(end = 10.dp)
             .padding(vertical = 6.dp)
