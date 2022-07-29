@@ -32,8 +32,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.baseio.discordjetpackcompose.R
+import dev.baseio.discordjetpackcompose.ui.theme.DiscordColorProvider
 import dev.baseio.discordjetpackcompose.ui.theme.Typography
-import dev.baseio.discordjetpackcompose.ui.theme.create_server_card_bg
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -47,7 +47,7 @@ fun CreateServerCard(
         modifier = Modifier
             .padding(horizontal = 16.dp, vertical = 6.dp),
         onClick = { onClick() },
-        color = create_server_card_bg
+        color = DiscordColorProvider.colors.surface
     ) {
         Row(
             modifier = Modifier

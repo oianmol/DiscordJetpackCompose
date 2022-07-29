@@ -74,7 +74,7 @@ fun FriendsScreen(
                     )
                 )
             },
-                backgroundColor = create_server_screen,
+                backgroundColor = DiscordColorProvider.colors.background,
                 actions = {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_chat_bubble),

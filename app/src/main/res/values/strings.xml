@@ -102,6 +102,9 @@
     <string name="server_emoji_nitro_benefit_msg">Use anywhere with nitro</string>
     <string name="emoji_count">%s EMOJIS</string>
     <string name="server_no_emojis">NO EMOJI</string>
+    <string name="connecting">Connecting…</string>
+    <string name="no_internet_status">Network connectivity limited or unavailable.</string>
+    <string name="airplane_mode_is_active">Airplane mode is active.</string>
     <string name="search_sheet_filter_dialog_title">Filter Options</string>
     <string name="search_sheet_filter_dialog_cancel_btn_txt">CANCEL</string>
     <string name="search_sheet_topbar_placeholder">Where would you like to go?</string>

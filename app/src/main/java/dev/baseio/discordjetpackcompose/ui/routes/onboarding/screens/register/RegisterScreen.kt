@@ -32,7 +32,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.baseio.discordjetpackcompose.R
 import dev.baseio.discordjetpackcompose.entities.CountryEntity
@@ -70,7 +69,6 @@ fun RegisterScreen(
     val onSelectionChange = { type: RegistrationType -> selectedOption = type }
 
     DiscordScaffold(
-        modifier = Modifier.statusBarsPadding(),
         navigator = composeNavigator,
         scaffoldState = scaffoldState
     ) {
