@@ -2,6 +2,9 @@ package dev.baseio.discordjetpackcompose.ui.routes.dashboard.main.chatscreen
 
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -12,8 +15,6 @@ import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
-import com.google.accompanist.insets.navigationBarsWithImePadding
-import com.google.accompanist.insets.statusBarsPadding
 import dev.baseio.discordjetpackcompose.viewmodels.ChatScreenViewModel
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -28,7 +29,8 @@ fun ChatScreenContent(
   BoxWithConstraints(
     modifier = modifier
       .statusBarsPadding()
-      .navigationBarsWithImePadding()
+      .navigationBarsPadding()
+      .imePadding()
   ) {
     val constraints = decoupledConstraints()
     ConstraintLayout(constraints) {

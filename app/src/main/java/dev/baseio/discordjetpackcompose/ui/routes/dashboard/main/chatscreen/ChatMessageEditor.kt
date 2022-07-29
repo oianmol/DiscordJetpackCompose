@@ -4,6 +4,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -309,9 +310,9 @@ fun ChatPlaceHolder(
   userName: State<String>,
   innerTextField: @Composable () -> Unit
 ) {
-  Row(
+  Box(
     modifier = modifier.padding(top = 8.dp, bottom = 8.dp),
-    verticalAlignment = Alignment.CenterVertically
+    contentAlignment = Alignment.Companion.CenterStart
   ) {
     if (search.isEmpty()) {
       Text(
@@ -320,12 +321,10 @@ fun ChatPlaceHolder(
           color = DiscordColorProvider.colors.textSecondary,
         ),
         maxLines = 1,
-        overflow = TextOverflow.Ellipsis,
-        modifier = Modifier.weight(1f)
+        overflow = TextOverflow.Ellipsis
       )
-    } else {
-      innerTextField()
     }
+    innerTextField()
   }
 }
 
