@@ -1,11 +1,13 @@
 package dev.baseio.discordjetpackcompose.ui.routes.dashboard.components
 
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
-import android.provider.Settings
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
@@ -20,6 +22,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
@@ -47,21 +50,43 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.launch
 
 @Composable
+fun AirplaneModeBroadcastReceiver(
+    airplaneModeState: (isAirplaneModeOn: Boolean?) -> Unit
+) {
+    val context = LocalContext.current
+
+    DisposableEffect(context) {
+        val broadcast = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                val state: Boolean = intent?.getBooleanExtra("state", false) ?: return
+                airplaneModeState(state)
+            }
+        }
+        context.registerReceiver(broadcast, IntentFilter(Intent.ACTION_AIRPLANE_MODE_CHANGED))
+        onDispose {
+            context.unregisterReceiver(broadcast)
+        }
+    }
+}
+
+
+@Composable
 fun NetworkStateBar(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
 
     val connection by connectivityState()
-    val airplane by isAirplaneMode()
-
     val isConnected by remember(key1 = connection) {
         mutableStateOf(connection == ConnectionState.Available)
     }
 
-    val isAirplaneModeOn by remember(key1 = airplane) {
-        mutableStateOf(airplane == ConnectionState.AirplaneModeOn)
+    val isAirplaneModeOn = remember {
+        mutableStateOf(false)
     }
 
+    AirplaneModeBroadcastReceiver{
+        isAirplaneModeOn.value = it ?: false
+    }
 
     Row(
         verticalAlignment = Alignment.Bottom,
@@ -70,8 +95,7 @@ fun NetworkStateBar(
             .fillMaxWidth()
             .padding(top = 4.dp)
     ) {
-        //Logic Needs to be fixed. Not updating always
-        if (isAirplaneModeOn) {
+        if (isAirplaneModeOn.value) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_airplanemode),
                 contentDescription = null,
@@ -79,15 +103,19 @@ fun NetworkStateBar(
                 tint = DiscordColorProvider.colors.textPrimary
             )
             NetworkStateText { R.string.airplane_mode_is_active }
+        } else if (isConnected) {
+            ConnectingAnimation()
         } else {
-            if (isConnected) {
-                ConnectingAnimation()
-            } else {
-                NoNetwork()
-                NetworkStateText { R.string.no_internet_status }
-            }
+            NoNetwork()
+            NetworkStateText { R.string.no_internet_status }
         }
     }
+}
+
+
+sealed class ConnectionState {
+    object Available : ConnectionState()
+    object Unavailable : ConnectionState()
 }
 
 
@@ -204,14 +232,6 @@ fun NonAnimatedBar(
 }
 
 
-sealed class ConnectionState {
-    object Available : ConnectionState()
-    object Unavailable : ConnectionState()
-    object AirplaneModeOn : ConnectionState()
-    object AirplaneModeOff : ConnectionState()
-}
-
-
 /**
  * Network utility to get current state of internet connection
  */
@@ -286,23 +306,4 @@ fun connectivityState(): State<ConnectionState> {
     }
 }
 
-
-@Composable
-fun isAirplaneMode(): State<ConnectionState> {
-    val context = LocalContext.current
-    val mode = Settings.System.getInt(
-        context.contentResolver,
-        Settings.Global.AIRPLANE_MODE_ON, 0
-    ) != 0
-
-    return remember {
-        mutableStateOf(
-            if (mode) {
-                ConnectionState.AirplaneModeOn
-            } else {
-                ConnectionState.AirplaneModeOff
-            }
-        )
-    }
-}
 
